@@ -19,10 +19,18 @@ pid_param_t pid2;
 QueueHandle_t pwmUpdateSignal = NULL;
 //串口2接收到的openmv原始数据
 char rawAngleFromOPENMV[8] = {0};
+//存储处理后的数据
+float realAngle;
 
 extern char *itoa(int num, char *str, int radix);
 void motorTEST(void);
 char *floatToString(float num, int precision, char *str);
+
+void pidControl(void){
+  PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (35 - LeftSpeed )/EncoderPerLength);
+  PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (35 - RightSpeed)/EncoderPerLength);
+  xSemaphoreGive(pwmUpdateSignal);
+}
 
 //计算小车速度并进行pid控制
 void outputSpeed(void *pvParameters){
@@ -56,14 +64,14 @@ void outputSpeed(void *pvParameters){
     floatToString(RightSpeed, 6, output);
     PrintString1(output);
 
-    PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (35 - LeftSpeed )/EncoderPerLength);
-    PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (35 - RightSpeed)/EncoderPerLength);
+    //PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (35 - LeftSpeed )/EncoderPerLength);
+    //PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (35 - RightSpeed)/EncoderPerLength);
 
 
     T3R = 1;//启动定时器
     T4R = 1;
-
-    xSemaphoreGive(pwmUpdateSignal);
+    pidControl();
+    //xSemaphoreGive(pwmUpdateSignal);
     vTaskDelay(100);
   }
   
@@ -109,7 +117,12 @@ void openMVgetAngle(void *pvParameters){
 				// }
 				RX2_Buffer[COM2.RX_Cnt] = '\0';
 				strcpy(rawAngleFromOPENMV,RX2_Buffer);
-        if(rawAngleFromOPENMV[0]==0x2c && rawAngleFromOPENMV[1] == 0x12)
+        if(rawAngleFromOPENMV[0]==0x2c && rawAngleFromOPENMV[1] == 0x12){
+          realAngle = rawAngleFromOPENMV[3];
+          if(rawAngleFromOPENMV[2] == 1){ //车头朝左1 朝右0
+            realAngle = 0 - realAngle;
+          }
+        }
 			}
 			COM2.RX_Cnt  = 0 ;
       
