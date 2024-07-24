@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_Soft_I2C                                                    22/07/24  12:06:39  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_Soft_I2C                                                    24/07/24  21:03:23  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_Soft_I2C
@@ -66,7 +66,7 @@ stmt  level    source
    54   1              I2C_Delay();
    55   1              SCL = 1;
    56   1              I2C_Delay();
-C251 COMPILER V5.60.0,  STC32G_Soft_I2C                                                    22/07/24  12:06:39  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_Soft_I2C                                                    24/07/24  21:03:23  PAGE 2   
 
    57   1              SDA = 1;
    58   1              I2C_Delay();
@@ -134,7 +134,7 @@ stmt  level    source
   120          // 参数: none.
   121          // 返回: 读取数据.
   122          // 版本: V1.0, 2020-09-15
-C251 COMPILER V5.60.0,  STC32G_Soft_I2C                                                    22/07/24  12:06:39  PAGE 3   
+C251 COMPILER V5.60.0,  STC32G_Soft_I2C                                                    24/07/24  21:03:23  PAGE 3   
 
   123          //========================================================================
   124          uint8_t I2C_ReadAbyte(void)          //read A byte from I2C
@@ -202,7 +202,7 @@ stmt  level    source
   184   1              if(!F0)
   185   1              {
   186   2                      I2C_WriteAbyte(addr);
-C251 COMPILER V5.60.0,  STC32G_Soft_I2C                                                    22/07/24  12:06:39  PAGE 4   
+C251 COMPILER V5.60.0,  STC32G_Soft_I2C                                                    24/07/24  21:03:23  PAGE 4   
 
   187   2                      I2C_Check_ACK();
   188   2                      if(!F0)

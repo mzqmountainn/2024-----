@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_Timer_Isr                                                   22/07/24  12:06:41  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_Timer_Isr                                                   24/07/24  21:03:24  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_Timer_Isr
@@ -66,7 +66,7 @@ stmt  level    source
    54          //========================================================================
    55          // 函数: Timer3_ISR_Handler
    56          // 描述: Timer3中断函数.
-C251 COMPILER V5.60.0,  STC32G_Timer_Isr                                                   22/07/24  12:06:41  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_Timer_Isr                                                   24/07/24  21:03:24  PAGE 2   
 
    57          // 参数: none.
    58          // 返回: none.

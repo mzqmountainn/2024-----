@@ -10,6 +10,8 @@
 #include "math.h"
 #include	"STC32G_PWM.h"
 #include "mzqGlobal.h"
+extern void TX1_write2buff(uint8_t dat);
+extern void TX2_write2buff(uint8_t dat);
 
 float LeftSpeed =0;
 float RightSpeed=0;
@@ -18,9 +20,9 @@ pid_param_t pid1;
 pid_param_t pid2;
 QueueHandle_t pwmUpdateSignal = NULL;
 //串口2接收到的openmv原始数据
-char rawAngleFromOPENMV[8] = {0};
+char rawAngleFromOPENMV[8] = {0x00/*0x2c,0x12,0x00,0x01,0x01,0x01,0x01,0x01*/};
 //存储处理后的数据
-float realAngle;
+int realAngle;
 
 extern char *itoa(int num, char *str, int radix);
 void motorTEST(void);
@@ -56,13 +58,13 @@ void outputSpeed(void *pvParameters){
     T4H = 0;
     T4L = 0;
 
-    LeftSpeed = Encoder1count * EncoderPerLength ;
-    RightSpeed = Encoder2count * EncoderPerLength;
+    LeftSpeed = Encoder1count * EncoderPerLength *10;
+    RightSpeed = Encoder2count * EncoderPerLength*10;
 
-    floatToString(LeftSpeed, 6, output);
-    PrintString1(output);
-    floatToString(RightSpeed, 6, output);
-    PrintString1(output);
+    // floatToString(LeftSpeed, 6, output);
+    // PrintString1(output);
+    // floatToString(RightSpeed, 6, output);
+    // PrintString1(output);
 
     //PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (35 - LeftSpeed )/EncoderPerLength);
     //PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (35 - RightSpeed)/EncoderPerLength);
@@ -87,8 +89,7 @@ void PWMupdate(void *pvParameters){
     //PWMA_Duty.PWM1_Duty = duty;
     //PWMA_Duty.PWM2_Duty = duty;
     UpdatePwm(PWMA, &PWMA_Duty);
-
-    vTaskDelay(10);
+    vTaskDelay(50);
     //vTaskDelay(500);
   }
 }
@@ -103,6 +104,8 @@ void motorTEST(void){
 
 //串口2接受openmv信息
 void openMVgetAngle(void *pvParameters){
+  int i = 0;
+  char temp[10];
   pvParameters = pvParameters;
   while (1)
   {
@@ -116,17 +119,22 @@ void openMVgetAngle(void *pvParameters){
 				// 	TX1_write2buff(RX2_Buffer[i]);
 				// }
 				RX2_Buffer[COM2.RX_Cnt] = '\0';
-				strcpy(rawAngleFromOPENMV,RX2_Buffer);
-        if(rawAngleFromOPENMV[0]==0x2c && rawAngleFromOPENMV[1] == 0x12){
-          realAngle = rawAngleFromOPENMV[3];
-          if(rawAngleFromOPENMV[2] == 1){ //车头朝左1 朝右0
+        PrintString1(RX2_Buffer);
+				//strcpy(rawAngleFromOPENMV,RX2_Buffer);  !!!问题
+        if(RX2_Buffer[0]==0x2c && RX2_Buffer[1] == 0x12){
+          realAngle = RX2_Buffer[3];
+          if(RX2_Buffer[2] == 1){ //车头朝左1 朝右0
             realAngle = 0 - realAngle;
           }
+          itoa(realAngle, temp, 10);
+          PrintString1(temp);
         }
 			}
 			COM2.RX_Cnt  = 0 ;
       
 		}
+
+    vTaskDelay(10);
   }
   
 }

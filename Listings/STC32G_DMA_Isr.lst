@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     22/07/24  12:06:40  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     24/07/24  21:03:23  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_DMA_Isr
@@ -66,7 +66,7 @@ stmt  level    source
    54   1      }
    55          
    56          //========================================================================
-C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     22/07/24  12:06:40  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     24/07/24  21:03:23  PAGE 2   
 
    57          // 函数: DMA_M2M_ISR_Handler
    58          // 描述: DMA M2M 中断函数.
@@ -134,7 +134,7 @@ stmt  level    source
   120   2      //              DMA_UR1R_TRIG();        //重新触发UART1接收功能
   121   2              }
   122   1              if (DMA_UR1R_STA & 0x02)        //数据丢弃
-C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     22/07/24  12:06:40  PAGE 3   
+C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     24/07/24  21:03:23  PAGE 3   
 
   123   1              {
   124   2                      DMA_UR1R_STA &= ~0x02;  //清标志位
@@ -202,7 +202,7 @@ stmt  level    source
   186   2                      DmaTx3Flag = 1;
   187   2              }
   188   1              if (DMA_UR3T_STA & 0x04)        //数据覆盖
-C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     22/07/24  12:06:40  PAGE 4   
+C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     24/07/24  21:03:23  PAGE 4   
 
   189   1              {
   190   2                      DMA_UR3T_STA &= ~0x04;  //清标志位
@@ -270,7 +270,7 @@ stmt  level    source
   252   2                      DmaRx4Flag = 1;
   253   2      
   254   2      //              DMA_UR4T_TRIG();        //重新触发UART4发送功能
-C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     22/07/24  12:06:40  PAGE 5   
+C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     24/07/24  21:03:23  PAGE 5   
 
   255   2      //              DMA_UR4R_TRIG();        //重新触发UART4接收功能
   256   2              }
@@ -338,7 +338,7 @@ stmt  level    source
   318          // 函数: DMA_I2CR_ISR_Handler
   319          // 描述: DMA I2C 接收中断函数.
   320          // 参数: none.
-C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     22/07/24  12:06:40  PAGE 6   
+C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     24/07/24  21:03:23  PAGE 6   
 
   321          // 返回: none.
   322          // 版本: V1.0, 2022-03-25
@@ -406,7 +406,7 @@ stmt  level    source
   384   1              if(DMA_ADC_STA & 0x01)  //AD转换完成
   385   1              {
   386   2                      DMA_ADC_STA &= ~0x01;   //清标志位
-C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     22/07/24  12:06:40  PAGE 7   
+C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     24/07/24  21:03:23  PAGE 7   
 
   387   2                      DmaADCFlag = 1;
   388   2              }
@@ -474,7 +474,7 @@ stmt  level    source
   450   2                      DMA_UR3T_STA &= ~0x01;  //清标志位
   451   2                      DmaTx3Flag = 1;
   452   2              }
-C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     22/07/24  12:06:40  PAGE 8   
+C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     24/07/24  21:03:23  PAGE 8   
 
   453   1              if (DMA_UR3T_STA & 0x04)        //数据覆盖
   454   1              {
@@ -542,7 +542,7 @@ stmt  level    source
   516   2              }
   517   1              
   518   1              //---------- DMA LCM -------------
-C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     22/07/24  12:06:40  PAGE 9   
+C251 COMPILER V5.60.0,  STC32G_DMA_Isr                                                     24/07/24  21:03:23  PAGE 9   
 
   519   1              if(DMA_LCM_STA & 0x01)
   520   1              {

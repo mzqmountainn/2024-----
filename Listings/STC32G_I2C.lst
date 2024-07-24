@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_I2C                                                         22/07/24  12:06:38  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_I2C                                                         24/07/24  21:03:22  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_I2C
@@ -66,7 +66,7 @@ stmt  level    source
    54          // 版本: V1.0, 2012-11-22
    55          //========================================================================
    56          uint8_t Get_MSBusy_Status(void)
-C251 COMPILER V5.60.0,  STC32G_I2C                                                         22/07/24  12:06:38  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_I2C                                                         24/07/24  21:03:22  PAGE 2   
 
    57          {
    58   1              return (I2CMSST & 0x80);
@@ -134,7 +134,7 @@ stmt  level    source
   120          //========================================================================
   121          char RecvData()
   122          {
-C251 COMPILER V5.60.0,  STC32G_I2C                                                         22/07/24  12:06:38  PAGE 3   
+C251 COMPILER V5.60.0,  STC32G_I2C                                                         24/07/24  21:03:22  PAGE 3   
 
   123   1              I2CMSCR = 0x04;                         //发送RECV命令
   124   1              Wait();
@@ -202,7 +202,7 @@ stmt  level    source
   186          // 参数: addr: 指定地址, *p写入数据存储位置, number写入数据个数.
   187          // 返回: none.
   188          // 版本: V1.0, 2020-09-15
-C251 COMPILER V5.60.0,  STC32G_I2C                                                         22/07/24  12:06:38  PAGE 4   
+C251 COMPILER V5.60.0,  STC32G_I2C                                                         24/07/24  21:03:22  PAGE 4   
 
   189          //========================================================================
   190          void I2C_WriteNbyte(uint8_t addr, uint8_t *p, uint8_t number)  /*  WordAddress,First Data Address,Byte le
@@ -272,7 +272,7 @@ Module Information          Static   Overlayable
   hconst size          =    ------     ------
 End of Module Information.
 
-C251 COMPILER V5.60.0,  STC32G_I2C                                                         22/07/24  12:06:38  PAGE 5   
+C251 COMPILER V5.60.0,  STC32G_I2C                                                         24/07/24  21:03:22  PAGE 5   
 
 
 C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

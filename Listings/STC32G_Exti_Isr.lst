@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_Exti_Isr                                                    22/07/24  12:06:40  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_Exti_Isr                                                    24/07/24  21:03:24  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_Exti_Isr
@@ -66,7 +66,7 @@ stmt  level    source
    54          // 版本: V1.0, 2020-09-23
    55          //========================================================================
    56          void INT2_ISR_Handler (void) interrupt INT2_VECTOR              //进中断时已经清除标志
-C251 COMPILER V5.60.0,  STC32G_Exti_Isr                                                    22/07/24  12:06:40  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_Exti_Isr                                                    24/07/24  21:03:24  PAGE 2   
 
    57          {
    58   1              // TODO: 在此处添加用户代码

@@ -27,11 +27,14 @@
 // #include "pwmb.h"
 #include "mzqGlobal.h"
 #include "Semphr.h"
+#include "STC32G_UART.h"
 void vSystemInit( void );
 void motorInit(void);
 extern void outputSpeed(void *pvParameters);
 extern void PWMupdate(void *pvParameters);
 extern QueueHandle_t pwmUpdateSignal;
+extern void openMVgetAngle(void *pvParameters);
+
 void main( void )
 {
     /* 系统初始化 */
@@ -49,13 +52,19 @@ void main( void )
                 (const char*    )"outputTIM",
                 (uint16_t       )configDEFAULT_STACK_SIZE,
                 (void*          )NULL,
-                (UBaseType_t    )(configDEFAULT_PRIORITIES),
+                (UBaseType_t    )(configDEFAULT_PRIORITIES)+2,
                 (TaskHandle_t*  )NULL);
     xTaskCreate((TaskFunction_t )PWMupdate,
                 (const char*    )"PWMupdate",
-                (uint16_t       )configDEFAULT_STACK_SIZE+1,
+                (uint16_t       )configDEFAULT_STACK_SIZE,
                 (void*          )NULL,
-                (UBaseType_t    )(configDEFAULT_PRIORITIES),
+                (UBaseType_t    )(configDEFAULT_PRIORITIES)+3,
+                (TaskHandle_t*  )NULL);
+    xTaskCreate((TaskFunction_t )openMVgetAngle,
+                (const char*    )"openMVgetAngle",
+                (uint16_t       )configDEFAULT_STACK_SIZE,
+                (void*          )NULL,
+                (UBaseType_t    )(configDEFAULT_PRIORITIES)+4,
                 (TaskHandle_t*  )NULL);
     // xTaskCreate((TaskFunction_t )vDisplayTask,
     //             (const char*    )"DISPLAY",
@@ -110,7 +119,7 @@ void main( void )
     vTaskStartScheduler();
 
     /* 正常情况下不会运行到此处 */
-    while (1);
+    while (1){};
 }
 void motorInit(void){
   STBY_6612 = 1;

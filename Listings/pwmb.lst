@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  pwmb                                                               22/07/24  12:06:37  PAGE 1   
+C251 COMPILER V5.60.0,  pwmb                                                               24/07/24  21:03:21  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE pwmb
@@ -66,7 +66,7 @@ stmt  level    source
    55   3              }
    56   2              else
    57   2              {
-C251 COMPILER V5.60.0,  pwmb                                                               22/07/24  12:06:37  PAGE 2   
+C251 COMPILER V5.60.0,  pwmb                                                               24/07/24  21:03:21  PAGE 2   
 
    58   3                  PWMB_Duty.PWM5_Duty--;
    59   3                  if(PWMB_Duty.PWM5_Duty <= 0) PWM5_Flag = 0;
@@ -134,7 +134,7 @@ stmt  level    source
   120   1              PWMx_InitStructure.PWM_Duty    = PWMB_Duty.PWM5_Duty;   //PWM占空比时间, 0~Period
   121   1              PWMx_InitStructure.PWM_EnoSelect   = ENO5P;                             //输出通道选择, ENO1P,ENO1N,ENO2P,ENO2N,ENO3P,ENO3N,ENO4P
              -,ENO4N / ENO5P,ENO6P,ENO7P,ENO8P
-C251 COMPILER V5.60.0,  pwmb                                                               22/07/24  12:06:37  PAGE 3   
+C251 COMPILER V5.60.0,  pwmb                                                               24/07/24  21:03:21  PAGE 3   
 
   122   1              PWM_Configuration(PWM5, &PWMx_InitStructure);                   //初始化PWM,  PWMA,PWMB
   123   1      

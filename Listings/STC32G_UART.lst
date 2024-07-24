@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_UART                                                        22/07/24  12:06:39  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_UART                                                        24/07/24  21:03:23  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_UART
@@ -66,7 +66,7 @@ stmt  level    source
                        UARTx = NULL;
                        COMx = NULL;
                #endif
-C251 COMPILER V5.60.0,  STC32G_UART                                                        22/07/24  12:06:39  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_UART                                                        24/07/24  21:03:23  PAGE 2   
 
    57   1      
    58   1      #ifdef UART1
@@ -134,7 +134,7 @@ stmt  level    source
   120   2                      COM2.TX_write   = 0;
   121   2                      COM2.B_TX_busy  = 0;
   122   2                      COM2.RX_Cnt     = 0;
-C251 COMPILER V5.60.0,  STC32G_UART                                                        22/07/24  12:06:39  PAGE 3   
+C251 COMPILER V5.60.0,  STC32G_UART                                                        24/07/24  21:03:23  PAGE 3   
 
   123   2                      COM2.RX_TimeOut = 0;
   124   2                      COM2.B_RX_OK    = 0;
@@ -202,7 +202,7 @@ stmt  level    source
   186   4                                      T3R = 1;                //Timer run enable
   187   4                              }
   188   3                      }
-C251 COMPILER V5.60.0,  STC32G_UART                                                        22/07/24  12:06:39  PAGE 4   
+C251 COMPILER V5.60.0,  STC32G_UART                                                        24/07/24  21:03:23  PAGE 4   
 
   189   2                      else    return FAIL;    //模式错误
   190   2                      UART3_RxEnable(COMx->UART_RxEnable);    //UART接收使能
@@ -270,7 +270,7 @@ stmt  level    source
              -–OM_TXn_Lenth）
   252   1              if(++COM1.TX_write >= COM_TX1_Lenth)    COM1.TX_write = 0;
   253   1      
-C251 COMPILER V5.60.0,  STC32G_UART                                                        22/07/24  12:06:39  PAGE 5   
+C251 COMPILER V5.60.0,  STC32G_UART                                                        24/07/24  21:03:23  PAGE 5   
 
   254   1              if(COM1.B_TX_busy == 0)         //空闲
   255   1              {  
@@ -338,7 +338,7 @@ stmt  level    source
              -–OM_TXn_Lenth）
   315   1              if(++COM4.TX_write >= COM_TX4_Lenth)    COM4.TX_write = 0;
   316   1      
-C251 COMPILER V5.60.0,  STC32G_UART                                                        22/07/24  12:06:39  PAGE 6   
+C251 COMPILER V5.60.0,  STC32G_UART                                                        24/07/24  21:03:23  PAGE 6   
 
   317   1              if(COM4.B_TX_busy == 0)         //空闲
   318   1              {  

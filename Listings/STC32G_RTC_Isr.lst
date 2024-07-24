@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_RTC_Isr                                                     22/07/24  12:06:40  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_RTC_Isr                                                     24/07/24  21:03:24  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_RTC_Isr
@@ -67,7 +67,7 @@ Module Information          Static   Overlayable
   edata size           =    ------     ------
   bit size             =         2     ------
   ebit size            =    ------     ------
-C251 COMPILER V5.60.0,  STC32G_RTC_Isr                                                     22/07/24  12:06:40  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_RTC_Isr                                                     24/07/24  21:03:24  PAGE 2   
 
   bitaddressable size  =    ------     ------
   ebitaddressable size =    ------     ------

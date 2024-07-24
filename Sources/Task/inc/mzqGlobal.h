@@ -4,7 +4,7 @@
 
 //小车中使用的长度我们使用厘米作为单位  有误差？
 #define CarPerRoundLength 14.444  // 4.6*3.14
-#define EncoderPerLength 0.641955 // 14.444/225
+#define EncoderPerLength 0.0641955 // 14.444/225
 //定时器3用于左轮，定时器4用于右轮
 extern float LeftSpeed;
 extern float RightSpeed;

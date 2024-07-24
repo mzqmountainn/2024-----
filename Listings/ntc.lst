@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  ntc                                                                22/07/24  12:06:37  PAGE 1   
+C251 COMPILER V5.60.0,  ntc                                                                24/07/24  21:03:21  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE ntc
@@ -66,7 +66,7 @@ stmt  level    source
    55   1          uint8_t  i;
    56   1          uint16_t j;
    57   1          j = Get_ADCResult(3);  //参数0~15,查询方式做一次ADC, 返回值就是结果, == 4096 为错误
-C251 COMPILER V5.60.0,  ntc                                                                22/07/24  12:06:37  PAGE 2   
+C251 COMPILER V5.60.0,  ntc                                                                24/07/24  21:03:21  PAGE 2   
 
    58   1      
    59   1          if(j < 4096)
@@ -134,7 +134,7 @@ stmt  level    source
   121                  965,    //;0    40
   122                  1003,   //;1    41
   123                  1041,   //;2    42
-C251 COMPILER V5.60.0,  ntc                                                                22/07/24  12:06:37  PAGE 3   
+C251 COMPILER V5.60.0,  ntc                                                                24/07/24  21:03:21  PAGE 3   
 
   124                  1080,   //;3    43
   125                  1119,   //;4    44
@@ -202,7 +202,7 @@ stmt  level    source
   187                  3413,   //;66   106
   188                  3432,   //;67   107
   189                  3452,   //;68   108
-C251 COMPILER V5.60.0,  ntc                                                                22/07/24  12:06:37  PAGE 4   
+C251 COMPILER V5.60.0,  ntc                                                                24/07/24  21:03:21  PAGE 4   
 
   190                  3470,   //;69   109
   191                  3488,   //;70   110
@@ -270,7 +270,7 @@ stmt  level    source
   253   1          uint16_t code *p;
   254   1          uint16_t i;
   255   1          uint8_t  j,k,min,max;
-C251 COMPILER V5.60.0,  ntc                                                                22/07/24  12:06:37  PAGE 5   
+C251 COMPILER V5.60.0,  ntc                                                                24/07/24  21:03:21  PAGE 5   
 
   256   1          
   257   1          adc = 4096 - adc;   //Rt接地

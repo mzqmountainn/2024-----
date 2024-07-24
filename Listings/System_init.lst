@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  System_init                                                        22/07/24  15:31:00  PAGE 1   
+C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE System_init
@@ -66,7 +66,7 @@ stmt  level    source
    54   1              TIM_InitTypeDef         TIM_InitStructure;                                              //结构定义
    55   1      //      TIM_InitStructure.TIM_Mode      = TIM_16BitAutoReload;  //指定工作模式,   TIM_16BitAutoReload,TIM_16Bit
              -,TIM_8BitAutoReload,TIM_16BitAutoReloadNoMask
-C251 COMPILER V5.60.0,  System_init                                                        22/07/24  15:31:00  PAGE 2   
+C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 2   
 
    56   1      //      TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_1T;         //指定时钟源,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOC
              -K_Ext
@@ -134,7 +134,7 @@ stmt  level    source
   109   1        //    TIM_InitStructure.TIM_ClkOut    = ENABLE;                                       //是否输出高速脉冲, ENABLE或DISABLE
   110   1        //    TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / (50*12));              //初值
   111   1        //    TIM_InitStructure.TIM_Run       = ENABLE;                                       //是否初始化后启动定时器, ENABLE或DISABLE
-C251 COMPILER V5.60.0,  System_init                                                        22/07/24  15:31:00  PAGE 3   
+C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 3   
 
   112   1        //    Timer_Inilize(Timer4,&TIM_InitStructure);                                       //初始化Timer4    Timer0,Timer1,Timer2,Timer3,Timer4
   113   1        //    NVIC_Timer4_Init(ENABLE,0);             //中断使能, ENABLE/DISABLE; 无优先级
@@ -179,15 +179,15 @@ stmt  level    source
              -iority_2,Priority_3
   146   1        
   147   1      
-  148   1      //      COMx_InitStructure.UART_Mode      = UART_8bit_BRTx;             //模式,   UART_ShiftRight,UART_8bit_BRTx,UART_9b
-             -it,UART_9bit_BRTx
-  149   1      // //   COMx_InitStructure.UART_BRT_Use   = BRT_Timer2;                 //选择波特率发生器, BRT_Timer2 (注意: 串口2固定使
-             -用BRT_Timer2, 所以不用选择)
-  150   1      //      COMx_InitStructure.UART_BaudRate  = 115200ul;                   //波特率,     110 ~ 115200
-  151   1      //      COMx_InitStructure.UART_RxEnable  = ENABLE;                             //接收允许,   ENABLE或DISABLE
-  152   1      //      UART_Configuration(UART2, &COMx_InitStructure);             //初始化串口2 UART1,UART2,UART3,UART4
-  153   1      //      NVIC_UART2_Init(ENABLE,Priority_1);             //中断使能, ENABLE/DISABLE; 优先级(低到高) Priority_0,Priority_1
-             -,Priority_2,Priority_3
+  148   1              COMx_InitStructure.UART_Mode      = UART_8bit_BRTx;             //模式,   UART_ShiftRight,UART_8bit_BRTx,UART_9bit,
+             -UART_9bit_BRTx
+  149   1      //      COMx_InitStructure.UART_BRT_Use   = BRT_Timer2;                 //选择波特率发生器, BRT_Timer2 (注意: 串口2固定使用B
+             -RT_Timer2, 所以不用选择)
+  150   1              COMx_InitStructure.UART_BaudRate  = 9600ul;                     //波特率,     110 ~ 115200
+  151   1              COMx_InitStructure.UART_RxEnable  = ENABLE;                             //接收允许,   ENABLE或DISABLE
+  152   1              UART_Configuration(UART2, &COMx_InitStructure);             //初始化串口2 UART1,UART2,UART3,UART4
+  153   1              NVIC_UART2_Init(ENABLE,Priority_1);             //中断使能, ENABLE/DISABLE; 优先级(低到高) Priority_0,Priority_1,Pr
+             -iority_2,Priority_3
   154   1      
   155   1      //      COMx_InitStructure.UART_Mode      = UART_8bit_BRTx;     //模式, UART_ShiftRight,UART_8bit_BRTx,UART_9bit
              -,UART_9bit_BRTx
@@ -202,7 +202,7 @@ stmt  level    source
   162          
   163          //========================================================================
   164          //                               I2C初始化
-C251 COMPILER V5.60.0,  System_init                                                        22/07/24  15:31:00  PAGE 4   
+C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 4   
 
   165          //========================================================================
   166          void I2C_config(void)
@@ -270,7 +270,7 @@ stmt  level    source
   220          //========================================================================
   221          void Exti_config(void)
   222          {
-C251 COMPILER V5.60.0,  System_init                                                        22/07/24  15:31:00  PAGE 5   
+C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 5   
 
   223   1              EXTI_InitTypeDef        Exti_InitStructure;                                                     //结构定义
   224   1      
@@ -338,7 +338,7 @@ stmt  level    source
   278   1              PWMx_InitStructure.PWM_EnoSelect   = ENO2P;     //输出通道选择, ENO1P,ENO1N,ENO2P,ENO2N,ENO3P,ENO3N,ENO4P,EN
              -O4N / ENO5P,ENO6P,ENO7P,ENO8P
   279   1              PWM_Configuration(PWM2, &PWMx_InitStructure);                           //初始化PWM2
-C251 COMPILER V5.60.0,  System_init                                                        22/07/24  15:31:00  PAGE 6   
+C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 6   
 
   280   1      
   281   1              // PWMx_InitStructure.PWM_Mode    =     CCMRn_PWM_MODE1;        //模式,         CCMRn_FREEZE,CCMRn_MATCH_VALID,CCMRn_MATCH
@@ -394,7 +394,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       776     ------
+  code size            =       819     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -407,7 +407,7 @@ Module Information          Static   Overlayable
   bitaddressable size  =    ------     ------
   ebitaddressable size =    ------     ------
   far data size        =    ------     ------
-C251 COMPILER V5.60.0,  System_init                                                        22/07/24  15:31:00  PAGE 7   
+C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 7   
 
   huge data size       =    ------     ------
   const size           =    ------     ------

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_RTC                                                         22/07/24  12:06:39  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_RTC                                                         24/07/24  21:03:23  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_RTC
@@ -66,7 +66,7 @@ stmt  level    source
    54   2                      RTCCFG = 0x03;    //选择内部32K时钟源，触发RTC寄存器初始化
    55   2              }
    56   1              else
-C251 COMPILER V5.60.0,  STC32G_RTC                                                         22/07/24  12:06:39  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_RTC                                                         24/07/24  21:03:23  PAGE 2   
 
    57   1              {
    58   2                      X32KCR = 0x80 + 0x40;   //启动外部32K晶振, 低增益+0x00, 高增益+0x40.

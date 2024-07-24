@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_I2C_Isr                                                     22/07/24  12:06:40  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_I2C_Isr                                                     24/07/24  21:03:24  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_I2C_Isr
@@ -66,7 +66,7 @@ stmt  level    source
    54   2                      if (I2CIsr.isda)
    55   2                      {
    56   3                              I2CIsr.isda = 0;                           //处理RECV事件（RECV DEVICE ADDR）
-C251 COMPILER V5.60.0,  STC32G_I2C_Isr                                                     22/07/24  12:06:40  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_I2C_Isr                                                     24/07/24  21:03:24  PAGE 2   
 
    57   3                      }
    58   2                      else if (I2CIsr.isma)
