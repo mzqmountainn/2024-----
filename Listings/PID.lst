@@ -1,0 +1,129 @@
+C251 COMPILER V5.60.0,  PID                                                                24/07/24  13:34:36  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE PID
+OBJECT MODULE PLACED IN .\Objects\PID.obj
+COMPILER INVOKED BY: D:\software\keilc51\C251\BIN\C251.EXE Sources\Task\src\PID.c XSMALL FUNCTIONS(REENTRANT) OPTIMIZE(4
+                    -,SPEED) BROWSE INCDIR(.\Sources\User;.\Sources\User\include;.\Sources\FreeRTOS\include;.\Sources\FreeRTOS\portable\STC32
+                    -G12K128;.\Sources\Driver\inc;.\Sources\Task\inc) DEBUG PRINT(.\Listings\PID.lst) OBJECT(.\Objects\PID.obj) 
+
+stmt  level    source
+
+    1          #include <PID.h>
+    2          
+    3          /*************************************************************************
+    4          *  功能说明：限幅函数
+    5          *  参数说明：
+    6          * @param    amt   ： 参数
+    7          * @param    low   ： 最低值
+    8          * @param    high  ： 最高值
+    9          *************************************************************************/
+   10          float constrain_float(float amt, float low, float high)
+   11          {
+   12   1        return ((amt)<(low)?(low):((amt)>(high)?(high):(amt)));
+   13   1      }
+   14          
+   15          // pid参数初始化函数
+   16          void PidInit(pid_param_t * pid)
+   17          {
+   18   1        pid->kp                = 0;
+   19   1        pid->ki                = 0;
+   20   1        pid->kd                = 0;
+   21   1        pid->imax              = 0;
+   22   1        pid->out_p             = 0;
+   23   1        pid->out_i             = 0;
+   24   1        pid->out_d             = 0;
+   25   1        pid->out               = 0;
+   26   1        pid->integrator        = 0;
+   27   1        pid->last_error        = 0;
+   28   1        pid->last_derivative   = 0;
+   29   1        pid->last_t                    = 0;
+   30   1      }
+   31          
+   32          /*************************************************************************
+   33          *  功能说明：pid位置式控制器输出
+   34          *  参数说明：
+   35          * @param    pid     pid参数
+   36          * @param    error   pid输入误差
+   37          *************************************************************************/
+   38          
+   39          float PidLocCtrl(pid_param_t * pid, float error)
+   40          {
+   41   1        /* 累积误差 */
+   42   1        pid->integrator += error;
+   43   1        
+   44   1        /* 误差限幅 */
+   45   1        pid->integrator=constrain_float(pid->integrator, -pid->imax, pid->imax);
+   46   1        pid->out_p = pid->kp * error;
+   47   1        pid->out_i = pid->ki * pid->integrator;
+   48   1        pid->out_d = pid->kd * (error - pid->last_error);
+   49   1       
+   50   1        pid->last_error = error;
+   51   1       
+   52   1        pid->out = pid->out_p + pid->out_i + pid->out_d;
+   53   1        
+   54   1        return pid->out;
+   55   1      }
+   56          
+   57          
+C251 COMPILER V5.60.0,  PID                                                                24/07/24  13:34:36  PAGE 2   
+
+   58          
+   59          /*************************************************************************
+   60          *  功能说明：pid增量式控制器输出
+   61          *  特别说明：此函数由chatgpt4o生成 mzq 20240724
+   62          *  参数说明：
+   63          * @param    pid     pid参数
+   64          * @param    error   pid输入误差
+   65          *************************************************************************/
+   66          float PidIncCtrl(pid_param_t * pid, float error)
+   67          {
+   68   1          float delta_error;
+   69   1          float delta_d;
+   70   1          float output;
+   71   1      
+   72   1          // 计算当前误差的增量
+   73   1          delta_error = error - pid->last_error;
+   74   1      
+   75   1          // 计算微分项增量
+   76   1          delta_d = delta_error - pid->last_derivative;
+   77   1      
+   78   1          // 计算PID各项的输出
+   79   1          pid->out_p = pid->kp * delta_error;
+   80   1          pid->out_i = pid->ki * error; // 积分项直接取当前误差
+   81   1          pid->out_d = pid->kd * delta_d;
+   82   1      
+   83   1          // 计算PID输出
+   84   1          output = pid->out_p + pid->out_i + pid->out_d;
+   85   1      
+   86   1          // 更新last_error和last_derivative
+   87   1          pid->last_error = error;
+   88   1          pid->last_derivative = delta_error;
+   89   1      
+   90   1          // 返回PID输出
+   91   1          return output;
+   92   1      }
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =       539     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =    ------     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =    ------     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
