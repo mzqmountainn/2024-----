@@ -15,22 +15,34 @@ extern void TX2_write2buff(uint8_t dat);
 
 float LeftSpeed =0;
 float RightSpeed=0;
+//目标速度
+int targetSpeed = 10; 
 extern PWMx_Duty PWMA_Duty;
 pid_param_t pid1;
 pid_param_t pid2;
+pid_param_t pidLoc;
+/// @brief 位置式pid返回pwm差值
+int pwmDeltaPIDloc = 0;
 QueueHandle_t pwmUpdateSignal = NULL;
 //串口2接收到的openmv原始数据
 char rawAngleFromOPENMV[8] = {0x00/*0x2c,0x12,0x00,0x01,0x01,0x01,0x01,0x01*/};
 //存储处理后的数据
-int realAngle;
+int realAngle = 0;
 
 extern char *itoa(int num, char *str, int radix);
 void motorTEST(void);
 char *floatToString(float num, int precision, char *str);
 
 void pidControl(void){
-  PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (35 - LeftSpeed )/EncoderPerLength);
-  PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (35 - RightSpeed)/EncoderPerLength);
+  //pidLoc.kp = (LeftSpeed + RightSpeed) / 2.0;
+  pwmDeltaPIDloc = PidLocCtrl(&pidLoc, realAngle);
+  pwmDeltaPIDloc = (int)constrain_float(pwmDeltaPIDloc, -300, 300);
+  PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (targetSpeed - LeftSpeed )/EncoderPerLength-pwmDeltaPIDloc);
+  PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (targetSpeed - RightSpeed)/EncoderPerLength+pwmDeltaPIDloc);
+  if(PWMA_Duty.PWM1_Duty>=2400)
+    PWMA_Duty.PWM1_Duty = 2400;
+  if(PWMA_Duty.PWM2_Duty>=2400)
+    PWMA_Duty.PWM2_Duty = 2400;
   xSemaphoreGive(pwmUpdateSignal);
 }
 
@@ -61,10 +73,10 @@ void outputSpeed(void *pvParameters){
     LeftSpeed = Encoder1count * EncoderPerLength *10;
     RightSpeed = Encoder2count * EncoderPerLength*10;
 
-    // floatToString(LeftSpeed, 6, output);
-    // PrintString1(output);
-    // floatToString(RightSpeed, 6, output);
-    // PrintString1(output);
+    floatToString(LeftSpeed, 6, output);
+    PrintString1(output);
+    floatToString(RightSpeed, 6, output);
+    PrintString1(output);
 
     //PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (35 - LeftSpeed )/EncoderPerLength);
     //PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (35 - RightSpeed)/EncoderPerLength);
@@ -105,7 +117,7 @@ void motorTEST(void){
 //串口2接受openmv信息
 void openMVgetAngle(void *pvParameters){
   int i = 0;
-  char temp[10];
+  char temp[15];
   pvParameters = pvParameters;
   while (1)
   {
@@ -119,15 +131,21 @@ void openMVgetAngle(void *pvParameters){
 				// 	TX1_write2buff(RX2_Buffer[i]);
 				// }
 				RX2_Buffer[COM2.RX_Cnt] = '\0';
-        PrintString1(RX2_Buffer);
+        //PrintString1(RX2_Buffer);
 				//strcpy(rawAngleFromOPENMV,RX2_Buffer);  !!!问题
-        if(RX2_Buffer[0]==0x2c && RX2_Buffer[1] == 0x12){
-          realAngle = RX2_Buffer[3];
-          if(RX2_Buffer[2] == 1){ //车头朝左1 朝右0
+        //PrintString1(RX2_Buffer);
+        for ( i = 0; i < COM2.RX_Cnt; i++)
+        {
+          temp[i] = RX2_Buffer[i];
+        }
+        //PrintString1(temp);
+        if(temp[0]==0x2c /*&& temp[1] == 0x12 &&temp[5] == 0x5b&&temp[6] == 0xdd*/){
+          realAngle = temp[3];
+          if(temp[2] == 2){ //车头朝左2 朝右1
             realAngle = 0 - realAngle;
           }
-          itoa(realAngle, temp, 10);
-          PrintString1(temp);
+          // itoa(realAngle, temp, 10);
+          // PrintString1(temp);
         }
 			}
 			COM2.RX_Cnt  = 0 ;

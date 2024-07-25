@@ -42,10 +42,12 @@ void main( void )
     motorInit();
     PidInit(&pid1);
     PidInit(&pid2);
+    PidInit(&pidLoc);
     pid1.kp = 0.1;
     pid1.ki = 1;
     pid2.kp = 0.1;
     pid2.ki = 1;
+    pidLoc.kp = 2;
     pwmUpdateSignal = xSemaphoreCreateBinary();
     /* 创建任务 */
     xTaskCreate((TaskFunction_t )outputSpeed,

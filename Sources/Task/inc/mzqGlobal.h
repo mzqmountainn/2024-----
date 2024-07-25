@@ -18,5 +18,6 @@ extern float RightSpeed;
 #include "PID.h"
 extern pid_param_t pid1;
 extern pid_param_t pid2;
+extern pid_param_t pidLoc;
 
 #endif
