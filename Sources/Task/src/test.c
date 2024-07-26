@@ -28,20 +28,51 @@ QueueHandle_t pwmUpdateSignal = NULL;
 char rawAngleFromOPENMV[8] = {0x00/*0x2c,0x12,0x00,0x01,0x01,0x01,0x01,0x01*/};
 //存储处理后的数据
 int realAngle = 0;
+//通过8266获取到的是否运行指令
+char runFlagFrom8266 = 1;
 
 extern char *itoa(int num, char *str, int radix);
 void motorTEST(void);
 char *floatToString(float num, int precision, char *str);
 
 void pidControl(void){
+  static int pwmaDuty1Raw, pwmaDuty2Raw;
   //pidLoc.kp = (LeftSpeed + RightSpeed) / 2.0;
   pwmDeltaPIDloc = PidLocCtrl(&pidLoc, realAngle);
   pwmDeltaPIDloc = (int)constrain_float(pwmDeltaPIDloc, -50, 50);
-  PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (targetSpeed - LeftSpeed )/EncoderPerLength+pwmDeltaPIDloc);
-  PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (targetSpeed - RightSpeed)/EncoderPerLength-pwmDeltaPIDloc);
+  // PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (targetSpeed - LeftSpeed )/EncoderPerLength+pwmDeltaPIDloc);
+  // PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (targetSpeed - RightSpeed)/EncoderPerLength-pwmDeltaPIDloc);
+  pwmaDuty1Raw+=PidIncCtrl(&pid1, (targetSpeed - LeftSpeed )/EncoderPerLength+pwmDeltaPIDloc);
+  pwmaDuty2Raw+=PidIncCtrl(&pid2, (targetSpeed - RightSpeed)/EncoderPerLength-pwmDeltaPIDloc);
+  if(pwmaDuty1Raw>=2400)
+    pwmaDuty1Raw = 2300;
+  if(pwmaDuty1Raw>=2400)
+    pwmaDuty1Raw = 2300;
+  if(pwmaDuty1Raw<= -2400)
+    pwmaDuty1Raw = 2300;
+  if(pwmaDuty1Raw<= -2400)
+    pwmaDuty1Raw = 2300;
+  if(pwmaDuty1Raw>=0){
+    AIN1_6612 = 1;
+    AIN2_6612 = 0;
+    PWMA_Duty.PWM1_Duty = pwmaDuty1Raw;
+  }else{
+    AIN1_6612 = 0;
+    AIN2_6612 = 1;
+    PWMA_Duty.PWM1_Duty = 0-pwmaDuty1Raw;
+  }
+  if(pwmaDuty2Raw>=0){
+    BIN1_6612 = 1;
+    BIN2_6612 = 0;
+    PWMA_Duty.PWM2_Duty = pwmaDuty2Raw;
+  }else{
+    BIN1_6612 = 0;
+    BIN2_6612 = 1;
+    PWMA_Duty.PWM2_Duty = 0-pwmaDuty2Raw;
+  }
   if(PWMA_Duty.PWM1_Duty>=2400)
-    PWMA_Duty.PWM1_Duty = 2400;
-  if(PWMA_Duty.PWM2_Duty>=2400)
+    PWMA_Duty.PWM1_Duty = 2300;
+  if(PWMA_Duty.PWM2_Duty>=2300)
     PWMA_Duty.PWM2_Duty = 2400;
   xSemaphoreGive(pwmUpdateSignal);
 }
@@ -84,7 +115,8 @@ void outputSpeed(void *pvParameters){
 
     T3R = 1;//启动定时器
     T4R = 1;
-    pidControl();
+    if(runFlagFrom8266){
+      pidControl();}
     //xSemaphoreGive(pwmUpdateSignal);
     vTaskDelay(100);
   }
@@ -184,9 +216,18 @@ void moudle8266(void *pvParameters){
         {
           temp[i] = RX3_Buffer[i];
         }
-        //PrintString1(temp);
+        PrintString1(temp);
         if(temp[0]==0x11 && temp[1] == 0x22 ){
-          PrintString1(temp);
+          if(temp[2] == 0x01){
+            runFlagFrom8266 = 1;
+          }
+          if(temp[2] == 0x02){
+            runFlagFrom8266 = 0;
+            PWMA_Duty.PWM1_Duty = 0;
+            PWMA_Duty.PWM2_Duty = 0;
+            xSemaphoreGive(pwmUpdateSignal);
+          }
+          //PrintString1(temp);
           // itoa(realAngle, temp, 10);
           // PrintString1(temp);
         }

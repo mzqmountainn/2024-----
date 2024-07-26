@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  i2c_ps                                                             24/07/24  21:03:21  PAGE 1   
+C251 COMPILER V5.60.0,  i2c_ps                                                             26/07/24  19:26:12  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE i2c_ps
@@ -66,7 +66,7 @@ stmt  level    source
    55   2      
    56   2                      temp[0] = second / 1000;
    57   2                      temp[1] = (second % 1000) / 100;
-C251 COMPILER V5.60.0,  i2c_ps                                                             24/07/24  21:03:21  PAGE 2   
+C251 COMPILER V5.60.0,  i2c_ps                                                             26/07/24  19:26:12  PAGE 2   
 
    58   2                      temp[2] = (second % 100) / 10;
    59   2                      temp[3] = second % 10;

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  croutine                                                           24/07/24  21:03:19  PAGE 1   
+C251 COMPILER V5.60.0,  croutine                                                           26/07/24  19:26:11  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE croutine
@@ -66,7 +66,7 @@ stmt  level    source
              -routine list currently being used to hold co-routines that have overflowed the current tick count. */
                    static List_t xPendingReadyCoRoutineList;                               /*< Holds co-routines that ha
              -ve been readied by an external event.  They cannot be added directly to the ready lists as the ready lists cannot be acc
-C251 COMPILER V5.60.0,  croutine                                                           24/07/24  21:03:19  PAGE 2   
+C251 COMPILER V5.60.0,  croutine                                                           26/07/24  19:26:11  PAGE 2   
 
              -essed by interrupts. */
                
@@ -134,7 +134,7 @@ stmt  level    source
                        BaseType_t xReturn;
                        CRCB_t * pxCoRoutine;
                
-C251 COMPILER V5.60.0,  croutine                                                           24/07/24  21:03:19  PAGE 3   
+C251 COMPILER V5.60.0,  croutine                                                           26/07/24  19:26:11  PAGE 3   
 
                        /* Allocate the memory that will store the co-routine control block. */
                        pxCoRoutine = ( CRCB_t * ) pvPortMalloc( sizeof( CRCB_t ) );
@@ -202,7 +202,7 @@ stmt  level    source
                        /* We must remove ourselves from the ready list before adding
                         * ourselves to the blocked list as the same list item is used for
                         * both lists. */
-C251 COMPILER V5.60.0,  croutine                                                           24/07/24  21:03:19  PAGE 4   
+C251 COMPILER V5.60.0,  croutine                                                           26/07/24  19:26:11  PAGE 4   
 
                        ( void ) uxListRemove( ( ListItem_t * ) &( pxCurrentCoRoutine->xGenericListItem ) );
                
@@ -270,7 +270,7 @@ stmt  level    source
                
                            /* If the tick count has overflowed we need to swap the ready lists. */
                            if( xCoRoutineTickCount == 0 )
-C251 COMPILER V5.60.0,  croutine                                                           24/07/24  21:03:19  PAGE 5   
+C251 COMPILER V5.60.0,  croutine                                                           26/07/24  19:26:11  PAGE 5   
 
                            {
                                List_t * pxTemp;
@@ -338,7 +338,7 @@ stmt  level    source
                                {
                                    /* No more co-routines to check. */
                                    return;
-C251 COMPILER V5.60.0,  croutine                                                           24/07/24  21:03:19  PAGE 6   
+C251 COMPILER V5.60.0,  croutine                                                           26/07/24  19:26:11  PAGE 6   
 
                                }
                
@@ -407,7 +407,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-C251 COMPILER V5.60.0,  croutine                                                           24/07/24  21:03:19  PAGE 7   
+C251 COMPILER V5.60.0,  croutine                                                           26/07/24  19:26:11  PAGE 7   
 
   code size            =    ------     ------
   ecode size           =    ------     ------

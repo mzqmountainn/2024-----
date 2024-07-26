@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 1   
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE queue
@@ -66,7 +66,7 @@ stmt  level    source
    55          #define queueINT8_MAX             ( ( int8_t ) 127 )
    56          
    57          /* When the Queue_t structure is used to represent a base queue its pcHead and
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 2   
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 2   
 
    58           * pcTail members are used as pointers into the queue storage area.  When the
    59           * Queue_t structure is used to represent a mutex pcHead and pcTail pointers are
@@ -134,7 +134,7 @@ stmt  level    source
   113          
   114              volatile UBaseType_t uxMessagesWaiting; /*< The number of items currently in the queue. */
   115              UBaseType_t uxLength;                   /*< The length of the queue defined as the number of items it
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 3   
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 3   
 
              - will hold, not the number of bytes. */
   116              UBaseType_t uxItemSize;                 /*< The size of each items that the queue will hold. */
@@ -202,7 +202,7 @@ stmt  level    source
   174           * these lock counts are inspected, and the appropriate action taken.
   175           */
   176          static void prvUnlockQueue( Queue_t * const pxQueue ) PRIVILEGED_FUNCTION;
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 4   
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 4   
 
   177          
   178          /*
@@ -270,7 +270,7 @@ stmt  level    source
   240           * other tasks that are waiting for the same mutex.  This function returns
   241           * that priority.
   242           */
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 5   
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 5   
 
   243              static UBaseType_t prvGetDisinheritPriorityAfterTimeout( const Queue_t * const pxQueue ) PRIVILEGED_F
              -UNCTION;
@@ -338,7 +338,7 @@ stmt  level    source
   303   6                              mtCOVERAGE_TEST_MARKER();
   304   6                          }
   305   5                      }
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 6   
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 6   
 
   306   4                      else
   307   4                      {
@@ -406,7 +406,7 @@ stmt  level    source
                            /* The address of a statically allocated queue was passed in, use it.
                             * The address of a statically allocated storage area was also passed in
                             * but is already set. */
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 7   
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 7   
 
                            pxNewQueue = ( Queue_t * ) pxStaticQueue; /*lint !e740 !e9087 Unusual cast is ok as the struc
              -tures are designed to have the same alignment, and the size is checked by an assert. */
@@ -474,7 +474,7 @@ stmt  level    source
   431   3                       * storage area. */
   432   3                      pucQueueStorage = ( uint8_t * ) pxNewQueue;
   433   3                      pucQueueStorage += sizeof( Queue_t ); /*lint !e9016 Pointer arithmetic allowed on char ty
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 8   
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 8   
 
              -pes, especially when it assists conveying intent. */
   434   3      
@@ -542,7 +542,7 @@ stmt  level    source
                        {
                            pxNewQueue->ucQueueType = ucQueueType;
                        }
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 9   
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 9   
 
                    #endif /* configUSE_TRACE_FACILITY */
   499   1      
@@ -610,7 +610,7 @@ stmt  level    source
                        QueueHandle_t xNewQueue;
                        const UBaseType_t uxMutexLength = ( UBaseType_t ) 1, uxMutexSize = ( UBaseType_t ) 0;
                
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 10  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 10  
 
                        /* Prevent compiler warnings about unused parameters if
                         * configUSE_TRACE_FACILITY does not equal 1. */
@@ -678,7 +678,7 @@ stmt  level    source
                        {
                            pxReturn = NULL;
                        }
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 11  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 11  
 
                
                        return pxReturn;
@@ -746,7 +746,7 @@ stmt  level    source
   691          #if ( configUSE_RECURSIVE_MUTEXES == 1 )
                
                    BaseType_t xQueueTakeMutexRecursive( QueueHandle_t xMutex,
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 12  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 12  
 
                                                         TickType_t xTicksToWait )
                    {
@@ -814,7 +814,7 @@ stmt  level    source
                            }
                        }
                        else
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 13  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 13  
 
                        {
                            configASSERT( xHandle );
@@ -882,7 +882,7 @@ stmt  level    source
                        }
                    #endif
   822   1      
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 14  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 14  
 
   823   1          /*lint -save -e904 This function relaxes the coding standard somewhat to
   824   1           * allow return statements within the function itself.  This is done in the
@@ -950,7 +950,7 @@ stmt  level    source
                                            }
                                            else if( xYieldRequired != pdFALSE )
                                            {
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 15  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 15  
 
                                                /* This path is a special case that will only get
                                                 * executed if the task was holding multiple mutexes
@@ -1018,7 +1018,7 @@ stmt  level    source
   948   5                          return errQUEUE_FULL;
   949   5                      }
   950   4                      else if( xEntryTimeSet == pdFALSE )
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 16  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 16  
 
   951   4                      {
   952   5                          /* The queue was full and a block time was specified so
@@ -1086,7 +1086,7 @@ stmt  level    source
  1014   1      }
  1015          /*-----------------------------------------------------------*/
  1016          
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 17  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 17  
 
  1017          BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue,
  1018                                               const void * const pvItemToQueue,
@@ -1154,7 +1154,7 @@ stmt  level    source
                                                 * in the queue has not changed. */
                                                mtCOVERAGE_TEST_MARKER();
                                            }
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 18  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 18  
 
                                            else if( prvNotifyQueueSetContainer( pxQueue ) != pdFALSE )
                                            {
@@ -1222,7 +1222,7 @@ stmt  level    source
  1143   8                                          mtCOVERAGE_TEST_MARKER();
  1144   8                                      }
  1145   7                                  }
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 19  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 19  
 
  1146   6                                  else
  1147   6                                  {
@@ -1290,7 +1290,7 @@ stmt  level    source
  1208   1          /* RTOS ports that support interrupt nesting have the concept of a maximum
  1209   1           * system call (or maximum API call) interrupt priority.  Interrupts that are
  1210   1           * above the maximum system call priority are kept permanently enabled, even
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 20  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 20  
 
  1211   1           * when the RTOS kernel is in a critical section, but cannot make any calls to
  1212   1           * FreeRTOS API functions.  If configASSERT() is defined in FreeRTOSConfig.h
@@ -1358,7 +1358,7 @@ stmt  level    source
                                            if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
                                            {
                                                if( xTaskRemoveFromEventList( &( pxQueue->xTasksWaitingToReceive ) ) != p
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 21  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 21  
 
              -dFALSE )
                                                {
@@ -1426,7 +1426,7 @@ stmt  level    source
  1338   3                  xReturn = pdPASS;
  1339   3              }
  1340   2              else
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 22  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 22  
 
  1341   2              {
  1342   3                  traceQUEUE_SEND_FROM_ISR_FAILED( pxQueue );
@@ -1494,7 +1494,7 @@ stmt  level    source
  1403   6                              mtCOVERAGE_TEST_MARKER();
  1404   6                          }
  1405   5                      }
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 23  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 23  
 
  1406   4                      else
  1407   4                      {
@@ -1562,7 +1562,7 @@ stmt  level    source
  1469   4                       * data. */
  1470   4                      prvUnlockQueue( pxQueue );
  1471   4                      ( void ) xTaskResumeAll();
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 24  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 24  
 
  1472   4                  }
  1473   3              }
@@ -1630,7 +1630,7 @@ stmt  level    source
  1534   3                  {
  1535   4                      traceQUEUE_RECEIVE( pxQueue );
  1536   4      
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 25  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 25  
 
  1537   4                      /* Semaphores are queues with a data size of zero and where the
  1538   4                       * messages waiting is the semaphore's count.  Reduce the count. */
@@ -1698,7 +1698,7 @@ stmt  level    source
  1600   5                          vTaskInternalSetTimeOutState( &xTimeOut );
  1601   5                          xEntryTimeSet = pdTRUE;
  1602   5                      }
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 26  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 26  
 
  1603   4                      else
  1604   4                      {
@@ -1766,7 +1766,7 @@ stmt  level    source
  1665   3              }
  1666   2              else
  1667   2              {
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 27  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 27  
 
  1668   3                  /* Timed out. */
  1669   3                  prvUnlockQueue( pxQueue );
@@ -1834,7 +1834,7 @@ stmt  level    source
  1729   1      
  1730   1          /* Cannot block if the scheduler is suspended. */
  1731   1          #if ( ( INCLUDE_xTaskGetSchedulerState == 1 ) || ( configUSE_TIMERS == 1 ) )
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 28  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 28  
 
                        {
                            configASSERT( !( ( xTaskGetSchedulerState() == taskSCHEDULER_SUSPENDED ) && ( xTicksToWait !=
@@ -1902,7 +1902,7 @@ stmt  level    source
  1794   4                      {
  1795   5                          /* The queue was empty and a block time was specified so
  1796   5                           * configure the timeout structure ready to enter the blocked
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 29  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 29  
 
  1797   5                           * state. */
  1798   5                          vTaskInternalSetTimeOutState( &xTimeOut );
@@ -1970,7 +1970,7 @@ stmt  level    source
  1860   3              }
  1861   2          } /*lint -restore */
  1862   1      }
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 30  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 30  
 
  1863          /*-----------------------------------------------------------*/
  1864          
@@ -2038,7 +2038,7 @@ stmt  level    source
  1926   6                          }
  1927   5                          else
  1928   5                          {
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 31  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 31  
 
  1929   6                              mtCOVERAGE_TEST_MARKER();
  1930   6                          }
@@ -2106,7 +2106,7 @@ stmt  level    source
  1992   2              {
  1993   3                  traceQUEUE_PEEK_FROM_ISR( pxQueue );
  1994   3      
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 32  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 32  
 
  1995   3                  /* Remember the read position so it can be reset as nothing is
  1996   3                   * actually being removed from the queue. */
@@ -2174,7 +2174,7 @@ stmt  level    source
  2058          /*-----------------------------------------------------------*/
  2059          
  2060          void vQueueDelete( QueueHandle_t xQueue )
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 33  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 33  
 
  2061          {
  2062   1          Queue_t * const pxQueue = xQueue;
@@ -2242,7 +2242,7 @@ stmt  level    source
  2123          #if ( configUSE_TRACE_FACILITY == 1 )
                
                    uint8_t ucQueueGetQueueType( QueueHandle_t xQueue )
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 34  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 34  
 
                    {
                        return ( ( Queue_t * ) xQueue )->ucQueueType;
@@ -2310,7 +2310,7 @@ stmt  level    source
  2188   1          else if( xPosition == queueSEND_TO_BACK )
  2189   1          {
  2190   2              ( void ) memcpy( ( void * ) pxQueue->pcWriteTo, pvItemToQueue, ( size_t ) pxQueue->uxItemSize ); 
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 35  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 35  
 
              -/*lint !e961 !e418 !e9087 MISRA exception as the casts are only redundant for some ports, plus previous logic ensures a 
              -null pointer can only be passed to memcpy() if the copy size is 0.  Cast to void required by function signature and safe
@@ -2378,7 +2378,7 @@ stmt  level    source
  2244                                            void * const pvBuffer )
  2245          {
  2246   1          if( pxQueue->uxItemSize != ( UBaseType_t ) 0 )
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 36  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 36  
 
  2247   1          {
  2248   2              pxQueue->u.xQueue.pcReadFrom += pxQueue->uxItemSize;           /*lint !e9016 Pointer arithmetic o
@@ -2446,7 +2446,7 @@ stmt  level    source
              -SE )
                                            {
                                                /* The task waiting has a higher priority so record that a
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 37  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 37  
 
                                                 * context switch is required. */
                                                vTaskMissedYield();
@@ -2514,7 +2514,7 @@ stmt  level    source
  2370   4                      --cRxLock;
  2371   4                  }
  2372   3                  else
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 38  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 38  
 
  2373   3                  {
  2374   4                      break;
@@ -2582,7 +2582,7 @@ stmt  level    source
  2436   2              {
  2437   3                  xReturn = pdFALSE;
  2438   3              }
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 39  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 39  
 
  2439   2          }
  2440   1          taskEXIT_CRITICAL();
@@ -2650,7 +2650,7 @@ stmt  level    source
                        {
                            if( pxQueue->uxMessagesWaiting < pxQueue->uxLength )
                            {
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 40  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 40  
 
                                /* There is room in the queue, copy the data into the queue. */
                                prvCopyDataToQueue( pxQueue, pvItemToQueue, queueSEND_TO_BACK );
@@ -2718,7 +2718,7 @@ stmt  level    source
                                    vCoRoutineAddToDelayedList( xTicksToWait, &( pxQueue->xTasksWaitingToReceive ) );
                                    portENABLE_INTERRUPTS();
                                    return errQUEUE_BLOCKED;
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 41  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 41  
 
                                }
                                else
@@ -2786,7 +2786,7 @@ stmt  level    source
                
                        return xReturn;
                    }
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 42  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 42  
 
                
                #endif /* configUSE_CO_ROUTINES */
@@ -2854,7 +2854,7 @@ stmt  level    source
                
                        /* We cannot block from an ISR, so check there is data available. If
                         * not then just leave without doing anything. */
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 43  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 43  
 
                        if( pxQueue->uxMessagesWaiting > ( UBaseType_t ) 0 )
                        {
@@ -2922,7 +2922,7 @@ stmt  level    source
                
                        QueueRegistryItem_t * pxEntryToWrite = NULL;
                
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 44  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 44  
 
                        if( pcQueueName != NULL )
                        {
@@ -2990,7 +2990,7 @@ stmt  level    source
                
                        return pcReturn;
                    } /*lint !e818 xQueue cannot be a pointer to const because it is a typedef. */
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 45  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 45  
 
                
                #endif /* configQUEUE_REGISTRY_SIZE */
@@ -3058,7 +3058,7 @@ stmt  level    source
                            /* There is nothing in the queue, block for the specified period. */
                            vTaskPlaceOnEventListRestricted( &( pxQueue->xTasksWaitingToReceive ), xTicksToWait, xWaitInd
              -efinitely );
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 46  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 46  
 
                        }
                        else
@@ -3126,7 +3126,7 @@ stmt  level    source
                    BaseType_t xQueueRemoveFromSet( QueueSetMemberHandle_t xQueueOrSemaphore,
                                                    QueueSetHandle_t xQueueSet )
                    {
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 47  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 47  
 
                        BaseType_t xReturn;
                        Queue_t * const pxQueueOrSemaphore = ( Queue_t * ) xQueueOrSemaphore;
@@ -3194,7 +3194,7 @@ stmt  level    source
                    static BaseType_t prvNotifyQueueSetContainer( const Queue_t * const pxQueue )
                    {
                        Queue_t * pxQueueSetContainer = pxQueue->pxQueueSetContainer;
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 48  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 48  
 
                        BaseType_t xReturn = pdFALSE;
                
@@ -3263,7 +3263,7 @@ Module Information          Static   Overlayable
   xdata size           =    ------     ------
   xdata-const size     =    ------     ------
   edata size           =    ------     ------
-C251 COMPILER V5.60.0,  queue                                                              24/07/24  21:03:20  PAGE 49  
+C251 COMPILER V5.60.0,  queue                                                              26/07/24  19:26:11  PAGE 49  
 
   bit size             =    ------     ------
   ebit size            =    ------     ------

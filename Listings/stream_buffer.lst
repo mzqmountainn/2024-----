@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 1   
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE stream_buffer
@@ -66,7 +66,7 @@ stmt  level    source
    54           * or #defined the notification macros away, then provide default implementations
    55           * that uses task notifications. */
    56          /*lint -save -e9026 Function like macros allowed and needed here so they can be overridden. */
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 2   
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 2   
 
    57          #ifndef sbRECEIVE_COMPLETED
    58              #define sbRECEIVE_COMPLETED( pxStreamBuffer )                         \
@@ -134,7 +134,7 @@ stmt  level    source
   120                          ( void ) xTaskNotifyFromISR( ( pxStreamBuffer )->xTaskWaitingToReceive, \
   121                                                       ( uint32_t ) 0,                            \
   122                                                       eNoAction,                                 \
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 3   
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 3   
 
   123                                                       pxHigherPriorityTaskWoken );               \
   124                          ( pxStreamBuffer )->xTaskWaitingToReceive = NULL;                       \
@@ -202,7 +202,7 @@ stmt  level    source
   180           * If the stream buffer is being used as a message buffer, then reads an entire
   181           * message out of the buffer.  If the stream buffer is being used as a stream
   182           * buffer then read as many bytes as possible from the buffer.
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 4   
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 4   
 
   183           * prvReadBytesFromBuffer() is called to actually extract the bytes from the
   184           * buffer's data storage area.
@@ -270,7 +270,7 @@ stmt  level    source
   246   1              if( xIsMessageBuffer == pdTRUE )
   247   1              {
   248   2                  /* Is a message buffer but not statically allocated. */
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 5   
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 5   
 
   249   2                  ucFlags = sbFLAGS_IS_MESSAGE_BUFFER;
   250   2                  configASSERT( xBufferSizeBytes > sbBYTES_TO_STORE_MESSAGE_LENGTH );
@@ -338,7 +338,7 @@ stmt  level    source
   306          
   307          #if ( configSUPPORT_STATIC_ALLOCATION == 1 )
                
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 6   
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 6   
 
                    StreamBufferHandle_t xStreamBufferGenericCreateStatic( size_t xBufferSizeBytes,
                                                                           size_t xTriggerLevelBytes,
@@ -406,7 +406,7 @@ stmt  level    source
                
                            xReturn = ( StreamBufferHandle_t ) pxStaticStreamBuffer; /*lint !e9087 Data hiding requires c
              -ast to opaque type. */
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 7   
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 7   
 
                        }
                        else
@@ -474,7 +474,7 @@ stmt  level    source
                        }
                    #endif
   436   1      
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 8   
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 8   
 
   437   1          /* Can only reset a message buffer if there are no tasks blocked on it. */
   438   1          taskENTER_CRITICAL();
@@ -542,7 +542,7 @@ stmt  level    source
   500   1          size_t xSpace;
   501   1          size_t xOriginalTail;
   502   1      
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 9   
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 9   
 
   503   1          configASSERT( pxStreamBuffer );
   504   1      
@@ -610,7 +610,7 @@ stmt  level    source
   566   2              xRequiredSpace += sbBYTES_TO_STORE_MESSAGE_LENGTH;
   567   2      
   568   2              /* Overflow? */
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 10  
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 10  
 
   569   2              configASSERT( xRequiredSpace > xDataLengthBytes );
   570   2      
@@ -678,7 +678,7 @@ stmt  level    source
   632   2          }
   633   1          else
   634   1          {
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 11  
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 11  
 
   635   2              mtCOVERAGE_TEST_MARKER();
   636   2          }
@@ -746,7 +746,7 @@ stmt  level    source
   697   1      
   698   1          xSpace = xStreamBufferSpacesAvailable( pxStreamBuffer );
   699   1          xReturn = prvWriteMessageToBuffer( pxStreamBuffer, pvTxData, xDataLengthBytes, xSpace, xRequiredSpace
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 12  
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 12  
 
              - );
   700   1      
@@ -814,7 +814,7 @@ stmt  level    source
              -aLengthBytes, xNextHead ); /*lint !e9079 Storage buffer is implemented as uint8_t for ease of sizing, alignment and acce
              -ss. */
   761   2          }
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 13  
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 13  
 
   762   1      
   763   1          return xDataLengthBytes;
@@ -882,7 +882,7 @@ stmt  level    source
   825   3                  ( void ) xTaskNotifyWait( ( uint32_t ) 0, ( uint32_t ) 0, NULL, xTicksToWait );
   826   3                  pxStreamBuffer->xTaskWaitingToReceive = NULL;
   827   3      
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 14  
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 14  
 
   828   3                  /* Recheck the data available after blocking. */
   829   3                  xBytesAvailable = prvBytesInBuffer( pxStreamBuffer );
@@ -950,7 +950,7 @@ stmt  level    source
              -_MESSAGE_LENGTH, pxStreamBuffer->xTail );
   890   3                  xReturn = ( size_t ) xTempReturn;
   891   3              }
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 15  
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 15  
 
   892   2              else
   893   2              {
@@ -1018,7 +1018,7 @@ stmt  level    source
   954   3                  mtCOVERAGE_TEST_MARKER();
   955   3              }
   956   2          }
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 16  
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 16  
 
   957   1          else
   958   1          {
@@ -1086,7 +1086,7 @@ stmt  level    source
  1017   1      }
  1018          /*-----------------------------------------------------------*/
  1019          
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 17  
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 17  
 
  1020          BaseType_t xStreamBufferIsEmpty( StreamBufferHandle_t xStreamBuffer )
  1021          {
@@ -1154,7 +1154,7 @@ stmt  level    source
  1083   1          BaseType_t xReturn;
  1084   1          UBaseType_t uxSavedInterruptStatus;
  1085   1      
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 18  
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 18  
 
  1086   1          configASSERT( pxStreamBuffer );
  1087   1      
@@ -1222,7 +1222,7 @@ stmt  level    source
  1149   1      
  1150   1          /* Calculate the number of bytes that can be added in the first write -
  1151   1           * which may be less than the total number of bytes that need to be added if
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 19  
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 19  
 
  1152   1           * the buffer will wrap back to the beginning. */
  1153   1          xFirstLength = configMIN( pxStreamBuffer->xLength - xHead, xCount );
@@ -1290,7 +1290,7 @@ stmt  level    source
  1212   2              ( void ) memcpy( ( void * ) &( pucData[ xFirstLength ] ), ( void * ) ( pxStreamBuffer->pucBuffer 
              -), xCount - xFirstLength ); /*lint !e9087 memcpy() requires void *. */
  1213   2          }
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 20  
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 20  
 
  1214   1          else
  1215   1          {
@@ -1358,7 +1358,7 @@ stmt  level    source
  1276   1      }
  1277          
  1278          #if ( configUSE_TRACE_FACILITY == 1 )
-C251 COMPILER V5.60.0,  stream_buffer                                                      24/07/24  21:03:20  PAGE 21  
+C251 COMPILER V5.60.0,  stream_buffer                                                      26/07/24  19:26:11  PAGE 21  
 
                
                    UBaseType_t uxStreamBufferGetStreamBufferNumber( StreamBufferHandle_t xStreamBuffer )

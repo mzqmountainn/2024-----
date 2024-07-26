@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  display                                                            24/07/24  21:03:21  PAGE 1   
+C251 COMPILER V5.60.0,  display                                                            26/07/24  19:26:12  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE display
@@ -66,7 +66,7 @@ stmt  level    source
    55   1              P6 = 0x00;                                          //·ÀÖ¹¹íÓ°
    56   1              P7 = ~pucBITMAP[7-ucDisplayIndex];
    57   1              P6 = ~pucDISPLAY[pucLEDBuffer[ucDisplayIndex]];
-C251 COMPILER V5.60.0,  display                                                            24/07/24  21:03:21  PAGE 2   
+C251 COMPILER V5.60.0,  display                                                            26/07/24  19:26:12  PAGE 2   
 
    58   1          
    59   1          if(++ucDisplayIndex >= 8)

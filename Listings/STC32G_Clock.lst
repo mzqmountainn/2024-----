@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_Clock                                                       24/07/24  21:03:22  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_Clock                                                       26/07/24  19:26:14  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_Clock
@@ -66,7 +66,7 @@ stmt  level    source
    54          {
    55   1              IRC32KCR = 0x80; //启动内部 32K IRC
    56   1              while (!(IRC32KCR & 1)); //等待时钟稳定
-C251 COMPILER V5.60.0,  STC32G_Clock                                                       24/07/24  21:03:22  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_Clock                                                       26/07/24  19:26:14  PAGE 2   
 
    57   1              CLKDIV = div;  //时钟分频
    58   1              CLKSEL = 0x03; //选择内部 32K

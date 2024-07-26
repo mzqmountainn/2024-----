@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 1   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  19:26:12  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE System_init
@@ -66,7 +66,7 @@ stmt  level    source
    54   1              TIM_InitTypeDef         TIM_InitStructure;                                              //结构定义
    55   1      //      TIM_InitStructure.TIM_Mode      = TIM_16BitAutoReload;  //指定工作模式,   TIM_16BitAutoReload,TIM_16Bit
              -,TIM_8BitAutoReload,TIM_16BitAutoReloadNoMask
-C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 2   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  19:26:12  PAGE 2   
 
    56   1      //      TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_1T;         //指定时钟源,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOC
              -K_Ext
@@ -134,7 +134,7 @@ stmt  level    source
   109   1        //    TIM_InitStructure.TIM_ClkOut    = ENABLE;                                       //是否输出高速脉冲, ENABLE或DISABLE
   110   1        //    TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / (50*12));              //初值
   111   1        //    TIM_InitStructure.TIM_Run       = ENABLE;                                       //是否初始化后启动定时器, ENABLE或DISABLE
-C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 3   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  19:26:12  PAGE 3   
 
   112   1        //    Timer_Inilize(Timer4,&TIM_InitStructure);                                       //初始化Timer4    Timer0,Timer1,Timer2,Timer3,Timer4
   113   1        //    NVIC_Timer4_Init(ENABLE,0);             //中断使能, ENABLE/DISABLE; 无优先级
@@ -202,7 +202,7 @@ stmt  level    source
   162          
   163          //========================================================================
   164          //                               I2C初始化
-C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 4   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  19:26:12  PAGE 4   
 
   165          //========================================================================
   166          void I2C_config(void)
@@ -270,7 +270,7 @@ stmt  level    source
   220          //========================================================================
   221          void Exti_config(void)
   222          {
-C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 5   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  19:26:12  PAGE 5   
 
   223   1              EXTI_InitTypeDef        Exti_InitStructure;                                                     //结构定义
   224   1      
@@ -338,7 +338,7 @@ stmt  level    source
   278   1              PWMx_InitStructure.PWM_EnoSelect   = ENO2P;     //输出通道选择, ENO1P,ENO1N,ENO2P,ENO2N,ENO3P,ENO3N,ENO4P,EN
              -O4N / ENO5P,ENO6P,ENO7P,ENO8P
   279   1              PWM_Configuration(PWM2, &PWMx_InitStructure);                           //初始化PWM2
-C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 6   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  19:26:12  PAGE 6   
 
   280   1      
   281   1              // PWMx_InitStructure.PWM_Mode    =     CCMRn_PWM_MODE1;        //模式,         CCMRn_FREEZE,CCMRn_MATCH_VALID,CCMRn_MATCH
@@ -407,7 +407,7 @@ Module Information          Static   Overlayable
   bitaddressable size  =    ------     ------
   ebitaddressable size =    ------     ------
   far data size        =    ------     ------
-C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 7   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  19:26:12  PAGE 7   
 
   huge data size       =    ------     ------
   const size           =    ------     ------

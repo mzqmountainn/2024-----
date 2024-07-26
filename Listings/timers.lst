@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 1   
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE timers
@@ -66,7 +66,7 @@ stmt  level    source
    55           * of this file.  If you want to include software timer functionality then ensure
    56           * configUSE_TIMERS is set to 1 in FreeRTOSConfig.h. */
    57          #if ( configUSE_TIMERS == 1 )
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 2   
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 2   
 
                
                /* Misc definitions. */
@@ -134,7 +134,7 @@ stmt  level    source
                
                /* The structure that contains the two message types, along with an identifier
                 * that is used to determine which message type is valid. */
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 3   
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 3   
 
                    typedef struct tmrTimerQueueMessage
                    {
@@ -202,7 +202,7 @@ stmt  level    source
                                                                  const TickType_t xCommandTime ) PRIVILEGED_FUNCTION;
                
                /*
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 4   
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 4   
 
                 * Reload the specified auto-reload timer.  If the reloading is backlogged,
                 * clear the backlog, calling the callback for each additional reload.  When
@@ -270,7 +270,7 @@ stmt  level    source
                         * been created then the initialisation will already have been performed. */
                        prvCheckForValidListAndQueue();
                
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 5   
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 5   
 
                        if( xTimerQueue != NULL )
                        {
@@ -338,7 +338,7 @@ stmt  level    source
                                /* Status is thus far zero as the timer is not created statically
                                 * and has not been started.  The auto-reload bit may get set in
                                 * prvInitialiseNewTimer. */
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 6   
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 6   
 
                                pxNewTimer->ucStatus = 0x00;
                                prvInitialiseNewTimer( pcTimerName, xTimerPeriodInTicks, uxAutoReload, pvTimerID, pxCallb
@@ -406,7 +406,7 @@ stmt  level    source
                    {
                        /* 0 is not a valid value for xTimerPeriodInTicks. */
                        configASSERT( ( xTimerPeriodInTicks > 0 ) );
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 7   
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 7   
 
                
                        /* Ensure the infrastructure used by the timer service task has been
@@ -474,7 +474,7 @@ stmt  level    source
                        }
                
                        return xReturn;
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 8   
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 8   
 
                    }
                /*-----------------------------------------------------------*/
@@ -542,7 +542,7 @@ stmt  level    source
                        return uxReturn;
                    }
                /*-----------------------------------------------------------*/
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 9   
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 9   
 
                
                    TickType_t xTimerGetExpiryTime( TimerHandle_t xTimer )
@@ -610,7 +610,7 @@ stmt  level    source
                        }
                
                        /* Call the timer callback. */
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 10  
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 10  
 
                        traceTIMER_EXPIRED( pxTimer );
                        pxTimer->pxCallbackFunction( ( TimerHandle_t ) pxTimer );
@@ -678,7 +678,7 @@ stmt  level    source
                                }
                                else
                                {
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 11  
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 11  
 
                                    /* The tick count has not overflowed, and the next expire
                                     * time has not been reached yet.  This task should therefore
@@ -746,7 +746,7 @@ stmt  level    source
                /*-----------------------------------------------------------*/
                
                    static TickType_t prvSampleTimeNow( BaseType_t * const pxTimerListsWereSwitched )
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 12  
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 12  
 
                    {
                        TickType_t xTimeNow;
@@ -814,7 +814,7 @@ stmt  level    source
                
                        return xProcessTimerNow;
                    }
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 13  
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 13  
 
                /*-----------------------------------------------------------*/
                
@@ -882,7 +882,7 @@ stmt  level    source
                                 *  pre-empted the timer daemon task after the xTimeNow value was set). */
                                xTimeNow = prvSampleTimeNow( &xTimerListsWereSwitched );
                
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 14  
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 14  
 
                                switch( xMessage.xMessageID )
                                {
@@ -950,7 +950,7 @@ stmt  level    source
                                                if( ( pxTimer->ucStatus & tmrSTATUS_IS_STATICALLY_ALLOCATED ) == ( uint8_
              -t ) 0 )
                                                {
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 15  
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 15  
 
                                                    vPortFree( pxTimer );
                                                }
@@ -1018,7 +1018,7 @@ stmt  level    source
                                pxCurrentTimerList = &xActiveTimerList1;
                                pxOverflowTimerList = &xActiveTimerList2;
                
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 16  
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 16  
 
                                #if ( configSUPPORT_STATIC_ALLOCATION == 1 )
                                    {
@@ -1086,7 +1086,7 @@ stmt  level    source
                
                        return xReturn;
                    } /*lint !e818 Can't be pointer to const due to the typedef. */
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 17  
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 17  
 
                /*-----------------------------------------------------------*/
                
@@ -1154,7 +1154,7 @@ stmt  level    source
                        BaseType_t xTimerPendFunctionCall( PendedFunction_t xFunctionToPend,
                                                           void * pvParameter1,
                                                           uint32_t ulParameter2,
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 18  
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 18  
 
                                                           TickType_t xTicksToWait )
                        {
@@ -1223,7 +1223,7 @@ Module Information          Static   Overlayable
   bit size             =    ------     ------
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------
-C251 COMPILER V5.60.0,  timers                                                             24/07/24  21:03:20  PAGE 19  
+C251 COMPILER V5.60.0,  timers                                                             26/07/24  19:26:11  PAGE 19  
 
   ebitaddressable size =    ------     ------
   far data size        =    ------     ------
