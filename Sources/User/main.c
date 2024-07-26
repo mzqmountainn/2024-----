@@ -48,6 +48,7 @@ void main( void )
     pid1.ki = 1;
     pid2.kp = 0.1;
     pid2.ki = 1;
+    pid2.kd = 0.18;
     pidLoc.kp = 5;
     pwmUpdateSignal = xSemaphoreCreateBinary();
     /* 创建任务 */

@@ -1918,9 +1918,9 @@
       </Doc>
       <Doc>
         <Name>.\Sources\Task\src\test.c</Name>
-        <ColumnNumber>3</ColumnNumber>
+        <ColumnNumber>6</ColumnNumber>
         <TopLine>177</TopLine>
-        <CurrentLine>184</CurrentLine>
+        <CurrentLine>192</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>

@@ -46,12 +46,12 @@ void pidControl(void){
   pwmaDuty2Raw+=PidIncCtrl(&pid2, (targetSpeed - RightSpeed)/EncoderPerLength-pwmDeltaPIDloc);
   if(pwmaDuty1Raw>=2400)
     pwmaDuty1Raw = 2300;
-  if(pwmaDuty1Raw>=2400)
-    pwmaDuty1Raw = 2300;
+  if(pwmaDuty2Raw>=2400)
+    pwmaDuty2Raw = 2300;
   if(pwmaDuty1Raw<= -2400)
     pwmaDuty1Raw = 2300;
-  if(pwmaDuty1Raw<= -2400)
-    pwmaDuty1Raw = 2300;
+  if(pwmaDuty2Raw<= -2400)
+    pwmaDuty2Raw = 2300;
   if(pwmaDuty1Raw>=0){
     AIN1_6612 = 1;
     AIN2_6612 = 0;
@@ -103,11 +103,19 @@ void outputSpeed(void *pvParameters){
 
     LeftSpeed = Encoder1count * EncoderPerLength *10;
     RightSpeed = Encoder2count * EncoderPerLength*10;
-
+    //常规向串口1发送
     // floatToString(LeftSpeed, 6, output);
     // PrintString1(output);
     // floatToString(RightSpeed, 6, output);
     // PrintString1(output);
+
+    //通过esp8266发送
+    // floatToString(LeftSpeed, 6, output);
+    // PrintString3(output);
+    // PrintString3("  ");
+    // floatToString(RightSpeed, 6, output);
+    // PrintString3(output);
+    // PrintString3("\n");
 
     //PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (35 - LeftSpeed )/EncoderPerLength);
     //PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (35 - RightSpeed)/EncoderPerLength);
@@ -216,7 +224,7 @@ void moudle8266(void *pvParameters){
         {
           temp[i] = RX3_Buffer[i];
         }
-        PrintString1(temp);
+        //PrintString1(temp);
         if(temp[0]==0x11 && temp[1] == 0x22 ){
           if(temp[2] == 0x01){
             runFlagFrom8266 = 1;
