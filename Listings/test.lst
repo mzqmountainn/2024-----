@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  test                                                               25/07/24  15:44:37  PAGE 1   
+C251 COMPILER V5.60.0,  test                                                               26/07/24  14:22:09  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE test
@@ -47,9 +47,9 @@ stmt  level    source
    36          void pidControl(void){
    37   1        //pidLoc.kp = (LeftSpeed + RightSpeed) / 2.0;
    38   1        pwmDeltaPIDloc = PidLocCtrl(&pidLoc, realAngle);
-   39   1        pwmDeltaPIDloc = (int)constrain_float(pwmDeltaPIDloc, -300, 300);
-   40   1        PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (targetSpeed - LeftSpeed )/EncoderPerLength-pwmDeltaPIDloc);
-   41   1        PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (targetSpeed - RightSpeed)/EncoderPerLength+pwmDeltaPIDloc);
+   39   1        pwmDeltaPIDloc = (int)constrain_float(pwmDeltaPIDloc, -50, 50);
+   40   1        PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (targetSpeed - LeftSpeed )/EncoderPerLength+pwmDeltaPIDloc);
+   41   1        PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (targetSpeed - RightSpeed)/EncoderPerLength-pwmDeltaPIDloc);
    42   1        if(PWMA_Duty.PWM1_Duty>=2400)
    43   1          PWMA_Duty.PWM1_Duty = 2400;
    44   1        if(PWMA_Duty.PWM2_Duty>=2400)
@@ -66,7 +66,7 @@ stmt  level    source
 *** WARNING C138 IN LINE 54 OF Sources\Task\src\test.c: expression with possibly no effect
    55   1        while (1)
    56   1        {
-C251 COMPILER V5.60.0,  test                                                               25/07/24  15:44:37  PAGE 2   
+C251 COMPILER V5.60.0,  test                                                               26/07/24  14:22:09  PAGE 2   
 
    57   2          T3R = 0;//Í£Ö¹¶¨Ê±Æ÷¹¤×÷
    58   2          T4R = 0;
@@ -87,10 +87,10 @@ stmt  level    source
    73   2          LeftSpeed = Encoder1count * EncoderPerLength *10;
    74   2          RightSpeed = Encoder2count * EncoderPerLength*10;
    75   2      
-   76   2          floatToString(LeftSpeed, 6, output);
-   77   2          PrintString1(output);
-   78   2          floatToString(RightSpeed, 6, output);
-   79   2          PrintString1(output);
+   76   2          // floatToString(LeftSpeed, 6, output);
+   77   2          // PrintString1(output);
+   78   2          // floatToString(RightSpeed, 6, output);
+   79   2          // PrintString1(output);
    80   2      
    81   2          //PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (35 - LeftSpeed )/EncoderPerLength);
    82   2          //PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (35 - RightSpeed)/EncoderPerLength);
@@ -104,6 +104,7 @@ stmt  level    source
    90   2        }
    91   1        
    92   1      }
+*** WARNING C47 IN LINE 53 OF Sources\Task\src\test.c: 'output': unreferenced local variable
    93          //pid¸üÐÂ
    94          void PWMupdate(void *pvParameters){
    95   1        static int duty = 600;
@@ -133,9 +134,9 @@ stmt  level    source
   118          void openMVgetAngle(void *pvParameters){
   119   1        int i = 0;
   120   1        char temp[15];
-  121   1        pvParameters = pvParameters;
-C251 COMPILER V5.60.0,  test                                                               25/07/24  15:44:37  PAGE 3   
+C251 COMPILER V5.60.0,  test                                                               26/07/24  14:22:09  PAGE 3   
 
+  121   1        pvParameters = pvParameters;
 *** WARNING C138 IN LINE 121 OF Sources\Task\src\test.c: expression with possibly no effect
   122   1        while (1)
   123   1        {
@@ -175,122 +176,172 @@ stmt  level    source
   157   1        
   158   1      }
   159          
-  160          char* itoa(int num,char* str,int radix)
-  161          {
-  162   1          char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//Ë÷Òý±í
-  163   1              char temp;//ÁÙÊ±±äÁ¿£¬½»»»Á½¸öÖµÊ±ÓÃµ½
-  164   1          unsigned unum;//´æ·ÅÒª×ª»»µÄÕûÊýµÄ¾ø¶ÔÖµ,×ª»»µÄÕûÊý¿ÉÄÜÊÇ¸ºÊý
-  165   1          int i=0,j,k;//iÓÃÀ´Ö¸Ê¾ÉèÖÃ×Ö·û´®ÏàÓ¦Î»£¬×ª»»Ö®ºóiÆäÊµ¾ÍÊÇ×Ö·û´®µÄ³¤¶È£»×ª»»ºóË³ÐòÊÇÄæÐòµÄ£¬ÓÐÕý¸ºµÄÇ
+  160          //´®¿Ú3½ÓÊÜesp8266ÐÅÏ¢
+  161          void moudle8266(void *pvParameters){
+  162   1        static char IfFirstIn = 1;
+  163   1        int i = 0;
+  164   1        char temp[15];
+  165   1        pvParameters = pvParameters;
+*** WARNING C138 IN LINE 165 OF Sources\Task\src\test.c: expression with possibly no effect
+  166   1        while (1)
+  167   1        {
+  168   2          if(IfFirstIn){
+  169   3            IfFirstIn = 0;
+  170   3            vTaskDelay(3000);
+  171   3          }
+  172   2          if(COM3.RX_TimeOut > 0 && --COM3.RX_TimeOut == 0 ){
+  173   3                              
+  174   3                              //1.2 ÅÐ¶ÏÊÕµ½µÄÊý¾Ý³¤¶È > 0
+  175   3                              if(COM3.RX_Cnt > 0 ){
+  176   4                                      
+  177   4                                      //1.3 »ñÈ¡Êý¾Ý :: Êý¾Ý×°ÔÚ RX1_Buffer Êý×éÀïÃæÈ¥ ÄÃµ½Ö®ºóÖ±½Ó·¢¸øPC¡£
+  178   4              // for(i = 0 ; i < COM2.RX_Cnt  ; i++){
+  179   4                                      //      TX1_write2buff(RX2_Buffer[i]);
+  180   4                                      // }
+  181   4                                      RX3_Buffer[COM3.RX_Cnt] = '\0';
+  182   4              //PrintString1(RX3_Buffer);
+  183   4              for ( i = 0; i < COM3.RX_Cnt; i++)
+  184   4              {
+C251 COMPILER V5.60.0,  test                                                               26/07/24  14:22:09  PAGE 4   
+
+  185   5                temp[i] = RX3_Buffer[i];
+  186   5              }
+  187   4              //PrintString1(temp);
+  188   4              if(temp[0]==0x11 && temp[1] == 0x22 ){
+  189   5                PrintString1(temp);
+  190   5                // itoa(realAngle, temp, 10);
+  191   5                // PrintString1(temp);
+  192   5              }
+  193   4                              }
+  194   3                              COM3.RX_Cnt  = 0 ;
+  195   3            for ( i = 0; i < 15; i++)
+  196   3              {
+  197   4                temp[i] = 0;
+  198   4              }
+  199   3            
+  200   3                      }
+  201   2      
+  202   2          vTaskDelay(10);
+  203   2        }
+  204   1        
+  205   1      }
+  206          
+  207          char* itoa(int num,char* str,int radix)
+  208          {
+  209   1          char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//Ë÷Òý±í
+  210   1              char temp;//ÁÙÊ±±äÁ¿£¬½»»»Á½¸öÖµÊ±ÓÃµ½
+  211   1          unsigned unum;//´æ·ÅÒª×ª»»µÄÕûÊýµÄ¾ø¶ÔÖµ,×ª»»µÄÕûÊý¿ÉÄÜÊÇ¸ºÊý
+  212   1          int i=0,j,k;//iÓÃÀ´Ö¸Ê¾ÉèÖÃ×Ö·û´®ÏàÓ¦Î»£¬×ª»»Ö®ºóiÆäÊµ¾ÍÊÇ×Ö·û´®µÄ³¤¶È£»×ª»»ºóË³ÐòÊÇÄæÐòµÄ£¬ÓÐÕý¸ºµÄÇ
              -é¿ö£¬kÓÃÀ´Ö¸Ê¾µ÷ÕûË³ÐòµÄ¿ªÊ¼Î»ÖÃ;jÓÃÀ´Ö¸Ê¾µ÷ÕûË³ÐòÊ±µÄ½»»»¡£
-  166   1       
-  167   1          //»ñÈ¡Òª×ª»»µÄÕûÊýµÄ¾ø¶ÔÖµ
-  168   1          if(radix==10&&num<0)//Òª×ª»»³ÉÊ®½øÖÆÊý²¢ÇÒÊÇ¸ºÊý
-  169   1          {
-  170   2              unum=(unsigned)-num;//½«numµÄ¾ø¶ÔÖµ¸³¸øunum
-  171   2              str[i++]='-';//ÔÚ×Ö·û´®×îÇ°ÃæÉèÖÃÎª'-'ºÅ£¬²¢ÇÒË÷Òý¼Ó1
-  172   2          }
-  173   1          else unum=(unsigned)num;//ÈôÊÇnumÎªÕý£¬Ö±½Ó¸³Öµ¸øunum
-  174   1       
-  175   1          //×ª»»²¿·Ö£¬×¢Òâ×ª»»ºóÊÇÄæÐòµÄ
-  176   1          do
-  177   1          {
-  178   2              str[i++]=index[unum%(unsigned)radix];//È¡unumµÄ×îºóÒ»Î»£¬²¢ÉèÖÃÎªstr¶ÔÓ¦Î»£¬Ö¸Ê¾Ë÷Òý¼Ó1
-  179   2              unum/=radix;//unumÈ¥µô×îºóÒ»Î»
-  180   2       
-  181   2          }while(unum);//Ö±ÖÁunumÎª0ÍË³öÑ­»·
-  182   1       
-  183   1          str[i]='\0';//ÔÚ×Ö·û´®×îºóÌí¼Ó'\0'×Ö·û£¬cÓïÑÔ×Ö·û´®ÒÔ'\0'½áÊø¡£
-  184   1       
-  185   1          //½«Ë³Ðòµ÷Õû¹ýÀ´
-C251 COMPILER V5.60.0,  test                                                               25/07/24  15:44:37  PAGE 4   
+  213   1       
+  214   1          //»ñÈ¡Òª×ª»»µÄÕûÊýµÄ¾ø¶ÔÖµ
+  215   1          if(radix==10&&num<0)//Òª×ª»»³ÉÊ®½øÖÆÊý²¢ÇÒÊÇ¸ºÊý
+  216   1          {
+  217   2              unum=(unsigned)-num;//½«numµÄ¾ø¶ÔÖµ¸³¸øunum
+  218   2              str[i++]='-';//ÔÚ×Ö·û´®×îÇ°ÃæÉèÖÃÎª'-'ºÅ£¬²¢ÇÒË÷Òý¼Ó1
+  219   2          }
+  220   1          else unum=(unsigned)num;//ÈôÊÇnumÎªÕý£¬Ö±½Ó¸³Öµ¸øunum
+  221   1       
+  222   1          //×ª»»²¿·Ö£¬×¢Òâ×ª»»ºóÊÇÄæÐòµÄ
+  223   1          do
+  224   1          {
+  225   2              str[i++]=index[unum%(unsigned)radix];//È¡unumµÄ×îºóÒ»Î»£¬²¢ÉèÖÃÎªstr¶ÔÓ¦Î»£¬Ö¸Ê¾Ë÷Òý¼Ó1
+  226   2              unum/=radix;//unumÈ¥µô×îºóÒ»Î»
+  227   2       
+  228   2          }while(unum);//Ö±ÖÁunumÎª0ÍË³öÑ­»·
+  229   1       
+  230   1          str[i]='\0';//ÔÚ×Ö·û´®×îºóÌí¼Ó'\0'×Ö·û£¬cÓïÑÔ×Ö·û´®ÒÔ'\0'½áÊø¡£
+  231   1       
+  232   1          //½«Ë³Ðòµ÷Õû¹ýÀ´
+  233   1          if(str[0]=='-') k=1;//Èç¹ûÊÇ¸ºÊý£¬·ûºÅ²»ÓÃµ÷Õû£¬´Ó·ûºÅºóÃæ¿ªÊ¼µ÷Õû
+  234   1          else k=0;//²»ÊÇ¸ºÊý£¬È«²¿¶¼Òªµ÷Õû
+  235   1       
+  236   1      
+  237   1          for(j=k;j<=(i-1)/2;j++)//Í·Î²Ò»Ò»¶Ô³Æ½»»»£¬iÆäÊµ¾ÍÊÇ×Ö·û´®µÄ³¤¶È£¬Ë÷Òý×î´óÖµ±È³¤¶ÈÉÙ1
+  238   1          {
+  239   2              temp=str[j];//Í·²¿¸³Öµ¸øÁÙÊ±±äÁ¿
+  240   2              str[j]=str[i-1+k-j];//Î²²¿¸³Öµ¸øÍ·²¿
+  241   2              str[i-1+k-j]=temp;//½«ÁÙÊ±±äÁ¿µÄÖµ(ÆäÊµ¾ÍÊÇÖ®Ç°µÄÍ·²¿Öµ)¸³¸øÎ²²¿
+  242   2          }
+  243   1       
+  244   1          return str;//·µ»Ø×ª»»ºóµÄ×Ö·û´®
+  245   1       
+  246   1      }
+  247          // ¶¨Òå½«¸¡µãÊý×ª»»Îª×Ö·û´®µÄº¯Êý
+  248          char* floatToString(float num, int precision, char* str) {
+  249   1          // ÔÚº¯Êý¿ªÍ·¶¨ÒåËùÓÐÐÂ±äÁ¿
+C251 COMPILER V5.60.0,  test                                                               26/07/24  14:22:09  PAGE 5   
 
-  186   1          if(str[0]=='-') k=1;//Èç¹ûÊÇ¸ºÊý£¬·ûºÅ²»ÓÃµ÷Õû£¬´Ó·ûºÅºóÃæ¿ªÊ¼µ÷Õû
-  187   1          else k=0;//²»ÊÇ¸ºÊý£¬È«²¿¶¼Òªµ÷Õû
-  188   1       
-  189   1      
-  190   1          for(j=k;j<=(i-1)/2;j++)//Í·Î²Ò»Ò»¶Ô³Æ½»»»£¬iÆäÊµ¾ÍÊÇ×Ö·û´®µÄ³¤¶È£¬Ë÷Òý×î´óÖµ±È³¤¶ÈÉÙ1
-  191   1          {
-  192   2              temp=str[j];//Í·²¿¸³Öµ¸øÁÙÊ±±äÁ¿
-  193   2              str[j]=str[i-1+k-j];//Î²²¿¸³Öµ¸øÍ·²¿
-  194   2              str[i-1+k-j]=temp;//½«ÁÙÊ±±äÁ¿µÄÖµ(ÆäÊµ¾ÍÊÇÖ®Ç°µÄÍ·²¿Öµ)¸³¸øÎ²²¿
-  195   2          }
-  196   1       
-  197   1          return str;//·µ»Ø×ª»»ºóµÄ×Ö·û´®
-  198   1       
-  199   1      }
-  200          // ¶¨Òå½«¸¡µãÊý×ª»»Îª×Ö·û´®µÄº¯Êý
-  201          char* floatToString(float num, int precision, char* str) {
-  202   1          // ÔÚº¯Êý¿ªÍ·¶¨ÒåËùÓÐÐÂ±äÁ¿
-  203   1          int offset = 0;
-  204   1          int intPart;
-  205   1          float decPart;
-  206   1          char intStr[20]; // ¼ÙÉèÕûÊý²¿·Ö³¤¶È²»»á³¬¹ý20Î»
-  207   1          int i, j;
-  208   1          int digit;
-  209   1      
-  210   1          // ´¦Àí¸ºÊýÇé¿ö
-  211   1          if (num < 0) {
-  212   2              str[offset++] = '-';
-  213   2              num = -num;
-  214   2          }
-  215   1      
-  216   1          // ÌáÈ¡ÕûÊý²¿·Ö
-  217   1          intPart = (int)num;
-  218   1          decPart = num - intPart;
-  219   1      
-  220   1          // ½«ÕûÊý²¿·Ö×ª»»Îª×Ö·û´®
-  221   1          i = 0;
-  222   1          if (intPart == 0) {
-  223   2              intStr[i++] = '0';
-  224   2          } else {
-  225   2              while (intPart > 0) {
-  226   3                  intStr[i++] = (intPart % 10) + '0';
-  227   3                  intPart /= 10;
-  228   3              }
-  229   2              // ·´×ªÕûÊý²¿·Ö×Ö·û´®
-  230   2              for (j = 0; j < i / 2; j++) {
-  231   3                  char temp = intStr[j];
-  232   3                  intStr[j] = intStr[i - 1 - j];
-  233   3                  intStr[i - 1 - j] = temp;
-  234   3              }
-  235   2          }
-  236   1          intStr[i] = '\0';
-  237   1      
-  238   1          // ½«ÕûÊý²¿·Ö¿½±´µ½Ä¿±ê×Ö·û´®
-  239   1          for (j = 0; intStr[j] != '\0'; j++) {
-  240   2              str[offset++] = intStr[j];
-  241   2          }
-  242   1      
-  243   1          // Ìí¼ÓÐ¡Êýµã
-  244   1          str[offset++] = '.';
-  245   1      
-  246   1          // ½«Ð¡Êý²¿·Ö×ª»»Îª×Ö·û´®
-  247   1          for (i = 0; i < precision; i++) {
-  248   2              decPart *= 10;
-  249   2              digit = (int)decPart;
-  250   2              str[offset++] = '0' + digit;
-  251   2              decPart -= digit;
-C251 COMPILER V5.60.0,  test                                                               25/07/24  15:44:37  PAGE 5   
-
-  252   2          }
-  253   1      
-  254   1          // Ìí¼Ó×Ö·û´®½áÊø·û
-  255   1          str[offset] = '\0';
+  250   1          int offset = 0;
+  251   1          int intPart;
+  252   1          float decPart;
+  253   1          char intStr[20]; // ¼ÙÉèÕûÊý²¿·Ö³¤¶È²»»á³¬¹ý20Î»
+  254   1          int i, j;
+  255   1          int digit;
   256   1      
-  257   1          return str;
-  258   1      }
+  257   1          // ´¦Àí¸ºÊýÇé¿ö
+  258   1          if (num < 0) {
+  259   2              str[offset++] = '-';
+  260   2              num = -num;
+  261   2          }
+  262   1      
+  263   1          // ÌáÈ¡ÕûÊý²¿·Ö
+  264   1          intPart = (int)num;
+  265   1          decPart = num - intPart;
+  266   1      
+  267   1          // ½«ÕûÊý²¿·Ö×ª»»Îª×Ö·û´®
+  268   1          i = 0;
+  269   1          if (intPart == 0) {
+  270   2              intStr[i++] = '0';
+  271   2          } else {
+  272   2              while (intPart > 0) {
+  273   3                  intStr[i++] = (intPart % 10) + '0';
+  274   3                  intPart /= 10;
+  275   3              }
+  276   2              // ·´×ªÕûÊý²¿·Ö×Ö·û´®
+  277   2              for (j = 0; j < i / 2; j++) {
+  278   3                  char temp = intStr[j];
+  279   3                  intStr[j] = intStr[i - 1 - j];
+  280   3                  intStr[i - 1 - j] = temp;
+  281   3              }
+  282   2          }
+  283   1          intStr[i] = '\0';
+  284   1      
+  285   1          // ½«ÕûÊý²¿·Ö¿½±´µ½Ä¿±ê×Ö·û´®
+  286   1          for (j = 0; intStr[j] != '\0'; j++) {
+  287   2              str[offset++] = intStr[j];
+  288   2          }
+  289   1      
+  290   1          // Ìí¼ÓÐ¡Êýµã
+  291   1          str[offset++] = '.';
+  292   1      
+  293   1          // ½«Ð¡Êý²¿·Ö×ª»»Îª×Ö·û´®
+  294   1          for (i = 0; i < precision; i++) {
+  295   2              decPart *= 10;
+  296   2              digit = (int)decPart;
+  297   2              str[offset++] = '0' + digit;
+  298   2              decPart -= digit;
+  299   2          }
+  300   1      
+  301   1          // Ìí¼Ó×Ö·û´®½áÊø·û
+  302   1          str[offset] = '\0';
+  303   1      
+  304   1          return str;
+  305   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1135     ------
+  code size            =      1213     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
   xdata size           =    ------     ------
   xdata-const size     =    ------     ------
-  edata size           =       172     ------
+C251 COMPILER V5.60.0,  test                                                               26/07/24  14:22:09  PAGE 6   
+
+  edata size           =       173     ------
   bit size             =    ------     ------
   ebit size            =    ------     ------
   bitaddressable size  =    ------     ------
@@ -298,8 +349,8 @@ Module Information          Static   Overlayable
   far data size        =    ------     ------
   huge data size       =    ------     ------
   const size           =    ------     ------
-  hconst size          =        97     ------
+  hconst size          =       102     ------
 End of Module Information.
 
 
-C251 COMPILATION COMPLETE.  3 WARNING(S),  0 ERROR(S)
+C251 COMPILATION COMPLETE.  5 WARNING(S),  0 ERROR(S)

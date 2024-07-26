@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 1   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE System_init
@@ -66,7 +66,7 @@ stmt  level    source
    54   1              TIM_InitTypeDef         TIM_InitStructure;                                              //½á¹¹¶¨Òå
    55   1      //      TIM_InitStructure.TIM_Mode      = TIM_16BitAutoReload;  //Ö¸¶¨¹¤×÷Ä£Ê½,   TIM_16BitAutoReload,TIM_16Bit
              -,TIM_8BitAutoReload,TIM_16BitAutoReloadNoMask
-C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 2   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 2   
 
    56   1      //      TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_1T;         //Ö¸¶¨Ê±ÖÓÔ´,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOC
              -K_Ext
@@ -134,7 +134,7 @@ stmt  level    source
   109   1        //    TIM_InitStructure.TIM_ClkOut    = ENABLE;                                       //ÊÇ·ñÊä³ö¸ßËÙÂö³å, ENABLE»òDISABLE
   110   1        //    TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / (50*12));              //³õÖµ
   111   1        //    TIM_InitStructure.TIM_Run       = ENABLE;                                       //ÊÇ·ñ³õÊ¼»¯ºóÆô¶¯¶¨Ê±Æ÷, ENABLE»òDISABLE
-C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 3   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 3   
 
   112   1        //    Timer_Inilize(Timer4,&TIM_InitStructure);                                       //³õÊ¼»¯Timer4    Timer0,Timer1,Timer2,Timer3,Timer4
   113   1        //    NVIC_Timer4_Init(ENABLE,0);             //ÖÐ¶ÏÊ¹ÄÜ, ENABLE/DISABLE; ÎÞÓÅÏÈ¼¶
@@ -169,7 +169,7 @@ stmt  level    source
   138   1      
   139   1              COMx_InitStructure.UART_Mode      = UART_8bit_BRTx;         //Ä£Ê½, UART_ShiftRight,UART_8bit_BRTx,UART_9bit
              -,UART_9bit_BRTx
-  140   1              COMx_InitStructure.UART_BRT_Use   = BRT_Timer1;                 //Ñ¡Ôñ²¨ÌØÂÊ·¢ÉúÆ÷, BRT_Timer1, BRT_Timer2 (×¢Òâ: ´®¿Ú
+  140   1              COMx_InitStructure.UART_BRT_Use   = BRT_Timer2;                 //Ñ¡Ôñ²¨ÌØÂÊ·¢ÉúÆ÷, BRT_Timer1, BRT_Timer2 (×¢Òâ: ´®¿Ú
              -2¹Ì¶¨Ê¹ÓÃBRT_Timer2)
   141   1              COMx_InitStructure.UART_BaudRate  = 115200ul;                   //²¨ÌØÂÊ, Ò»°ã 110 ~ 115200
   142   1              COMx_InitStructure.UART_RxEnable  = ENABLE;                             //½ÓÊÕÔÊÐí,   ENABLE»òDISABLE
@@ -183,26 +183,26 @@ stmt  level    source
              -UART_9bit_BRTx
   149   1      //      COMx_InitStructure.UART_BRT_Use   = BRT_Timer2;                 //Ñ¡Ôñ²¨ÌØÂÊ·¢ÉúÆ÷, BRT_Timer2 (×¢Òâ: ´®¿Ú2¹Ì¶¨Ê¹ÓÃB
              -RT_Timer2, ËùÒÔ²»ÓÃÑ¡Ôñ)
-  150   1              COMx_InitStructure.UART_BaudRate  = 9600ul;                     //²¨ÌØÂÊ,     110 ~ 115200
+  150   1              COMx_InitStructure.UART_BaudRate  = 115200ul;                   //²¨ÌØÂÊ,     110 ~ 115200
   151   1              COMx_InitStructure.UART_RxEnable  = ENABLE;                             //½ÓÊÕÔÊÐí,   ENABLE»òDISABLE
   152   1              UART_Configuration(UART2, &COMx_InitStructure);             //³õÊ¼»¯´®¿Ú2 UART1,UART2,UART3,UART4
   153   1              NVIC_UART2_Init(ENABLE,Priority_1);             //ÖÐ¶ÏÊ¹ÄÜ, ENABLE/DISABLE; ÓÅÏÈ¼¶(µÍµ½¸ß) Priority_0,Priority_1,Pr
              -iority_2,Priority_3
   154   1      
-  155   1      //      COMx_InitStructure.UART_Mode      = UART_8bit_BRTx;     //Ä£Ê½, UART_ShiftRight,UART_8bit_BRTx,UART_9bit
-             -,UART_9bit_BRTx
-  156   1      //      COMx_InitStructure.UART_BRT_Use   = BRT_Timer3;                 //Ñ¡Ôñ²¨ÌØÂÊ·¢ÉúÆ÷, BRT_Timer3, BRT_Timer2 (×¢Òâ: ´
-             -®¿Ú2¹Ì¶¨Ê¹ÓÃBRT_Timer2)
-  157   1      //      COMx_InitStructure.UART_BaudRate  = 115200ul;                   //²¨ÌØÂÊ, Ò»°ã 110 ~ 115200
-  158   1      //      COMx_InitStructure.UART_RxEnable  = ENABLE;                             //½ÓÊÕÔÊÐí,   ENABLE»òDISABLE
-  159   1      //      UART_Configuration(UART3, &COMx_InitStructure);         //³õÊ¼»¯´®¿Ú1 UART1,UART2,UART3,UART4
-  160   1      //      NVIC_UART3_Init(ENABLE,Priority_1);             //ÖÐ¶ÏÊ¹ÄÜ, ENABLE/DISABLE; ÓÅÏÈ¼¶(µÍµ½¸ß) Priority_0,Priority_1
-             -,Priority_2,Priority_3
+  155   1              COMx_InitStructure.UART_Mode      = UART_8bit_BRTx;     //Ä£Ê½, UART_ShiftRight,UART_8bit_BRTx,UART_9bit,UA
+             -RT_9bit_BRTx
+  156   1              COMx_InitStructure.UART_BRT_Use   = BRT_Timer2;                 //Ñ¡Ôñ²¨ÌØÂÊ·¢ÉúÆ÷, BRT_Timer3, BRT_Timer2 (×¢Òâ: ´®¿Ú
+             -2¹Ì¶¨Ê¹ÓÃBRT_Timer2)
+  157   1              COMx_InitStructure.UART_BaudRate  = 115200ul;                   //²¨ÌØÂÊ, Ò»°ã 110 ~ 115200
+  158   1              COMx_InitStructure.UART_RxEnable  = ENABLE;                             //½ÓÊÕÔÊÐí,   ENABLE»òDISABLE
+  159   1              UART_Configuration(UART3, &COMx_InitStructure);         //³õÊ¼»¯´®¿Ú1 UART1,UART2,UART3,UART4
+  160   1              NVIC_UART3_Init(ENABLE,Priority_1);             //ÖÐ¶ÏÊ¹ÄÜ, ENABLE/DISABLE; ÓÅÏÈ¼¶(µÍµ½¸ß) Priority_0,Priority_1,Pr
+             -iority_2,Priority_3
   161   1      }
   162          
   163          //========================================================================
   164          //                               I2C³õÊ¼»¯
-C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 4   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 4   
 
   165          //========================================================================
   166          void I2C_config(void)
@@ -270,7 +270,7 @@ stmt  level    source
   220          //========================================================================
   221          void Exti_config(void)
   222          {
-C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 5   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 5   
 
   223   1              EXTI_InitTypeDef        Exti_InitStructure;                                                     //½á¹¹¶¨Òå
   224   1      
@@ -338,7 +338,7 @@ stmt  level    source
   278   1              PWMx_InitStructure.PWM_EnoSelect   = ENO2P;     //Êä³öÍ¨µÀÑ¡Ôñ, ENO1P,ENO1N,ENO2P,ENO2N,ENO3P,ENO3N,ENO4P,EN
              -O4N / ENO5P,ENO6P,ENO7P,ENO8P
   279   1              PWM_Configuration(PWM2, &PWMx_InitStructure);                           //³õÊ¼»¯PWM2
-C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 6   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 6   
 
   280   1      
   281   1              // PWMx_InitStructure.PWM_Mode    =     CCMRn_PWM_MODE1;        //Ä£Ê½,         CCMRn_FREEZE,CCMRn_MATCH_VALID,CCMRn_MATCH
@@ -394,7 +394,7 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       819     ------
+  code size            =       876     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -407,7 +407,7 @@ Module Information          Static   Overlayable
   bitaddressable size  =    ------     ------
   ebitaddressable size =    ------     ------
   far data size        =    ------     ------
-C251 COMPILER V5.60.0,  System_init                                                        24/07/24  21:45:48  PAGE 7   
+C251 COMPILER V5.60.0,  System_init                                                        26/07/24  13:45:54  PAGE 7   
 
   huge data size       =    ------     ------
   const size           =    ------     ------

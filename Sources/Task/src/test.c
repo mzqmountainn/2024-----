@@ -36,9 +36,9 @@ char *floatToString(float num, int precision, char *str);
 void pidControl(void){
   //pidLoc.kp = (LeftSpeed + RightSpeed) / 2.0;
   pwmDeltaPIDloc = PidLocCtrl(&pidLoc, realAngle);
-  pwmDeltaPIDloc = (int)constrain_float(pwmDeltaPIDloc, -300, 300);
-  PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (targetSpeed - LeftSpeed )/EncoderPerLength-pwmDeltaPIDloc);
-  PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (targetSpeed - RightSpeed)/EncoderPerLength+pwmDeltaPIDloc);
+  pwmDeltaPIDloc = (int)constrain_float(pwmDeltaPIDloc, -50, 50);
+  PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (targetSpeed - LeftSpeed )/EncoderPerLength+pwmDeltaPIDloc);
+  PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (targetSpeed - RightSpeed)/EncoderPerLength-pwmDeltaPIDloc);
   if(PWMA_Duty.PWM1_Duty>=2400)
     PWMA_Duty.PWM1_Duty = 2400;
   if(PWMA_Duty.PWM2_Duty>=2400)
@@ -73,10 +73,10 @@ void outputSpeed(void *pvParameters){
     LeftSpeed = Encoder1count * EncoderPerLength *10;
     RightSpeed = Encoder2count * EncoderPerLength*10;
 
-    floatToString(LeftSpeed, 6, output);
-    PrintString1(output);
-    floatToString(RightSpeed, 6, output);
-    PrintString1(output);
+    // floatToString(LeftSpeed, 6, output);
+    // PrintString1(output);
+    // floatToString(RightSpeed, 6, output);
+    // PrintString1(output);
 
     //PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (35 - LeftSpeed )/EncoderPerLength);
     //PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (35 - RightSpeed)/EncoderPerLength);
@@ -149,6 +149,53 @@ void openMVgetAngle(void *pvParameters){
         }
 			}
 			COM2.RX_Cnt  = 0 ;
+      
+		}
+
+    vTaskDelay(10);
+  }
+  
+}
+
+//串口3接受esp8266信息
+void moudle8266(void *pvParameters){
+  static char IfFirstIn = 1;
+  int i = 0;
+  char temp[15];
+  pvParameters = pvParameters;
+  while (1)
+  {
+    if(IfFirstIn){
+      IfFirstIn = 0;
+      vTaskDelay(3000);
+    }
+    if(COM3.RX_TimeOut > 0 && --COM3.RX_TimeOut == 0 ){
+			
+			//1.2 判断收到的数据长度 > 0
+			if(COM3.RX_Cnt > 0 ){
+				
+				//1.3 获取数据 :: 数据装在 RX1_Buffer 数组里面去 拿到之后直接发给PC。
+        // for(i = 0 ; i < COM2.RX_Cnt  ; i++){
+				// 	TX1_write2buff(RX2_Buffer[i]);
+				// }
+				RX3_Buffer[COM3.RX_Cnt] = '\0';
+        //PrintString1(RX3_Buffer);
+        for ( i = 0; i < COM3.RX_Cnt; i++)
+        {
+          temp[i] = RX3_Buffer[i];
+        }
+        //PrintString1(temp);
+        if(temp[0]==0x11 && temp[1] == 0x22 ){
+          PrintString1(temp);
+          // itoa(realAngle, temp, 10);
+          // PrintString1(temp);
+        }
+			}
+			COM3.RX_Cnt  = 0 ;
+      for ( i = 0; i < 15; i++)
+        {
+          temp[i] = 0;
+        }
       
 		}
 

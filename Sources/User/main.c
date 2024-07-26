@@ -34,6 +34,7 @@ extern void outputSpeed(void *pvParameters);
 extern void PWMupdate(void *pvParameters);
 extern QueueHandle_t pwmUpdateSignal;
 extern void openMVgetAngle(void *pvParameters);
+extern void moudle8266(void *pvParameters);
 
 void main( void )
 {
@@ -47,7 +48,7 @@ void main( void )
     pid1.ki = 1;
     pid2.kp = 0.1;
     pid2.ki = 1;
-    pidLoc.kp = 2;
+    pidLoc.kp = 5;
     pwmUpdateSignal = xSemaphoreCreateBinary();
     /* 创建任务 */
     xTaskCreate((TaskFunction_t )outputSpeed,
@@ -64,6 +65,12 @@ void main( void )
                 (TaskHandle_t*  )NULL);
     xTaskCreate((TaskFunction_t )openMVgetAngle,
                 (const char*    )"openMVgetAngle",
+                (uint16_t       )configDEFAULT_STACK_SIZE,
+                (void*          )NULL,
+                (UBaseType_t    )(configDEFAULT_PRIORITIES)+4,
+                (TaskHandle_t*  )NULL);
+    xTaskCreate((TaskFunction_t )moudle8266,
+                (const char*    )"moudle8266",
                 (uint16_t       )configDEFAULT_STACK_SIZE,
                 (void*          )NULL,
                 (UBaseType_t    )(configDEFAULT_PRIORITIES)+4,
