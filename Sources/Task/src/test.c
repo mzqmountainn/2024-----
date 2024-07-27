@@ -253,6 +253,57 @@ void moudle8266(void *pvParameters){
   
 }
 
+//串口4  预留
+void uart4frame(void *pvParameters){
+  int i = 0;
+  char temp[15];
+  pvParameters = pvParameters;
+  while (1)
+  {
+    if(COM4.RX_TimeOut > 0 && --COM4.RX_TimeOut == 0 ){
+			
+			//1.2 判断收到的数据长度 > 0
+			if(COM4.RX_Cnt > 0 ){
+				
+				//1.3 获取数据 :: 数据装在 RX1_Buffer 数组里面去 拿到之后直接发给PC。
+        // for(i = 0 ; i < COM2.RX_Cnt  ; i++){
+				// 	TX1_write2buff(RX2_Buffer[i]);
+				// }
+				RX4_Buffer[COM4.RX_Cnt] = '\0';
+        //PrintString1(RX4_Buffer);
+        for ( i = 0; i < COM4.RX_Cnt; i++)
+        {
+          temp[i] = RX4_Buffer[i];
+        }
+        PrintString1(temp);
+        if(temp[0]==0x11 && temp[1] == 0x22 ){
+          // if(temp[2] == 0x01){
+          //   runFlagFrom8266 = 1;
+          // }
+          // if(temp[2] == 0x02){
+          //   runFlagFrom8266 = 0;
+          //   PWMA_Duty.PWM1_Duty = 0;
+          //   PWMA_Duty.PWM2_Duty = 0;
+          //   xSemaphoreGive(pwmUpdateSignal);
+          // }
+          //PrintString1(temp);
+          // itoa(realAngle, temp, 10);
+          // PrintString1(temp);
+        }
+			}
+			COM4.RX_Cnt  = 0 ;
+      for ( i = 0; i < 15; i++)
+        {
+          temp[i] = 0;
+        }
+      
+		}
+
+    vTaskDelay(10);
+  }
+  
+}
+
 char* itoa(int num,char* str,int radix)
 {
     char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//索引表

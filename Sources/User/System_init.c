@@ -158,6 +158,13 @@ void UART_config(void)
 	COMx_InitStructure.UART_RxEnable  = ENABLE;				//接收允许,   ENABLE或DISABLE
 	UART_Configuration(UART3, &COMx_InitStructure);	    	//初始化串口1 UART1,UART2,UART3,UART4
 	NVIC_UART3_Init(ENABLE,Priority_1);		//中断使能, ENABLE/DISABLE; 优先级(低到高) Priority_0,Priority_1,Priority_2,Priority_3
+
+  COMx_InitStructure.UART_Mode      = UART_8bit_BRTx; 	//模式, UART_ShiftRight,UART_8bit_BRTx,UART_9bit,UART_9bit_BRTx
+	COMx_InitStructure.UART_BRT_Use   = BRT_Timer2;			//选择波特率发生器, BRT_Timer3, BRT_Timer2 (注意: 串口2固定使用BRT_Timer2)
+	COMx_InitStructure.UART_BaudRate  = 115200ul;			//波特率, 一般 110 ~ 115200
+	COMx_InitStructure.UART_RxEnable  = ENABLE;				//接收允许,   ENABLE或DISABLE
+	UART_Configuration(UART4, &COMx_InitStructure);	    	//初始化串口1 UART1,UART2,UART3,UART4
+	NVIC_UART4_Init(ENABLE,Priority_1);		//中断使能, ENABLE/DISABLE; 优先级(低到高) Priority_0,Priority_1,Priority_2,Priority_3
 }
 
 //========================================================================

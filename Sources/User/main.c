@@ -35,6 +35,7 @@ extern void PWMupdate(void *pvParameters);
 extern QueueHandle_t pwmUpdateSignal;
 extern void openMVgetAngle(void *pvParameters);
 extern void moudle8266(void *pvParameters);
+extern void uart4frame(void *pvParameters);
 
 void main( void )
 {
@@ -71,6 +72,12 @@ void main( void )
                 (UBaseType_t    )(configDEFAULT_PRIORITIES)+4,
                 (TaskHandle_t*  )NULL);
     xTaskCreate((TaskFunction_t )moudle8266,
+                (const char*    )"moudle8266",
+                (uint16_t       )configDEFAULT_STACK_SIZE,
+                (void*          )NULL,
+                (UBaseType_t    )(configDEFAULT_PRIORITIES)+4,
+                (TaskHandle_t*  )NULL);
+    xTaskCreate((TaskFunction_t )uart4frame,
                 (const char*    )"moudle8266",
                 (uint16_t       )configDEFAULT_STACK_SIZE,
                 (void*          )NULL,

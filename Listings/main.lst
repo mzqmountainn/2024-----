@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  main                                                               26/07/24  20:47:21  PAGE 1   
+C251 COMPILER V5.60.0,  main                                                               27/07/24  16:12:50  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE main
@@ -46,119 +46,126 @@ stmt  level    source
    35          extern QueueHandle_t pwmUpdateSignal;
    36          extern void openMVgetAngle(void *pvParameters);
    37          extern void moudle8266(void *pvParameters);
-   38          
-   39          void main( void )
-   40          {
-   41   1          /* 系统初始化 */
-   42   1          vSystemInit();
-   43   1          motorInit();
-   44   1          PidInit(&pid1);
-   45   1          PidInit(&pid2);
-   46   1          PidInit(&pidLoc);
-   47   1          pid1.kp = 0.1;
-   48   1          pid1.ki = 1;
-   49   1          pid2.kp = 0.1;
-   50   1          pid2.ki = 1;
-   51   1          pid2.kd = 0.18;
-   52   1          pidLoc.kp = 5;
-   53   1          pwmUpdateSignal = xSemaphoreCreateBinary();
-   54   1          /* 创建任务 */
-   55   1          xTaskCreate((TaskFunction_t )outputSpeed,
-   56   1                      (const char*    )"outputTIM",
-   57   1                      (uint16_t       )configDEFAULT_STACK_SIZE,
-C251 COMPILER V5.60.0,  main                                                               26/07/24  20:47:21  PAGE 2   
+   38          extern void uart4frame(void *pvParameters);
+   39          
+   40          void main( void )
+   41          {
+   42   1          /* 系统初始化 */
+   43   1          vSystemInit();
+   44   1          motorInit();
+   45   1          PidInit(&pid1);
+   46   1          PidInit(&pid2);
+   47   1          PidInit(&pidLoc);
+   48   1          pid1.kp = 0.1;
+   49   1          pid1.ki = 1;
+   50   1          pid2.kp = 0.1;
+   51   1          pid2.ki = 1;
+   52   1          pid2.kd = 0.18;
+   53   1          pidLoc.kp = 5;
+   54   1          pwmUpdateSignal = xSemaphoreCreateBinary();
+   55   1          /* 创建任务 */
+   56   1          xTaskCreate((TaskFunction_t )outputSpeed,
+   57   1                      (const char*    )"outputTIM",
+C251 COMPILER V5.60.0,  main                                                               27/07/24  16:12:50  PAGE 2   
 
-   58   1                      (void*          )NULL,
-   59   1                      (UBaseType_t    )(configDEFAULT_PRIORITIES)+2,
-   60   1                      (TaskHandle_t*  )NULL);
-   61   1          xTaskCreate((TaskFunction_t )PWMupdate,
-   62   1                      (const char*    )"PWMupdate",
-   63   1                      (uint16_t       )configDEFAULT_STACK_SIZE,
-   64   1                      (void*          )NULL,
-   65   1                      (UBaseType_t    )(configDEFAULT_PRIORITIES)+3,
-   66   1                      (TaskHandle_t*  )NULL);
-   67   1          xTaskCreate((TaskFunction_t )openMVgetAngle,
-   68   1                      (const char*    )"openMVgetAngle",
-   69   1                      (uint16_t       )configDEFAULT_STACK_SIZE,
-   70   1                      (void*          )NULL,
-   71   1                      (UBaseType_t    )(configDEFAULT_PRIORITIES)+4,
-   72   1                      (TaskHandle_t*  )NULL);
-   73   1          xTaskCreate((TaskFunction_t )moudle8266,
-   74   1                      (const char*    )"moudle8266",
-   75   1                      (uint16_t       )configDEFAULT_STACK_SIZE,
-   76   1                      (void*          )NULL,
-   77   1                      (UBaseType_t    )(configDEFAULT_PRIORITIES)+4,
-   78   1                      (TaskHandle_t*  )NULL);
-   79   1          // xTaskCreate((TaskFunction_t )vDisplayTask,
-   80   1          //             (const char*    )"DISPLAY",
-   81   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
-   82   1          //             (void*          )NULL,
-   83   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES + 1),
-   84   1          //             (TaskHandle_t*  )NULL);
-   85   1          // xTaskCreate((TaskFunction_t )vRtcTask,
-   86   1          //             (const char*    )"RTC",
-   87   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
-   88   1          //             (void*          )NULL,
-   89   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES + 1),
-   90   1          //             (TaskHandle_t*  )NULL);
-   91   1          // xTaskCreate((TaskFunction_t )vAdcKeyTask,
-   92   1          //             (const char*    )"ADCKEY",
-   93   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
-   94   1          //             (void*          )NULL,
-   95   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES),
-   96   1          //             (TaskHandle_t*  )NULL);
-   97   1          // xTaskCreate((TaskFunction_t )vNtcTask,
-   98   1          //             (const char*    )"NTC",
-   99   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
-  100   1          //             (void*          )NULL,
-  101   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES),
-  102   1          //             (TaskHandle_t*  )NULL);
-  103   1          // xTaskCreate((TaskFunction_t )vUart2_3Task,
-  104   1          //             (const char*    )"UART2_3",
-  105   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
-  106   1          //             (void*          )1000,  //注意pvParameters参数传地址或者立即数时只有低24位是有效位，最
+   58   1                      (uint16_t       )configDEFAULT_STACK_SIZE,
+   59   1                      (void*          )NULL,
+   60   1                      (UBaseType_t    )(configDEFAULT_PRIORITIES)+2,
+   61   1                      (TaskHandle_t*  )NULL);
+   62   1          xTaskCreate((TaskFunction_t )PWMupdate,
+   63   1                      (const char*    )"PWMupdate",
+   64   1                      (uint16_t       )configDEFAULT_STACK_SIZE,
+   65   1                      (void*          )NULL,
+   66   1                      (UBaseType_t    )(configDEFAULT_PRIORITIES)+3,
+   67   1                      (TaskHandle_t*  )NULL);
+   68   1          xTaskCreate((TaskFunction_t )openMVgetAngle,
+   69   1                      (const char*    )"openMVgetAngle",
+   70   1                      (uint16_t       )configDEFAULT_STACK_SIZE,
+   71   1                      (void*          )NULL,
+   72   1                      (UBaseType_t    )(configDEFAULT_PRIORITIES)+4,
+   73   1                      (TaskHandle_t*  )NULL);
+   74   1          xTaskCreate((TaskFunction_t )moudle8266,
+   75   1                      (const char*    )"moudle8266",
+   76   1                      (uint16_t       )configDEFAULT_STACK_SIZE,
+   77   1                      (void*          )NULL,
+   78   1                      (UBaseType_t    )(configDEFAULT_PRIORITIES)+4,
+   79   1                      (TaskHandle_t*  )NULL);
+   80   1          xTaskCreate((TaskFunction_t )uart4frame,
+   81   1                      (const char*    )"moudle8266",
+   82   1                      (uint16_t       )configDEFAULT_STACK_SIZE,
+   83   1                      (void*          )NULL,
+   84   1                      (UBaseType_t    )(configDEFAULT_PRIORITIES)+4,
+   85   1                      (TaskHandle_t*  )NULL);
+   86   1          // xTaskCreate((TaskFunction_t )vDisplayTask,
+   87   1          //             (const char*    )"DISPLAY",
+   88   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
+   89   1          //             (void*          )NULL,
+   90   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES + 1),
+   91   1          //             (TaskHandle_t*  )NULL);
+   92   1          // xTaskCreate((TaskFunction_t )vRtcTask,
+   93   1          //             (const char*    )"RTC",
+   94   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
+   95   1          //             (void*          )NULL,
+   96   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES + 1),
+   97   1          //             (TaskHandle_t*  )NULL);
+   98   1          // xTaskCreate((TaskFunction_t )vAdcKeyTask,
+   99   1          //             (const char*    )"ADCKEY",
+  100   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
+  101   1          //             (void*          )NULL,
+  102   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES),
+  103   1          //             (TaskHandle_t*  )NULL);
+  104   1          // xTaskCreate((TaskFunction_t )vNtcTask,
+  105   1          //             (const char*    )"NTC",
+  106   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
+  107   1          //             (void*          )NULL,
+  108   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES),
+  109   1          //             (TaskHandle_t*  )NULL);
+  110   1          // xTaskCreate((TaskFunction_t )vUart2_3Task,
+  111   1          //             (const char*    )"UART2_3",
+  112   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
+  113   1          //             (void*          )1000,  //注意pvParameters参数传地址或者立即数时只有低24位是有效位，最
              -高8位编译时会自动填0. 可通过变量或者常量传送32字节数据.
-  107   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES),
-  108   1          //             (TaskHandle_t*  )NULL);
-  109   1          // xTaskCreate((TaskFunction_t )vMatrixKeyTask,
-  110   1          //             (const char*    )"MatrixKey",
-  111   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
-  112   1          //             (void*          )NULL,
-  113   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES),
-  114   1          //             (TaskHandle_t*  )NULL);
-  115   1          // xTaskCreate((TaskFunction_t )vI2C_PsTask,
-  116   1          //             (const char*    )"I2C_PS",
-  117   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
-  118   1          //             (void*          )NULL,
-  119   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES),
-  120   1          //             (TaskHandle_t*  )NULL);
-  121   1          // xTaskCreate((TaskFunction_t )vPWMB_LedTask,
-  122   1          //             (const char*    )"PWMB_LED",
-C251 COMPILER V5.60.0,  main                                                               26/07/24  20:47:21  PAGE 3   
+  114   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES),
+  115   1          //             (TaskHandle_t*  )NULL);
+  116   1          // xTaskCreate((TaskFunction_t )vMatrixKeyTask,
+  117   1          //             (const char*    )"MatrixKey",
+  118   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
+  119   1          //             (void*          )NULL,
+  120   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES),
+  121   1          //             (TaskHandle_t*  )NULL);
+  122   1          // xTaskCreate((TaskFunction_t )vI2C_PsTask,
+C251 COMPILER V5.60.0,  main                                                               27/07/24  16:12:50  PAGE 3   
 
-  123   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
-  124   1          //             (void*          )NULL,
-  125   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES),
-  126   1          //             (TaskHandle_t*  )NULL);
-  127   1      
-  128   1          /* 启动任务调度器开始任务调度 */
-  129   1          vTaskStartScheduler();
-  130   1      
-  131   1          /* 正常情况下不会运行到此处 */
-  132   1          while (1){};
-  133   1      }
-  134          void motorInit(void){
-  135   1        STBY_6612 = 1;
-  136   1        AIN1_6612 = 0;
-  137   1        AIN2_6612 = 0;
-  138   1        BIN1_6612 = 0;
-  139   1        BIN2_6612 = 0;
+  123   1          //             (const char*    )"I2C_PS",
+  124   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
+  125   1          //             (void*          )NULL,
+  126   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES),
+  127   1          //             (TaskHandle_t*  )NULL);
+  128   1          // xTaskCreate((TaskFunction_t )vPWMB_LedTask,
+  129   1          //             (const char*    )"PWMB_LED",
+  130   1          //             (uint16_t       )configDEFAULT_STACK_SIZE,
+  131   1          //             (void*          )NULL,
+  132   1          //             (UBaseType_t    )(configDEFAULT_PRIORITIES),
+  133   1          //             (TaskHandle_t*  )NULL);
+  134   1      
+  135   1          /* 启动任务调度器开始任务调度 */
+  136   1          vTaskStartScheduler();
+  137   1      
+  138   1          /* 正常情况下不会运行到此处 */
+  139   1          while (1){};
   140   1      }
+  141          void motorInit(void){
+  142   1        STBY_6612 = 1;
+  143   1        AIN1_6612 = 0;
+  144   1        AIN2_6612 = 0;
+  145   1        BIN1_6612 = 0;
+  146   1        BIN2_6612 = 0;
+  147   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       247     ------
+  code size            =       278     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
