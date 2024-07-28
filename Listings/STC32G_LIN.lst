@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_LIN                                                         24/07/24  21:03:22  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_LIN                                                         28/07/24  14:10:12  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_LIN
@@ -66,7 +66,7 @@ stmt  level    source
    54          // 备注: 
    55          //========================================================================
    56          void LinReadMsg(uint8_t *pdat)
-C251 COMPILER V5.60.0,  STC32G_LIN                                                         24/07/24  21:03:22  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_LIN                                                         28/07/24  14:10:12  PAGE 2   
 
    57          {
    58   1              uint8_t i;
@@ -134,7 +134,7 @@ stmt  level    source
   120          // 参数: none.
   121          // 返回: LIN总线状态.
   122          // 版本: VER1.0
-C251 COMPILER V5.60.0,  STC32G_LIN                                                         24/07/24  21:03:22  PAGE 3   
+C251 COMPILER V5.60.0,  STC32G_LIN                                                         28/07/24  14:10:12  PAGE 3   
 
   123          // 日期: 2021-01-05
   124          // 备注: 
@@ -202,7 +202,7 @@ stmt  level    source
   186          // 备注: 
   187          //========================================================================
   188          void ResponseTxCmd(void)
-C251 COMPILER V5.60.0,  STC32G_LIN                                                         24/07/24  21:03:22  PAGE 4   
+C251 COMPILER V5.60.0,  STC32G_LIN                                                         28/07/24  14:10:12  PAGE 4   
 
   189          {
   190   1              uint8_t lcr_val;
@@ -270,7 +270,7 @@ stmt  level    source
   252          // 日期: 2021-01-05
   253          // 备注: 
   254          //========================================================================
-C251 COMPILER V5.60.0,  STC32G_LIN                                                         24/07/24  21:03:22  PAGE 5   
+C251 COMPILER V5.60.0,  STC32G_LIN                                                         28/07/24  14:10:12  PAGE 5   
 
   255          void LinSendFrame(uint8_t lid, uint8_t *pdat)
   256          {
@@ -338,7 +338,7 @@ stmt  level    source
   318          //========================================================================
   319          void LinSetHeadDelay(uint8_t base_ms, uint8_t prescaler)
   320          {
-C251 COMPILER V5.60.0,  STC32G_LIN                                                         24/07/24  21:03:22  PAGE 6   
+C251 COMPILER V5.60.0,  STC32G_LIN                                                         28/07/24  14:10:12  PAGE 6   
 
   321   1              uint16_t tmp;
   322   1              tmp = (MAIN_Fosc * base_ms) / 1000;

@@ -1,1 +1,0 @@
-"Sources\Driver\isr\STC32G_LIN_Isr.c" XSMALL FUNCTIONS (REENTRANT) OPTIMIZE (4,SPEED) BROWSE INCDIR(.\Sources\User;.\Sources\User\include;.\Sources\FreeRTOS\include;.\Sources\FreeRTOS\portable\STC32G12K128;.\Sources\Driver\inc;.\Sources\Task\inc) DEBUG PRINT(.\Listings\STC32G_LIN_Isr.lst) OBJECT(.\Objects\STC32G_LIN_Isr.obj)

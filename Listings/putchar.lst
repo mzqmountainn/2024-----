@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  putchar                                                            26/07/24  19:26:12  PAGE 1   
+C251 COMPILER V5.60.0,  putchar                                                            28/07/24  14:10:10  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE putchar
@@ -66,7 +66,7 @@ stmt  level    source
                char putchar(char c)
                {
                        TX4_write2buff(c);
-C251 COMPILER V5.60.0,  putchar                                                            26/07/24  19:26:12  PAGE 2   
+C251 COMPILER V5.60.0,  putchar                                                            28/07/24  14:10:10  PAGE 2   
 
                        return c;
                }

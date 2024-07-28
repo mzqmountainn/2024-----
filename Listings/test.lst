@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  test                                                               27/07/24  20:04:07  PAGE 1   
+C251 COMPILER V5.60.0,  test                                                               28/07/24  15:23:19  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE test
@@ -21,423 +21,440 @@ stmt  level    source
    10          #include "math.h"
    11          #include        "STC32G_PWM.h"
    12          #include "mzqGlobal.h"
-   13          extern void TX1_write2buff(uint8_t dat);
-   14          extern void TX2_write2buff(uint8_t dat);
-   15          
-   16          float LeftSpeed =0;
-   17          float RightSpeed=0;
-   18          //Ä¿±êËÙ¶È
-   19          int targetSpeed = 10; 
-   20          extern PWMx_Duty PWMA_Duty;
-   21          pid_param_t pid1;
-   22          pid_param_t pid2;
-   23          pid_param_t pidLoc;
-   24          /// @brief Î»ÖÃÊ½pid·µ»Øpwm²îÖµ
-   25          int pwmDeltaPIDloc = 0;
-   26          QueueHandle_t pwmUpdateSignal = NULL;
-   27          //´®¿Ú2½ÓÊÕµ½µÄopenmvÔ­Ê¼Êý¾Ý
-   28          char rawAngleFromOPENMV[8] = {0x00/*0x2c,0x12,0x00,0x01,0x01,0x01,0x01,0x01*/};
-   29          //´æ´¢´¦ÀíºóµÄÊý¾Ý
-   30          int realAngle = 0;
-   31          //Í¨¹ý8266»ñÈ¡µ½µÄÊÇ·ñÔËÐÐÖ¸Áî
-   32          char runFlagFrom8266 = 1;
-   33          
-   34          extern char *itoa(int num, char *str, int radix);
-   35          void motorTEST(void);
-   36          char *floatToString(float num, int precision, char *str);
-   37          
-   38          void pidControl(void){
-   39   1        static int pwmaDuty1Raw, pwmaDuty2Raw;
-   40   1        //pidLoc.kp = (LeftSpeed + RightSpeed) / 2.0;
-   41   1        pwmDeltaPIDloc = PidLocCtrl(&pidLoc, realAngle);
-   42   1        pwmDeltaPIDloc = (int)constrain_float(pwmDeltaPIDloc, -50, 50);
-   43   1        // PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (targetSpeed - LeftSpeed )/EncoderPerLength+pwmDeltaPIDloc);
-   44   1        // PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (targetSpeed - RightSpeed)/EncoderPerLength-pwmDeltaPIDloc);
-   45   1        pwmaDuty1Raw+=PidIncCtrl(&pid1, (targetSpeed - LeftSpeed )/EncoderPerLength+pwmDeltaPIDloc);
-   46   1        pwmaDuty2Raw+=PidIncCtrl(&pid2, (targetSpeed - RightSpeed)/EncoderPerLength-pwmDeltaPIDloc);
-   47   1        if(pwmaDuty1Raw>=2400)
-   48   1          pwmaDuty1Raw = 2300;
-   49   1        if(pwmaDuty2Raw>=2400)
-   50   1          pwmaDuty2Raw = 2300;
-   51   1        if(pwmaDuty1Raw<= -2400)
-   52   1          pwmaDuty1Raw = 2300;
-   53   1        if(pwmaDuty2Raw<= -2400)
-   54   1          pwmaDuty2Raw = 2300;
-   55   1        if(pwmaDuty1Raw>=0){
-   56   2          AIN1_6612 = 1;
-   57   2          AIN2_6612 = 0;
-C251 COMPILER V5.60.0,  test                                                               27/07/24  20:04:07  PAGE 2   
+   13          #include "lcd.h"
+   14          #include "lcd_init.h"
+   15          extern void TX1_write2buff(uint8_t dat);
+   16          extern void TX2_write2buff(uint8_t dat);
+   17          
+   18          float LeftSpeed =0;
+   19          float RightSpeed=0;
+   20          //Ä¿±êËÙ¶È
+   21          int targetSpeed = 10; 
+   22          extern PWMx_Duty PWMA_Duty;
+   23          pid_param_t pid1;
+   24          pid_param_t pid2;
+   25          pid_param_t pidLoc;
+   26          /// @brief Î»ÖÃÊ½pid·µ»Øpwm²îÖµ
+   27          int pwmDeltaPIDloc = 0;
+   28          QueueHandle_t pwmUpdateSignal = NULL;
+   29          //´®¿Ú2½ÓÊÕµ½µÄopenmvÔ­Ê¼Êý¾Ý
+   30          char rawAngleFromOPENMV[8] = {0x00/*0x2c,0x12,0x00,0x01,0x01,0x01,0x01,0x01*/};
+   31          //´æ´¢´¦ÀíºóµÄÊý¾Ý
+   32          int realAngle = 0;
+   33          //Í¨¹ý8266»ñÈ¡µ½µÄÊÇ·ñÔËÐÐÖ¸Áî
+   34          char runFlagFrom8266 = 1;
+   35          
+   36          extern char *itoa(int num, char *str, int radix);
+   37          void motorTEST(void);
+   38          char *floatToString(float num, int precision, char *str);
+   39          
+   40          void pidControl(void){
+   41   1        static int pwmaDuty1Raw, pwmaDuty2Raw;
+   42   1        //pidLoc.kp = (LeftSpeed + RightSpeed) / 2.0;
+   43   1        pwmDeltaPIDloc = PidLocCtrl(&pidLoc, realAngle);
+   44   1        pwmDeltaPIDloc = (int)constrain_float(pwmDeltaPIDloc, -50, 50);
+   45   1        // PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (targetSpeed - LeftSpeed )/EncoderPerLength+pwmDeltaPIDloc);
+   46   1        // PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (targetSpeed - RightSpeed)/EncoderPerLength-pwmDeltaPIDloc);
+   47   1        pwmaDuty1Raw+=PidIncCtrl(&pid1, (targetSpeed - LeftSpeed )/EncoderPerLength+pwmDeltaPIDloc);
+   48   1        pwmaDuty2Raw+=PidIncCtrl(&pid2, (targetSpeed - RightSpeed)/EncoderPerLength-pwmDeltaPIDloc);
+   49   1        if(pwmaDuty1Raw>=2400)
+   50   1          pwmaDuty1Raw = 2300;
+   51   1        if(pwmaDuty2Raw>=2400)
+   52   1          pwmaDuty2Raw = 2300;
+   53   1        if(pwmaDuty1Raw<= -2400)
+   54   1          pwmaDuty1Raw = 2300;
+   55   1        if(pwmaDuty2Raw<= -2400)
+   56   1          pwmaDuty2Raw = 2300;
+   57   1        if(pwmaDuty1Raw>=0){
+C251 COMPILER V5.60.0,  test                                                               28/07/24  15:23:19  PAGE 2   
 
-   58   2          PWMA_Duty.PWM1_Duty = pwmaDuty1Raw;
-   59   2        }else{
-   60   2          AIN1_6612 = 0;
-   61   2          AIN2_6612 = 1;
-   62   2          PWMA_Duty.PWM1_Duty = 0-pwmaDuty1Raw;
-   63   2        }
-   64   1        if(pwmaDuty2Raw>=0){
-   65   2          BIN1_6612 = 1;
-   66   2          BIN2_6612 = 0;
-   67   2          PWMA_Duty.PWM2_Duty = pwmaDuty2Raw;
-   68   2        }else{
-   69   2          BIN1_6612 = 0;
-   70   2          BIN2_6612 = 1;
-   71   2          PWMA_Duty.PWM2_Duty = 0-pwmaDuty2Raw;
-   72   2        }
-   73   1        if(PWMA_Duty.PWM1_Duty>=2400)
-   74   1          PWMA_Duty.PWM1_Duty = 2300;
-   75   1        if(PWMA_Duty.PWM2_Duty>=2300)
-   76   1          PWMA_Duty.PWM2_Duty = 2400;
-   77   1        xSemaphoreGive(pwmUpdateSignal);
-   78   1      }
-   79          
-   80          //¼ÆËãÐ¡³µËÙ¶È²¢½øÐÐpid¿ØÖÆ
-   81          void outputSpeed(void *pvParameters){
-   82   1        int Encoder1count = 0;//×ó
-   83   1        int Encoder2count = 0;//ÓÒ
-   84   1        char output[15];
-   85   1        pvParameters = pvParameters;
-*** WARNING C138 IN LINE 85 OF Sources\Task\src\test.c: expression with possibly no effect
-   86   1        while (1)
-   87   1        {
-   88   2          T3R = 0;//Í£Ö¹¶¨Ê±Æ÷¹¤×÷
-   89   2          T4R = 0;
-   90   2      
-   91   2          Encoder1count = (T3H << 8) | T3L;
-   92   2          //itoa(Encoder1count, output, 10);
-   93   2          //PrintString1(output);
-   94   2          T3H = 0;
-   95   2          T3L = 0;
-   96   2      
-   97   2          
-   98   2          Encoder2count = (T4H << 8) | T4L;
-   99   2          //itoa(Encoder1count, output, 10);
-  100   2          //PrintString1(output);
-  101   2          T4H = 0;
-  102   2          T4L = 0;
-  103   2      
-  104   2          LeftSpeed = Encoder1count * EncoderPerLength *10;
-  105   2          RightSpeed = Encoder2count * EncoderPerLength*10;
-  106   2          //³£¹æÏò´®¿Ú1·¢ËÍ
-  107   2          // floatToString(LeftSpeed, 6, output);
-  108   2          // PrintString1(output);
-  109   2          // floatToString(RightSpeed, 6, output);
+   58   2          AIN1_6612 = 1;
+   59   2          AIN2_6612 = 0;
+   60   2          PWMA_Duty.PWM1_Duty = pwmaDuty1Raw;
+   61   2        }else{
+   62   2          AIN1_6612 = 0;
+   63   2          AIN2_6612 = 1;
+   64   2          PWMA_Duty.PWM1_Duty = 0-pwmaDuty1Raw;
+   65   2        }
+   66   1        if(pwmaDuty2Raw>=0){
+   67   2          BIN1_6612 = 1;
+   68   2          BIN2_6612 = 0;
+   69   2          PWMA_Duty.PWM2_Duty = pwmaDuty2Raw;
+   70   2        }else{
+   71   2          BIN1_6612 = 0;
+   72   2          BIN2_6612 = 1;
+   73   2          PWMA_Duty.PWM2_Duty = 0-pwmaDuty2Raw;
+   74   2        }
+   75   1        if(PWMA_Duty.PWM1_Duty>=2400)
+   76   1          PWMA_Duty.PWM1_Duty = 2300;
+   77   1        if(PWMA_Duty.PWM2_Duty>=2300)
+   78   1          PWMA_Duty.PWM2_Duty = 2400;
+   79   1        xSemaphoreGive(pwmUpdateSignal);
+   80   1      }
+   81          
+   82          //¼ÆËãÐ¡³µËÙ¶È²¢½øÐÐpid¿ØÖÆ
+   83          void outputSpeed(void *pvParameters){
+   84   1        int Encoder1count = 0;//×ó
+   85   1        int Encoder2count = 0;//ÓÒ
+   86   1        char output[15];
+   87   1        pvParameters = pvParameters;
+*** WARNING C138 IN LINE 87 OF Sources\Task\src\test.c: expression with possibly no effect
+   88   1        while (1)
+   89   1        {
+   90   2          T3R = 0;//Í£Ö¹¶¨Ê±Æ÷¹¤×÷
+   91   2          T4R = 0;
+   92   2      
+   93   2          Encoder1count = (T3H << 8) | T3L;
+   94   2          //itoa(Encoder1count, output, 10);
+   95   2          //PrintString1(output);
+   96   2          T3H = 0;
+   97   2          T3L = 0;
+   98   2      
+   99   2          
+  100   2          Encoder2count = (T4H << 8) | T4L;
+  101   2          //itoa(Encoder1count, output, 10);
+  102   2          //PrintString1(output);
+  103   2          T4H = 0;
+  104   2          T4L = 0;
+  105   2      
+  106   2          LeftSpeed = Encoder1count * EncoderPerLength *10;
+  107   2          RightSpeed = Encoder2count * EncoderPerLength*10;
+  108   2          //³£¹æÏò´®¿Ú1·¢ËÍ
+  109   2          // floatToString(LeftSpeed, 6, output);
   110   2          // PrintString1(output);
-  111   2      
-  112   2          //Í¨¹ýesp8266·¢ËÍ
-  113   2          // floatToString(LeftSpeed, 6, output);
-  114   2          // PrintString3(output);
-  115   2          // PrintString3("  ");
-  116   2          // floatToString(RightSpeed, 6, output);
-  117   2          // PrintString3(output);
-  118   2          // PrintString3("\n");
-  119   2      
-  120   2          //PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (35 - LeftSpeed )/EncoderPerLength);
-  121   2          //PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (35 - RightSpeed)/EncoderPerLength);
-  122   2      
-C251 COMPILER V5.60.0,  test                                                               27/07/24  20:04:07  PAGE 3   
+  111   2          // floatToString(RightSpeed, 6, output);
+  112   2          // PrintString1(output);
+  113   2      
+  114   2          //Í¨¹ýesp8266·¢ËÍ
+  115   2          // floatToString(LeftSpeed, 6, output);
+  116   2          // PrintString3(output);
+  117   2          // PrintString3("  ");
+  118   2          // floatToString(RightSpeed, 6, output);
+  119   2          // PrintString3(output);
+  120   2          // PrintString3("\n");
+  121   2      
+  122   2          //PWMA_Duty.PWM1_Duty+=PidIncCtrl(&pid1, (35 - LeftSpeed )/EncoderPerLength);
+C251 COMPILER V5.60.0,  test                                                               28/07/24  15:23:19  PAGE 3   
 
-  123   2      
-  124   2          T3R = 1;//Æô¶¯¶¨Ê±Æ÷
-  125   2          T4R = 1;
-  126   2          if(runFlagFrom8266){
-  127   3            pidControl();}
-  128   2          //xSemaphoreGive(pwmUpdateSignal);
-  129   2          vTaskDelay(100);
-  130   2        }
-  131   1        
-  132   1      }
-*** WARNING C47 IN LINE 84 OF Sources\Task\src\test.c: 'output': unreferenced local variable
-  133          //pid¸üÐÂ
-  134          void PWMupdate(void *pvParameters){
-  135   1        static int duty = 600;
-  136   1        pvParameters = pvParameters;
-*** WARNING C138 IN LINE 136 OF Sources\Task\src\test.c: expression with possibly no effect
-  137   1        motorTEST();
-  138   1        while (1)
-  139   1        {
-  140   2          xSemaphoreTake(pwmUpdateSignal, portMAX_DELAY);
-  141   2          //PWMA_Duty.PWM1_Duty = duty;
-  142   2          //PWMA_Duty.PWM2_Duty = duty;
-  143   2          UpdatePwm(PWMA, &PWMA_Duty);
-  144   2          vTaskDelay(50);
-  145   2          //vTaskDelay(500);
-  146   2        }
-  147   1      }
-  148          
-  149          void motorTEST(void){
-  150   1        AIN1_6612 = 1;
-  151   1        AIN2_6612 = 0;
-  152   1        STBY_6612 = 1;
-  153   1        BIN1_6612 = 1;
-  154   1        BIN2_6612 = 0;
-  155   1      }
-  156          
-  157          //´®¿Ú2½ÓÊÜopenmvÐÅÏ¢
-  158          void openMVgetAngle(void *pvParameters){
-  159   1        int i = 0;
-  160   1        char temp[15];
-  161   1        pvParameters = pvParameters;
-*** WARNING C138 IN LINE 161 OF Sources\Task\src\test.c: expression with possibly no effect
-  162   1        while (1)
-  163   1        {
-  164   2          if(COM2.RX_TimeOut > 0 && --COM2.RX_TimeOut == 0 ){
-  165   3                              
-  166   3                              //1.2 ÅÐ¶ÏÊÕµ½µÄÊý¾Ý³¤¶È > 0
-  167   3                              if(COM2.RX_Cnt > 0 ){
-  168   4                                      
-  169   4                                      //1.3 »ñÈ¡Êý¾Ý :: Êý¾Ý×°ÔÚ RX1_Buffer Êý×éÀïÃæÈ¥ ÄÃµ½Ö®ºóÖ±½Ó·¢¸øPC¡£
-  170   4              // for(i = 0 ; i < COM2.RX_Cnt  ; i++){
-  171   4                                      //      TX1_write2buff(RX2_Buffer[i]);
-  172   4                                      // }
-  173   4                                      RX2_Buffer[COM2.RX_Cnt] = '\0';
-  174   4              //PrintString1(RX2_Buffer);
-  175   4                                      //strcpy(rawAngleFromOPENMV,RX2_Buffer);  !!!ÎÊÌâ
+  123   2          //PWMA_Duty.PWM2_Duty+=PidIncCtrl(&pid2, (35 - RightSpeed)/EncoderPerLength);
+  124   2      
+  125   2      
+  126   2          T3R = 1;//Æô¶¯¶¨Ê±Æ÷
+  127   2          T4R = 1;
+  128   2          if(runFlagFrom8266){
+  129   3            pidControl();}
+  130   2          //xSemaphoreGive(pwmUpdateSignal);
+  131   2          vTaskDelay(100);
+  132   2        }
+  133   1        
+  134   1      }
+*** WARNING C47 IN LINE 86 OF Sources\Task\src\test.c: 'output': unreferenced local variable
+  135          //pid¸üÐÂ
+  136          void PWMupdate(void *pvParameters){
+  137   1        static int duty = 600;
+  138   1        pvParameters = pvParameters;
+*** WARNING C138 IN LINE 138 OF Sources\Task\src\test.c: expression with possibly no effect
+  139   1        motorTEST();
+  140   1        while (1)
+  141   1        {
+  142   2          xSemaphoreTake(pwmUpdateSignal, portMAX_DELAY);
+  143   2          //PWMA_Duty.PWM1_Duty = duty;
+  144   2          //PWMA_Duty.PWM2_Duty = duty;
+  145   2          UpdatePwm(PWMA, &PWMA_Duty);
+  146   2          vTaskDelay(50);
+  147   2          //vTaskDelay(500);
+  148   2        }
+  149   1      }
+  150          
+  151          void motorTEST(void){
+  152   1        AIN1_6612 = 1;
+  153   1        AIN2_6612 = 0;
+  154   1        STBY_6612 = 1;
+  155   1        BIN1_6612 = 1;
+  156   1        BIN2_6612 = 0;
+  157   1      }
+  158          
+  159          //´®¿Ú2½ÓÊÜopenmvÐÅÏ¢
+  160          void openMVgetAngle(void *pvParameters){
+  161   1        int i = 0;
+  162   1        char temp[15];
+  163   1        pvParameters = pvParameters;
+*** WARNING C138 IN LINE 163 OF Sources\Task\src\test.c: expression with possibly no effect
+  164   1        while (1)
+  165   1        {
+  166   2          if(COM2.RX_TimeOut > 0 && --COM2.RX_TimeOut == 0 ){
+  167   3                              
+  168   3                              //1.2 ÅÐ¶ÏÊÕµ½µÄÊý¾Ý³¤¶È > 0
+  169   3                              if(COM2.RX_Cnt > 0 ){
+  170   4                                      
+  171   4                                      //1.3 »ñÈ¡Êý¾Ý :: Êý¾Ý×°ÔÚ RX1_Buffer Êý×éÀïÃæÈ¥ ÄÃµ½Ö®ºóÖ±½Ó·¢¸øPC¡£
+  172   4              // for(i = 0 ; i < COM2.RX_Cnt  ; i++){
+  173   4                                      //      TX1_write2buff(RX2_Buffer[i]);
+  174   4                                      // }
+  175   4                                      RX2_Buffer[COM2.RX_Cnt] = '\0';
   176   4              //PrintString1(RX2_Buffer);
-  177   4              for ( i = 0; i < COM2.RX_Cnt; i++)
-  178   4              {
-  179   5                temp[i] = RX2_Buffer[i];
-  180   5              }
-  181   4              //PrintString1(temp);
-  182   4              if(temp[0]==0x2c /*&& temp[1] == 0x12 &&temp[5] == 0x5b&&temp[6] == 0xdd*/){
-  183   5                realAngle = temp[3];
-  184   5                if(temp[2] == 2){ //³µÍ·³¯×ó2 ³¯ÓÒ1
-  185   6                  realAngle = 0 - realAngle;
-C251 COMPILER V5.60.0,  test                                                               27/07/24  20:04:07  PAGE 4   
+  177   4                                      //strcpy(rawAngleFromOPENMV,RX2_Buffer);  !!!ÎÊÌâ
+  178   4              //PrintString1(RX2_Buffer);
+  179   4              for ( i = 0; i < COM2.RX_Cnt; i++)
+  180   4              {
+  181   5                temp[i] = RX2_Buffer[i];
+  182   5              }
+  183   4              //PrintString1(temp);
+  184   4              if(temp[0]==0x2c /*&& temp[1] == 0x12 &&temp[5] == 0x5b&&temp[6] == 0xdd*/){
+  185   5                realAngle = temp[3];
+C251 COMPILER V5.60.0,  test                                                               28/07/24  15:23:19  PAGE 4   
 
-  186   6                }
-  187   5                // itoa(realAngle, temp, 10);
-  188   5                // PrintString1(temp);
-  189   5              }
-  190   4                              }
-  191   3                              COM2.RX_Cnt  = 0 ;
-  192   3            
-  193   3                      }
-  194   2      
-  195   2          vTaskDelay(10);
-  196   2        }
-  197   1        
-  198   1      }
-  199          
-  200          //´®¿Ú3½ÓÊÜesp8266ÐÅÏ¢
-  201          void moudle8266(void *pvParameters){
-  202   1        static char IfFirstIn = 1;
-  203   1        int i = 0;
-  204   1        char temp[15];
-  205   1        pvParameters = pvParameters;
-*** WARNING C138 IN LINE 205 OF Sources\Task\src\test.c: expression with possibly no effect
-  206   1        while (1)
-  207   1        {
-  208   2          if(IfFirstIn){
-  209   3            IfFirstIn = 0;
-  210   3            vTaskDelay(3000);
-  211   3          }
-  212   2          if(COM3.RX_TimeOut > 0 && --COM3.RX_TimeOut == 0 ){
-  213   3                              
-  214   3                              //1.2 ÅÐ¶ÏÊÕµ½µÄÊý¾Ý³¤¶È > 0
-  215   3                              if(COM3.RX_Cnt > 0 ){
-  216   4                                      
-  217   4                                      //1.3 »ñÈ¡Êý¾Ý :: Êý¾Ý×°ÔÚ RX1_Buffer Êý×éÀïÃæÈ¥ ÄÃµ½Ö®ºóÖ±½Ó·¢¸øPC¡£
-  218   4              // for(i = 0 ; i < COM2.RX_Cnt  ; i++){
-  219   4                                      //      TX1_write2buff(RX2_Buffer[i]);
-  220   4                                      // }
-  221   4                                      RX3_Buffer[COM3.RX_Cnt] = '\0';
-  222   4              //PrintString1(RX3_Buffer);
-  223   4              for ( i = 0; i < COM3.RX_Cnt; i++)
-  224   4              {
-  225   5                temp[i] = RX3_Buffer[i];
-  226   5              }
-  227   4              //PrintString1(temp);
-  228   4              if(temp[0]==0x11 && temp[1] == 0x22 ){
-  229   5                if(temp[2] == 0x01){
-  230   6                  runFlagFrom8266 = 1;
-  231   6                }
-  232   5                if(temp[2] == 0x02){
-  233   6                  runFlagFrom8266 = 0;
-  234   6                  PWMA_Duty.PWM1_Duty = 0;
-  235   6                  PWMA_Duty.PWM2_Duty = 0;
-  236   6                  xSemaphoreGive(pwmUpdateSignal);
-  237   6                }
-  238   5                //PrintString1(temp);
-  239   5                // itoa(realAngle, temp, 10);
-  240   5                // PrintString1(temp);
-  241   5              }
-  242   4                              }
-  243   3                              COM3.RX_Cnt  = 0 ;
-  244   3            for ( i = 0; i < 15; i++)
-  245   3              {
-  246   4                temp[i] = 0;
-  247   4              }
-  248   3            
-  249   3                      }
-  250   2      
-C251 COMPILER V5.60.0,  test                                                               27/07/24  20:04:07  PAGE 5   
+  186   5                if(temp[2] == 2){ //³µÍ·³¯×ó2 ³¯ÓÒ1
+  187   6                  realAngle = 0 - realAngle;
+  188   6                }
+  189   5                // itoa(realAngle, temp, 10);
+  190   5                // PrintString1(temp);
+  191   5              }
+  192   4                              }
+  193   3                              COM2.RX_Cnt  = 0 ;
+  194   3            
+  195   3                      }
+  196   2      
+  197   2          vTaskDelay(10);
+  198   2        }
+  199   1        
+  200   1      }
+  201          
+  202          //´®¿Ú3½ÓÊÜesp8266ÐÅÏ¢
+  203          void moudle8266(void *pvParameters){
+  204   1        static char IfFirstIn = 1;
+  205   1        int i = 0;
+  206   1        char temp[15];
+  207   1        pvParameters = pvParameters;
+*** WARNING C138 IN LINE 207 OF Sources\Task\src\test.c: expression with possibly no effect
+  208   1        while (1)
+  209   1        {
+  210   2          if(IfFirstIn){
+  211   3            IfFirstIn = 0;
+  212   3            vTaskDelay(3000);
+  213   3          }
+  214   2          if(COM3.RX_TimeOut > 0 && --COM3.RX_TimeOut == 0 ){
+  215   3                              
+  216   3                              //1.2 ÅÐ¶ÏÊÕµ½µÄÊý¾Ý³¤¶È > 0
+  217   3                              if(COM3.RX_Cnt > 0 ){
+  218   4                                      
+  219   4                                      //1.3 »ñÈ¡Êý¾Ý :: Êý¾Ý×°ÔÚ RX1_Buffer Êý×éÀïÃæÈ¥ ÄÃµ½Ö®ºóÖ±½Ó·¢¸øPC¡£
+  220   4              // for(i = 0 ; i < COM2.RX_Cnt  ; i++){
+  221   4                                      //      TX1_write2buff(RX2_Buffer[i]);
+  222   4                                      // }
+  223   4                                      RX3_Buffer[COM3.RX_Cnt] = '\0';
+  224   4              //PrintString1(RX3_Buffer);
+  225   4              for ( i = 0; i < COM3.RX_Cnt; i++)
+  226   4              {
+  227   5                temp[i] = RX3_Buffer[i];
+  228   5              }
+  229   4              //PrintString1(temp);
+  230   4              if(temp[0]==0x11 && temp[1] == 0x22 ){
+  231   5                if(temp[2] == 0x01){
+  232   6                  runFlagFrom8266 = 1;
+  233   6                }
+  234   5                if(temp[2] == 0x02){
+  235   6                  runFlagFrom8266 = 0;
+  236   6                  PWMA_Duty.PWM1_Duty = 0;
+  237   6                  PWMA_Duty.PWM2_Duty = 0;
+  238   6                  xSemaphoreGive(pwmUpdateSignal);
+  239   6                }
+  240   5                //PrintString1(temp);
+  241   5                // itoa(realAngle, temp, 10);
+  242   5                // PrintString1(temp);
+  243   5              }
+  244   4                              }
+  245   3                              COM3.RX_Cnt  = 0 ;
+  246   3            for ( i = 0; i < 15; i++)
+  247   3              {
+  248   4                temp[i] = 0;
+  249   4              }
+  250   3            
+C251 COMPILER V5.60.0,  test                                                               28/07/24  15:23:19  PAGE 5   
 
-  251   2          vTaskDelay(10);
-  252   2        }
-  253   1        
-  254   1      }
-  255          
-  256          //´®¿Ú4  Ô¤Áô
-  257          void uart4frame(void *pvParameters){
-  258   1        int i = 0;
-  259   1        char temp[15];
-  260   1        pvParameters = pvParameters;
-*** WARNING C138 IN LINE 260 OF Sources\Task\src\test.c: expression with possibly no effect
-  261   1        while (1)
-  262   1        {
-  263   2          if(COM4.RX_TimeOut > 0 && --COM4.RX_TimeOut == 0 ){
-  264   3                              
-  265   3                              //1.2 ÅÐ¶ÏÊÕµ½µÄÊý¾Ý³¤¶È > 0
-  266   3                              if(COM4.RX_Cnt > 0 ){
-  267   4                                      
-  268   4                                      //1.3 »ñÈ¡Êý¾Ý :: Êý¾Ý×°ÔÚ RX1_Buffer Êý×éÀïÃæÈ¥ ÄÃµ½Ö®ºóÖ±½Ó·¢¸øPC¡£
-  269   4              // for(i = 0 ; i < COM2.RX_Cnt  ; i++){
-  270   4                                      //      TX1_write2buff(RX2_Buffer[i]);
-  271   4                                      // }
-  272   4                                      RX4_Buffer[COM4.RX_Cnt] = '\0';
-  273   4              //PrintString1(RX4_Buffer);
-  274   4              for ( i = 0; i < COM4.RX_Cnt; i++)
-  275   4              {
-  276   5                temp[i] = RX4_Buffer[i];
-  277   5              }
-  278   4              PrintString1(temp);
-  279   4              if(temp[0]==0x11 && temp[1] == 0x22 ){
-  280   5                // if(temp[2] == 0x01){
-  281   5                //   runFlagFrom8266 = 1;
-  282   5                // }
-  283   5                // if(temp[2] == 0x02){
-  284   5                //   runFlagFrom8266 = 0;
-  285   5                //   PWMA_Duty.PWM1_Duty = 0;
-  286   5                //   PWMA_Duty.PWM2_Duty = 0;
-  287   5                //   xSemaphoreGive(pwmUpdateSignal);
-  288   5                // }
-  289   5                //PrintString1(temp);
-  290   5                // itoa(realAngle, temp, 10);
-  291   5                // PrintString1(temp);
-  292   5              }
-  293   4                              }
-  294   3                              COM4.RX_Cnt  = 0 ;
-  295   3            for ( i = 0; i < 15; i++)
-  296   3              {
-  297   4                temp[i] = 0;
-  298   4              }
-  299   3            
-  300   3                      }
-  301   2      
-  302   2          vTaskDelay(10);
-  303   2        }
-  304   1        
-  305   1      }
-  306          
-  307          char* itoa(int num,char* str,int radix)
-  308          {
-  309   1          char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//Ë÷Òý±í
-  310   1              char temp;//ÁÙÊ±±äÁ¿£¬½»»»Á½¸öÖµÊ±ÓÃµ½
-  311   1          unsigned unum;//´æ·ÅÒª×ª»»µÄÕûÊýµÄ¾ø¶ÔÖµ,×ª»»µÄÕûÊý¿ÉÄÜÊÇ¸ºÊý
-  312   1          int i=0,j,k;//iÓÃÀ´Ö¸Ê¾ÉèÖÃ×Ö·û´®ÏàÓ¦Î»£¬×ª»»Ö®ºóiÆäÊµ¾ÍÊÇ×Ö·û´®µÄ³¤¶È£»×ª»»ºóË³ÐòÊÇÄæÐòµÄ£¬ÓÐÕý¸ºµÄÇ
+  251   3                      }
+  252   2      
+  253   2          vTaskDelay(10);
+  254   2        }
+  255   1        
+  256   1      }
+  257          
+  258          //´®¿Ú4  Ô¤Áô
+  259          void uart4frame(void *pvParameters){
+  260   1        int i = 0;
+  261   1        char temp[15];
+  262   1        pvParameters = pvParameters;
+*** WARNING C138 IN LINE 262 OF Sources\Task\src\test.c: expression with possibly no effect
+  263   1        while (1)
+  264   1        {
+  265   2          if(COM4.RX_TimeOut > 0 && --COM4.RX_TimeOut == 0 ){
+  266   3                              
+  267   3                              //1.2 ÅÐ¶ÏÊÕµ½µÄÊý¾Ý³¤¶È > 0
+  268   3                              if(COM4.RX_Cnt > 0 ){
+  269   4                                      
+  270   4                                      //1.3 »ñÈ¡Êý¾Ý :: Êý¾Ý×°ÔÚ RX1_Buffer Êý×éÀïÃæÈ¥ ÄÃµ½Ö®ºóÖ±½Ó·¢¸øPC¡£
+  271   4              // for(i = 0 ; i < COM2.RX_Cnt  ; i++){
+  272   4                                      //      TX1_write2buff(RX2_Buffer[i]);
+  273   4                                      // }
+  274   4                                      RX4_Buffer[COM4.RX_Cnt] = '\0';
+  275   4              //PrintString1(RX4_Buffer);
+  276   4              for ( i = 0; i < COM4.RX_Cnt; i++)
+  277   4              {
+  278   5                temp[i] = RX4_Buffer[i];
+  279   5              }
+  280   4              PrintString1(temp);
+  281   4              if(temp[0]==0x11 && temp[1] == 0x22 ){
+  282   5                // if(temp[2] == 0x01){
+  283   5                //   runFlagFrom8266 = 1;
+  284   5                // }
+  285   5                // if(temp[2] == 0x02){
+  286   5                //   runFlagFrom8266 = 0;
+  287   5                //   PWMA_Duty.PWM1_Duty = 0;
+  288   5                //   PWMA_Duty.PWM2_Duty = 0;
+  289   5                //   xSemaphoreGive(pwmUpdateSignal);
+  290   5                // }
+  291   5                //PrintString1(temp);
+  292   5                // itoa(realAngle, temp, 10);
+  293   5                // PrintString1(temp);
+  294   5              }
+  295   4                              }
+  296   3                              COM4.RX_Cnt  = 0 ;
+  297   3            for ( i = 0; i < 15; i++)
+  298   3              {
+  299   4                temp[i] = 0;
+  300   4              }
+  301   3            
+  302   3                      }
+  303   2      
+  304   2          vTaskDelay(10);
+  305   2        }
+  306   1        
+  307   1      }
+  308          //lcd³õÊ¼»¯ÓëÏÔÊ¾³ÌÐò
+  309          void lcd(void *pvParameters){
+  310   1        pvParameters = pvParameters;
+*** WARNING C138 IN LINE 310 OF Sources\Task\src\test.c: expression with possibly no effect
+  311   1        LCD_Init();
+  312   1        LCD_Fill(0, 0, LCD_W, LCD_H, WHITE);
+  313   1        LCD_ShowChar(20, 20, 123, BLACK, WHITE, 16, 0);
+  314   1        while (1)
+C251 COMPILER V5.60.0,  test                                                               28/07/24  15:23:19  PAGE 6   
+
+  315   1        {
+  316   2          vTaskDelay(1000);
+  317   2        }
+  318   1        
+  319   1      
+  320   1      }
+  321          
+  322          
+  323          char* itoa(int num,char* str,int radix)
+  324          {
+  325   1          char index[]="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//Ë÷Òý±í
+  326   1              char temp;//ÁÙÊ±±äÁ¿£¬½»»»Á½¸öÖµÊ±ÓÃµ½
+  327   1          unsigned unum;//´æ·ÅÒª×ª»»µÄÕûÊýµÄ¾ø¶ÔÖµ,×ª»»µÄÕûÊý¿ÉÄÜÊÇ¸ºÊý
+  328   1          int i=0,j,k;//iÓÃÀ´Ö¸Ê¾ÉèÖÃ×Ö·û´®ÏàÓ¦Î»£¬×ª»»Ö®ºóiÆäÊµ¾ÍÊÇ×Ö·û´®µÄ³¤¶È£»×ª»»ºóË³ÐòÊÇÄæÐòµÄ£¬ÓÐÕý¸ºµÄÇ
              -é¿ö£¬kÓÃÀ´Ö¸Ê¾µ÷ÕûË³ÐòµÄ¿ªÊ¼Î»ÖÃ;jÓÃÀ´Ö¸Ê¾µ÷ÕûË³ÐòÊ±µÄ½»»»¡£
-  313   1       
-  314   1          //»ñÈ¡Òª×ª»»µÄÕûÊýµÄ¾ø¶ÔÖµ
-C251 COMPILER V5.60.0,  test                                                               27/07/24  20:04:07  PAGE 6   
-
-  315   1          if(radix==10&&num<0)//Òª×ª»»³ÉÊ®½øÖÆÊý²¢ÇÒÊÇ¸ºÊý
-  316   1          {
-  317   2              unum=(unsigned)-num;//½«numµÄ¾ø¶ÔÖµ¸³¸øunum
-  318   2              str[i++]='-';//ÔÚ×Ö·û´®×îÇ°ÃæÉèÖÃÎª'-'ºÅ£¬²¢ÇÒË÷Òý¼Ó1
-  319   2          }
-  320   1          else unum=(unsigned)num;//ÈôÊÇnumÎªÕý£¬Ö±½Ó¸³Öµ¸øunum
-  321   1       
-  322   1          //×ª»»²¿·Ö£¬×¢Òâ×ª»»ºóÊÇÄæÐòµÄ
-  323   1          do
-  324   1          {
-  325   2              str[i++]=index[unum%(unsigned)radix];//È¡unumµÄ×îºóÒ»Î»£¬²¢ÉèÖÃÎªstr¶ÔÓ¦Î»£¬Ö¸Ê¾Ë÷Òý¼Ó1
-  326   2              unum/=radix;//unumÈ¥µô×îºóÒ»Î»
-  327   2       
-  328   2          }while(unum);//Ö±ÖÁunumÎª0ÍË³öÑ­»·
   329   1       
-  330   1          str[i]='\0';//ÔÚ×Ö·û´®×îºóÌí¼Ó'\0'×Ö·û£¬cÓïÑÔ×Ö·û´®ÒÔ'\0'½áÊø¡£
-  331   1       
-  332   1          //½«Ë³Ðòµ÷Õû¹ýÀ´
-  333   1          if(str[0]=='-') k=1;//Èç¹ûÊÇ¸ºÊý£¬·ûºÅ²»ÓÃµ÷Õû£¬´Ó·ûºÅºóÃæ¿ªÊ¼µ÷Õû
-  334   1          else k=0;//²»ÊÇ¸ºÊý£¬È«²¿¶¼Òªµ÷Õû
-  335   1       
-  336   1      
-  337   1          for(j=k;j<=(i-1)/2;j++)//Í·Î²Ò»Ò»¶Ô³Æ½»»»£¬iÆäÊµ¾ÍÊÇ×Ö·û´®µÄ³¤¶È£¬Ë÷Òý×î´óÖµ±È³¤¶ÈÉÙ1
-  338   1          {
-  339   2              temp=str[j];//Í·²¿¸³Öµ¸øÁÙÊ±±äÁ¿
-  340   2              str[j]=str[i-1+k-j];//Î²²¿¸³Öµ¸øÍ·²¿
-  341   2              str[i-1+k-j]=temp;//½«ÁÙÊ±±äÁ¿µÄÖµ(ÆäÊµ¾ÍÊÇÖ®Ç°µÄÍ·²¿Öµ)¸³¸øÎ²²¿
-  342   2          }
-  343   1       
-  344   1          return str;//·µ»Ø×ª»»ºóµÄ×Ö·û´®
+  330   1          //»ñÈ¡Òª×ª»»µÄÕûÊýµÄ¾ø¶ÔÖµ
+  331   1          if(radix==10&&num<0)//Òª×ª»»³ÉÊ®½øÖÆÊý²¢ÇÒÊÇ¸ºÊý
+  332   1          {
+  333   2              unum=(unsigned)-num;//½«numµÄ¾ø¶ÔÖµ¸³¸øunum
+  334   2              str[i++]='-';//ÔÚ×Ö·û´®×îÇ°ÃæÉèÖÃÎª'-'ºÅ£¬²¢ÇÒË÷Òý¼Ó1
+  335   2          }
+  336   1          else unum=(unsigned)num;//ÈôÊÇnumÎªÕý£¬Ö±½Ó¸³Öµ¸øunum
+  337   1       
+  338   1          //×ª»»²¿·Ö£¬×¢Òâ×ª»»ºóÊÇÄæÐòµÄ
+  339   1          do
+  340   1          {
+  341   2              str[i++]=index[unum%(unsigned)radix];//È¡unumµÄ×îºóÒ»Î»£¬²¢ÉèÖÃÎªstr¶ÔÓ¦Î»£¬Ö¸Ê¾Ë÷Òý¼Ó1
+  342   2              unum/=radix;//unumÈ¥µô×îºóÒ»Î»
+  343   2       
+  344   2          }while(unum);//Ö±ÖÁunumÎª0ÍË³öÑ­»·
   345   1       
-  346   1      }
-  347          // ¶¨Òå½«¸¡µãÊý×ª»»Îª×Ö·û´®µÄº¯Êý
-  348          char* floatToString(float num, int precision, char* str) {
-  349   1          // ÔÚº¯Êý¿ªÍ·¶¨ÒåËùÓÐÐÂ±äÁ¿
-  350   1          int offset = 0;
-  351   1          int intPart;
-  352   1          float decPart;
-  353   1          char intStr[20]; // ¼ÙÉèÕûÊý²¿·Ö³¤¶È²»»á³¬¹ý20Î»
-  354   1          int i, j;
-  355   1          int digit;
-  356   1      
-  357   1          // ´¦Àí¸ºÊýÇé¿ö
-  358   1          if (num < 0) {
-  359   2              str[offset++] = '-';
-  360   2              num = -num;
-  361   2          }
-  362   1      
-  363   1          // ÌáÈ¡ÕûÊý²¿·Ö
-  364   1          intPart = (int)num;
-  365   1          decPart = num - intPart;
-  366   1      
-  367   1          // ½«ÕûÊý²¿·Ö×ª»»Îª×Ö·û´®
-  368   1          i = 0;
-  369   1          if (intPart == 0) {
-  370   2              intStr[i++] = '0';
-  371   2          } else {
-  372   2              while (intPart > 0) {
-  373   3                  intStr[i++] = (intPart % 10) + '0';
-  374   3                  intPart /= 10;
-  375   3              }
-  376   2              // ·´×ªÕûÊý²¿·Ö×Ö·û´®
-  377   2              for (j = 0; j < i / 2; j++) {
-  378   3                  char temp = intStr[j];
-  379   3                  intStr[j] = intStr[i - 1 - j];
-  380   3                  intStr[i - 1 - j] = temp;
-C251 COMPILER V5.60.0,  test                                                               27/07/24  20:04:07  PAGE 7   
+  346   1          str[i]='\0';//ÔÚ×Ö·û´®×îºóÌí¼Ó'\0'×Ö·û£¬cÓïÑÔ×Ö·û´®ÒÔ'\0'½áÊø¡£
+  347   1       
+  348   1          //½«Ë³Ðòµ÷Õû¹ýÀ´
+  349   1          if(str[0]=='-') k=1;//Èç¹ûÊÇ¸ºÊý£¬·ûºÅ²»ÓÃµ÷Õû£¬´Ó·ûºÅºóÃæ¿ªÊ¼µ÷Õû
+  350   1          else k=0;//²»ÊÇ¸ºÊý£¬È«²¿¶¼Òªµ÷Õû
+  351   1       
+  352   1      
+  353   1          for(j=k;j<=(i-1)/2;j++)//Í·Î²Ò»Ò»¶Ô³Æ½»»»£¬iÆäÊµ¾ÍÊÇ×Ö·û´®µÄ³¤¶È£¬Ë÷Òý×î´óÖµ±È³¤¶ÈÉÙ1
+  354   1          {
+  355   2              temp=str[j];//Í·²¿¸³Öµ¸øÁÙÊ±±äÁ¿
+  356   2              str[j]=str[i-1+k-j];//Î²²¿¸³Öµ¸øÍ·²¿
+  357   2              str[i-1+k-j]=temp;//½«ÁÙÊ±±äÁ¿µÄÖµ(ÆäÊµ¾ÍÊÇÖ®Ç°µÄÍ·²¿Öµ)¸³¸øÎ²²¿
+  358   2          }
+  359   1       
+  360   1          return str;//·µ»Ø×ª»»ºóµÄ×Ö·û´®
+  361   1       
+  362   1      }
+  363          // ¶¨Òå½«¸¡µãÊý×ª»»Îª×Ö·û´®µÄº¯Êý
+  364          char* floatToString(float num, int precision, char* str) {
+  365   1          // ÔÚº¯Êý¿ªÍ·¶¨ÒåËùÓÐÐÂ±äÁ¿
+  366   1          int offset = 0;
+  367   1          int intPart;
+  368   1          float decPart;
+  369   1          char intStr[20]; // ¼ÙÉèÕûÊý²¿·Ö³¤¶È²»»á³¬¹ý20Î»
+  370   1          int i, j;
+  371   1          int digit;
+  372   1      
+  373   1          // ´¦Àí¸ºÊýÇé¿ö
+  374   1          if (num < 0) {
+  375   2              str[offset++] = '-';
+  376   2              num = -num;
+  377   2          }
+  378   1      
+  379   1          // ÌáÈ¡ÕûÊý²¿·Ö
+C251 COMPILER V5.60.0,  test                                                               28/07/24  15:23:19  PAGE 7   
 
-  381   3              }
-  382   2          }
-  383   1          intStr[i] = '\0';
-  384   1      
-  385   1          // ½«ÕûÊý²¿·Ö¿½±´µ½Ä¿±ê×Ö·û´®
-  386   1          for (j = 0; intStr[j] != '\0'; j++) {
-  387   2              str[offset++] = intStr[j];
-  388   2          }
-  389   1      
-  390   1          // Ìí¼ÓÐ¡Êýµã
-  391   1          str[offset++] = '.';
-  392   1      
-  393   1          // ½«Ð¡Êý²¿·Ö×ª»»Îª×Ö·û´®
-  394   1          for (i = 0; i < precision; i++) {
-  395   2              decPart *= 10;
-  396   2              digit = (int)decPart;
-  397   2              str[offset++] = '0' + digit;
-  398   2              decPart -= digit;
-  399   2          }
+  380   1          intPart = (int)num;
+  381   1          decPart = num - intPart;
+  382   1      
+  383   1          // ½«ÕûÊý²¿·Ö×ª»»Îª×Ö·û´®
+  384   1          i = 0;
+  385   1          if (intPart == 0) {
+  386   2              intStr[i++] = '0';
+  387   2          } else {
+  388   2              while (intPart > 0) {
+  389   3                  intStr[i++] = (intPart % 10) + '0';
+  390   3                  intPart /= 10;
+  391   3              }
+  392   2              // ·´×ªÕûÊý²¿·Ö×Ö·û´®
+  393   2              for (j = 0; j < i / 2; j++) {
+  394   3                  char temp = intStr[j];
+  395   3                  intStr[j] = intStr[i - 1 - j];
+  396   3                  intStr[i - 1 - j] = temp;
+  397   3              }
+  398   2          }
+  399   1          intStr[i] = '\0';
   400   1      
-  401   1          // Ìí¼Ó×Ö·û´®½áÊø·û
-  402   1          str[offset] = '\0';
-  403   1      
-  404   1          return str;
-  405   1      }
+  401   1          // ½«ÕûÊý²¿·Ö¿½±´µ½Ä¿±ê×Ö·û´®
+  402   1          for (j = 0; intStr[j] != '\0'; j++) {
+  403   2              str[offset++] = intStr[j];
+  404   2          }
+  405   1      
+  406   1          // Ìí¼ÓÐ¡Êýµã
+  407   1          str[offset++] = '.';
+  408   1      
+  409   1          // ½«Ð¡Êý²¿·Ö×ª»»Îª×Ö·û´®
+  410   1          for (i = 0; i < precision; i++) {
+  411   2              decPart *= 10;
+  412   2              digit = (int)decPart;
+  413   2              str[offset++] = '0' + digit;
+  414   2              decPart -= digit;
+  415   2          }
+  416   1      
+  417   1          // Ìí¼Ó×Ö·û´®½áÊø·û
+  418   1          str[offset] = '\0';
+  419   1      
+  420   1          return str;
+  421   1      }
 
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =      1523     ------
+  code size            =      1584     ------
   ecode size           =    ------     ------
   data size            =    ------     ------
   idata size           =    ------     ------
@@ -456,4 +473,4 @@ Module Information          Static   Overlayable
 End of Module Information.
 
 
-C251 COMPILATION COMPLETE.  6 WARNING(S),  0 ERROR(S)
+C251 COMPILATION COMPLETE.  7 WARNING(S),  0 ERROR(S)

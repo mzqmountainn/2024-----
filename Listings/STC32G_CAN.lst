@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_CAN                                                         26/07/24  19:26:14  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_CAN                                                         28/07/24  14:10:11  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_CAN
@@ -66,7 +66,7 @@ stmt  level    source
    54          void CAN_Inilize(uint8_t CANx, CAN_InitTypeDef *CAN)
    55          {
    56   1              if(CANx == CAN1)
-C251 COMPILER V5.60.0,  STC32G_CAN                                                         26/07/24  19:26:14  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_CAN                                                         28/07/24  14:10:11  PAGE 2   
 
    57   1              {
    58   2                      CANSEL = CAN1;          //选择CAN1模块
@@ -134,7 +134,7 @@ stmt  level    source
   120   1              pdat[2]  = CanReadReg(RX_BUF2);
   121   1              pdat[3]  = CanReadReg(RX_BUF3);
   122   1      
-C251 COMPILER V5.60.0,  STC32G_CAN                                                         26/07/24  19:26:14  PAGE 3   
+C251 COMPILER V5.60.0,  STC32G_CAN                                                         28/07/24  14:10:11  PAGE 3   
 
   123   1              pdat[4]  = CanReadReg(RX_BUF0);
   124   1              pdat[5]  = CanReadReg(RX_BUF1);
@@ -202,7 +202,7 @@ stmt  level    source
   185   1      }
   186          
   187          //========================================================================
-C251 COMPILER V5.60.0,  STC32G_CAN                                                         26/07/24  19:26:14  PAGE 4   
+C251 COMPILER V5.60.0,  STC32G_CAN                                                         28/07/24  14:10:11  PAGE 4   
 
   188          // 函数: void CanSendStandardFrame(uint16_t canid, uint8_t *pdat)
   189          // 描述: CAN发送标准帧函数。
@@ -270,7 +270,7 @@ stmt  level    source
   249   1              CanWriteReg(TX_BUF1,0x00);
   250   1              CanWriteReg(TX_BUF2,0x00);
   251   1              CanWriteReg(TX_BUF3,0x00);
-C251 COMPILER V5.60.0,  STC32G_CAN                                                         26/07/24  19:26:14  PAGE 5   
+C251 COMPILER V5.60.0,  STC32G_CAN                                                         28/07/24  14:10:11  PAGE 5   
 
   252   1      
   253   1              CanWriteReg(CMR ,0x04);         //发起一次帧传输

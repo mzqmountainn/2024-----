@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  System_init                                                        27/07/24  16:16:37  PAGE 1   
+C251 COMPILER V5.60.0,  System_init                                                        28/07/24  14:37:48  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE System_init
@@ -66,7 +66,7 @@ stmt  level    source
    54   1              TIM_InitTypeDef         TIM_InitStructure;                                              //½á¹¹¶¨Òå
    55   1      //      TIM_InitStructure.TIM_Mode      = TIM_16BitAutoReload;  //Ö¸¶¨¹¤×÷Ä£Ê½,   TIM_16BitAutoReload,TIM_16Bit
              -,TIM_8BitAutoReload,TIM_16BitAutoReloadNoMask
-C251 COMPILER V5.60.0,  System_init                                                        27/07/24  16:16:37  PAGE 2   
+C251 COMPILER V5.60.0,  System_init                                                        28/07/24  14:37:48  PAGE 2   
 
    56   1      //      TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_1T;         //Ö¸¶¨Ê±ÖÓÔ´,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOC
              -K_Ext
@@ -134,7 +134,7 @@ stmt  level    source
   109   1        //    TIM_InitStructure.TIM_ClkOut    = ENABLE;                                       //ÊÇ·ñÊä³ö¸ßËÙÂö³å, ENABLE»òDISABLE
   110   1        //    TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / (50*12));              //³õÖµ
   111   1        //    TIM_InitStructure.TIM_Run       = ENABLE;                                       //ÊÇ·ñ³õÊ¼»¯ºóÆô¶¯¶¨Ê±Æ÷, ENABLE»òDISABLE
-C251 COMPILER V5.60.0,  System_init                                                        27/07/24  16:16:37  PAGE 3   
+C251 COMPILER V5.60.0,  System_init                                                        28/07/24  14:37:48  PAGE 3   
 
   112   1        //    Timer_Inilize(Timer4,&TIM_InitStructure);                                       //³õÊ¼»¯Timer4    Timer0,Timer1,Timer2,Timer3,Timer4
   113   1        //    NVIC_Timer4_Init(ENABLE,0);             //ÖÐ¶ÏÊ¹ÄÜ, ENABLE/DISABLE; ÎÞÓÅÏÈ¼¶
@@ -202,7 +202,7 @@ stmt  level    source
   162   1        COMx_InitStructure.UART_Mode      = UART_8bit_BRTx;   //Ä£Ê½, UART_ShiftRight,UART_8bit_BRTx,UART_9bit,U
              -ART_9bit_BRTx
   163   1              COMx_InitStructure.UART_BRT_Use   = BRT_Timer2;                 //Ñ¡Ôñ²¨ÌØÂÊ·¢ÉúÆ÷, BRT_Timer3, BRT_Timer2 (×¢Òâ: ´®¿Ú
-C251 COMPILER V5.60.0,  System_init                                                        27/07/24  16:16:37  PAGE 4   
+C251 COMPILER V5.60.0,  System_init                                                        28/07/24  14:37:48  PAGE 4   
 
              -2¹Ì¶¨Ê¹ÓÃBRT_Timer2)
   164   1              COMx_InitStructure.UART_BaudRate  = 115200ul;                   //²¨ÌØÂÊ, Ò»°ã 110 ~ 115200
@@ -246,8 +246,9 @@ stmt  level    source
   198   1              SPI_InitStructure.SPI_Enable    = ENABLE;                       //SPIÆô¶¯    ENABLE, DISABLE
   199   1              SPI_InitStructure.SPI_SSIG      = ENABLE;                               //Æ¬Ñ¡Î»     ENABLE, DISABLE
   200   1              SPI_InitStructure.SPI_FirstBit  = SPI_MSB;                              //ÒÆÎ»·½Ïò   SPI_MSB, SPI_LSB
-  201   1              SPI_InitStructure.SPI_Mode      = SPI_Mode_Slave;               //Ö÷´ÓÑ¡Ôñ   SPI_Mode_Master, SPI_Mode_Slave
-  202   1              SPI_InitStructure.SPI_CPOL      = SPI_CPOL_Low;                 //Ê±ÖÓÏàÎ»   SPI_CPOL_High,   SPI_CPOL_Low
+  201   1              SPI_InitStructure.SPI_Mode      = SPI_Mode_Master;              //Ö÷´ÓÑ¡Ôñ   SPI_Mode_Master, SPI_Mode_Slave
+  202   1              SPI_InitStructure.SPI_CPOL      = SPI_CPOL_High;                        //Ê±ÖÓÏàÎ»   SPI_CPOL_High,   SPI_CPOL_Low //attettio
+             -n!
   203   1              SPI_InitStructure.SPI_CPHA      = SPI_CPHA_2Edge;               //Êý¾Ý±ßÑØ   SPI_CPHA_1Edge,  SPI_CPHA_2Edge
   204   1              SPI_InitStructure.SPI_Speed     = SPI_Speed_4;                  //SPIËÙ¶È    SPI_Speed_4, SPI_Speed_8, SPI_Speed_16, SP
              -I_Speed_32/SPI_Speed_2
@@ -269,9 +270,9 @@ stmt  level    source
              -óµÄµçÑ¹×ö¸ºÊäÈë, CMP_N_P36: Ñ¡ÔñP3.6×ö¸ºÊäÈë.
   218   1              CMP_InitStructure.CMP_InvCMPO      = DISABLE;                   //±È½ÏÆ÷Êä³öÈ¡·´,       ENABLE,DISABLE
   219   1              CMP_InitStructure.CMP_100nsFilter  = ENABLE;                    //ÄÚ²¿0.1uFÂË²¨,        ENABLE,DISABLE
-  220   1              CMP_InitStructure.CMP_Outpt_En     = ENABLE;                    //ÔÊÐí±È½Ï½á¹ûÊä³ö,ENABLE,DISABLE
-C251 COMPILER V5.60.0,  System_init                                                        27/07/24  16:16:37  PAGE 5   
+C251 COMPILER V5.60.0,  System_init                                                        28/07/24  14:37:48  PAGE 5   
 
+  220   1              CMP_InitStructure.CMP_Outpt_En     = ENABLE;                    //ÔÊÐí±È½Ï½á¹ûÊä³ö,ENABLE,DISABLE
   221   1              CMP_InitStructure.CMP_OutDelayDuty = 16;                                        //±È½Ï½á¹û±ä»¯ÑÓÊ±ÖÜÆÚÊý, 0~63
   222   1              CMP_Inilize(&CMP_InitStructure);                                //³õÊ¼»¯±È½ÏÆ÷
   223   1              NVIC_CMP_Init(RISING_EDGE|FALLING_EDGE,Priority_0);     //ÖÐ¶ÏÊ¹ÄÜ, RISING_EDGE/FALLING_EDGE/DISABLE; ÓÅÏÈ¼¶
@@ -317,10 +318,10 @@ stmt  level    source
   260   1              SPI_SW(SPI_P22_P23_P24_P25);    //SPI_P54_P13_P14_P15,SPI_P22_P23_P24_P25,SPI_P54_P40_P41_P43,SPI_P35_P34_P
              -33_P32
   261   1      
-  262   1              LCM_CTRL_SW(LCM_CTRL_P45_P44_P42);      //LCM_CTRL_P45_P44_P42,LCM_CTRL_P45_P37_P36,LCM_CTRL_P40_P44_P42,LCM_
-             -CTRL_P40_P37_P36
-  263   1              LCM_DATA_SW(LCM_D8_NA_P6);              //LCM_D8_NA_P2,LCM_D8_NA_P6 / LCM_D16_P2_P0,LCM_D16_P6_P2,LCM_D16_P2_P7P4,LC
-             -M_D16_P6_P7
+  262   1              // LCM_CTRL_SW(LCM_CTRL_P45_P44_P42);   //LCM_CTRL_P45_P44_P42,LCM_CTRL_P45_P37_P36,LCM_CTRL_P40_P44_P42,L
+             -CM_CTRL_P40_P37_P36
+  263   1              // LCM_DATA_SW(LCM_D8_NA_P6);           //LCM_D8_NA_P2,LCM_D8_NA_P6 / LCM_D16_P2_P0,LCM_D16_P6_P2,LCM_D16_P2_P7P4
+             -,LCM_D16_P6_P7
   264   1      }
   265          
   266          
@@ -337,9 +338,9 @@ stmt  level    source
   277   1      
   278   1              PWMx_InitStructure.PWM_Mode    =        CCMRn_PWM_MODE1;        //Ä£Ê½,         CCMRn_FREEZE,CCMRn_MATCH_VALID,CCMRn_MATCH_IN
              -VALID,CCMRn_ROLLOVER,CCMRn_FORCE_INVALID,CCMRn_FORCE_VALID,CCMRn_PWM_MODE1,CCMRn_PWM_MODE2
-  279   1              PWMx_InitStructure.PWM_Duty    = PWMA_Duty.PWM1_Duty;   //PWMÕ¼¿Õ±ÈÊ±¼ä, 0~Period
-C251 COMPILER V5.60.0,  System_init                                                        27/07/24  16:16:37  PAGE 6   
+C251 COMPILER V5.60.0,  System_init                                                        28/07/24  14:37:48  PAGE 6   
 
+  279   1              PWMx_InitStructure.PWM_Duty    = PWMA_Duty.PWM1_Duty;   //PWMÕ¼¿Õ±ÈÊ±¼ä, 0~Period
   280   1              PWMx_InitStructure.PWM_EnoSelect   = ENO1P ;    //Êä³öÍ¨µÀÑ¡Ôñ, ENO1P,ENO1N,ENO2P,ENO2N,ENO3P,ENO3N,ENO4P,E
              -NO4N / ENO5P,ENO6P,ENO7P,ENO8P
   281   1              PWM_Configuration(PWM1, &PWMx_InitStructure);                           //³õÊ¼»¯PWM1
@@ -395,7 +396,7 @@ stmt  level    source
   325   1        PWM_config();
   326   1        //    Exti_config();
   327   1        // I2C_config();
-  328   1        //    SPI_config();
+  328   1        SPI_config();
   329   1        //    CMP_config();
   330   1              Switch_config();
   331   1      }
@@ -404,11 +405,11 @@ stmt  level    source
 
 Module Information          Static   Overlayable
 ------------------------------------------------
-  code size            =       929     ------
+  code size            =       900     ------
   ecode size           =    ------     ------
-  data size            =    ------     ------
-C251 COMPILER V5.60.0,  System_init                                                        27/07/24  16:16:37  PAGE 7   
+C251 COMPILER V5.60.0,  System_init                                                        28/07/24  14:37:48  PAGE 7   
 
+  data size            =    ------     ------
   idata size           =    ------     ------
   pdata size           =    ------     ------
   xdata size           =    ------     ------

@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_NVIC                                                        24/07/24  21:03:22  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_NVIC                                                        28/07/24  14:10:12  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_NVIC
@@ -66,7 +66,7 @@ stmt  level    source
    54          //========================================================================
    55          uint8_t NVIC_Timer2_Init(uint8_t State, uint8_t Priority)
    56          {
-C251 COMPILER V5.60.0,  STC32G_NVIC                                                        24/07/24  21:03:22  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_NVIC                                                        28/07/24  14:10:12  PAGE 2   
 
    57   1              if(State <= ENABLE) Timer2_Interrupt(State); else  return FAIL;
    58   1              Priority = 0;
@@ -134,7 +134,7 @@ stmt  level    source
   120   1      }
   121          
   122          //========================================================================
-C251 COMPILER V5.60.0,  STC32G_NVIC                                                        24/07/24  21:03:22  PAGE 3   
+C251 COMPILER V5.60.0,  STC32G_NVIC                                                        28/07/24  14:10:12  PAGE 3   
 
   123          // 函数: NVIC_INT2_Init
   124          // 描述: INT2嵌套向量中断控制器初始化.
@@ -202,7 +202,7 @@ stmt  level    source
   186          // 参数: Priority: 中断优先级, Priority_0,Priority_1,Priority_2,Priority_3.
   187          // 返回: 执行结果 SUCCESS/FAIL.
   188          // 版本: V1.0, 2020-09-29
-C251 COMPILER V5.60.0,  STC32G_NVIC                                                        24/07/24  21:03:22  PAGE 4   
+C251 COMPILER V5.60.0,  STC32G_NVIC                                                        28/07/24  14:10:12  PAGE 4   
 
   189          //========================================================================
   190          uint8_t NVIC_CMP_Init(uint8_t State, uint8_t Priority)
@@ -270,7 +270,7 @@ stmt  level    source
   252   1              return SUCCESS;
   253   1      }
   254          
-C251 COMPILER V5.60.0,  STC32G_NVIC                                                        24/07/24  21:03:22  PAGE 5   
+C251 COMPILER V5.60.0,  STC32G_NVIC                                                        28/07/24  14:10:12  PAGE 5   
 
   255          //========================================================================
   256          // 函数: NVIC_UART3_Init
@@ -338,7 +338,7 @@ stmt  level    source
   317          // 描述: PWM嵌套向量中断控制器初始化.
   318          // 参数: Channel:  通道, PWMA/PWMB.
   319          // 参数: State:    中断使能状态, PWM_BIE/PWM_TIE/PWM_COMIE/PWM_CC8IE~PWM_CC1IE/PWM_UIE/DISABLE.
-C251 COMPILER V5.60.0,  STC32G_NVIC                                                        24/07/24  21:03:22  PAGE 6   
+C251 COMPILER V5.60.0,  STC32G_NVIC                                                        28/07/24  14:10:12  PAGE 6   
 
   320          // 参数: Priority: 中断优先级, Priority_0,Priority_1,Priority_2,Priority_3.
   321          // 返回: 执行结果 SUCCESS/FAIL.
@@ -406,7 +406,7 @@ stmt  level    source
   383   1              if(State == ENABLE)
   384   1                      DMA_M2M_CFG |= 0x80;            //bit7 1:Enable Interrupt
   385   1              else
-C251 COMPILER V5.60.0,  STC32G_NVIC                                                        24/07/24  21:03:22  PAGE 7   
+C251 COMPILER V5.60.0,  STC32G_NVIC                                                        28/07/24  14:10:12  PAGE 7   
 
   386   1                      DMA_M2M_CFG &= ~0x80;           //bit7 0:Disable Interrupt
   387   1              return SUCCESS;
@@ -474,7 +474,7 @@ stmt  level    source
   449   1                      DMA_UR1R_CFG &= ~0x80;  //bit7 0:Disable Interrupt
   450   1              return SUCCESS;
   451   1      }
-C251 COMPILER V5.60.0,  STC32G_NVIC                                                        24/07/24  21:03:22  PAGE 8   
+C251 COMPILER V5.60.0,  STC32G_NVIC                                                        28/07/24  14:10:12  PAGE 8   
 
   452          
   453          //========================================================================
@@ -542,7 +542,7 @@ stmt  level    source
   515          
   516          //========================================================================
   517          // 函数: NVIC_DMA_UART3_Rx_Init
-C251 COMPILER V5.60.0,  STC32G_NVIC                                                        24/07/24  21:03:22  PAGE 9   
+C251 COMPILER V5.60.0,  STC32G_NVIC                                                        28/07/24  14:10:12  PAGE 9   
 
   518          // 描述: DMA UART3 Rx嵌套向量中断控制器初始化.
   519          // 参数: State:    中断使能状态, ENABLE/DISABLE.
@@ -610,7 +610,7 @@ stmt  level    source
   581          // 描述: DMA LCM嵌套向量中断控制器初始化.
   582          // 参数: State:    中断使能状态, ENABLE/DISABLE.
   583          // 参数: Priority: 中断优先级, Priority_0,Priority_1,Priority_2,Priority_3.
-C251 COMPILER V5.60.0,  STC32G_NVIC                                                        24/07/24  21:03:22  PAGE 10  
+C251 COMPILER V5.60.0,  STC32G_NVIC                                                        28/07/24  14:10:12  PAGE 10  
 
   584          // 参数: Bus_Priority: 数据总线访问优先级, Priority_0,Priority_1,Priority_2,Priority_3.
   585          // 返回: 执行结果 SUCCESS/FAIL.
@@ -678,7 +678,7 @@ stmt  level    source
   647          // 版本: V1.0, 2022-03-25
   648          //========================================================================
   649          uint8_t NVIC_DMA_I2CR_Init(uint8_t State, uint8_t Priority, uint8_t Bus_Priority)
-C251 COMPILER V5.60.0,  STC32G_NVIC                                                        24/07/24  21:03:22  PAGE 11  
+C251 COMPILER V5.60.0,  STC32G_NVIC                                                        28/07/24  14:10:12  PAGE 11  
 
   650          {
   651   1              DMA_I2CR_CFG &= ~0x0f;
@@ -746,7 +746,7 @@ stmt  level    source
   713          
 
 
-C251 COMPILER V5.60.0,  STC32G_NVIC                                                        24/07/24  21:03:22  PAGE 12  
+C251 COMPILER V5.60.0,  STC32G_NVIC                                                        28/07/24  14:10:12  PAGE 12  
 
 Module Information          Static   Overlayable
 ------------------------------------------------

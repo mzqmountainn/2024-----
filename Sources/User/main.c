@@ -28,6 +28,8 @@
 #include "mzqGlobal.h"
 #include "Semphr.h"
 #include "STC32G_UART.h"
+#include "lcd.h"
+#include "lcd_init.h"
 void vSystemInit( void );
 void motorInit(void);
 extern void outputSpeed(void *pvParameters);
@@ -36,7 +38,7 @@ extern QueueHandle_t pwmUpdateSignal;
 extern void openMVgetAngle(void *pvParameters);
 extern void moudle8266(void *pvParameters);
 extern void uart4frame(void *pvParameters);
-
+extern void lcd(void *pvParameters);
 void main( void )
 {
     /* 系统初始化 */
@@ -82,6 +84,12 @@ void main( void )
                 (uint16_t       )configDEFAULT_STACK_SIZE,
                 (void*          )NULL,
                 (UBaseType_t    )(configDEFAULT_PRIORITIES)+4,
+                (TaskHandle_t*  )NULL);
+    xTaskCreate((TaskFunction_t )lcd,
+                (const char*    )"lcd",
+                (uint16_t       )configDEFAULT_STACK_SIZE,
+                (void*          )NULL,
+                (UBaseType_t    )(configDEFAULT_PRIORITIES)+3,
                 (TaskHandle_t*  )NULL);
     // xTaskCreate((TaskFunction_t )vDisplayTask,
     //             (const char*    )"DISPLAY",

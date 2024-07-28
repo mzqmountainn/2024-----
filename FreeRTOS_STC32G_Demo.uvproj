@@ -500,46 +500,6 @@
           <GroupName>task</GroupName>
           <Files>
             <File>
-              <FileName>adckey.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\Task\src\adckey.c</FilePath>
-            </File>
-            <File>
-              <FileName>display.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\Task\src\display.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c_ps.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\Task\src\i2c_ps.c</FilePath>
-            </File>
-            <File>
-              <FileName>MatrixKey.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\Task\src\MatrixKey.c</FilePath>
-            </File>
-            <File>
-              <FileName>ntc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\Task\src\ntc.c</FilePath>
-            </File>
-            <File>
-              <FileName>pwmb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\Task\src\pwmb.c</FilePath>
-            </File>
-            <File>
-              <FileName>rtc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\Task\src\rtc.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart2_3.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\Task\src\uart2_3.c</FilePath>
-            </File>
-            <File>
               <FileName>test.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Sources\Task\src\test.c</FilePath>
@@ -664,6 +624,31 @@
               <FileType>1</FileType>
               <FilePath>.\Sources\Driver\src\STC32G_WDT.c</FilePath>
             </File>
+            <File>
+              <FileName>lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\Driver\src\lcd7796\LCD\lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\Driver\src\lcd7796\LCD\lcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\Driver\src\lcd7796\LCD\lcd_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\Driver\src\lcd7796\LCD\lcd_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcdfont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\Driver\src\lcd7796\LCD\lcdfont.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -685,11 +670,6 @@
               <FilePath>.\Sources\Driver\isr\STC32G_Compare_Isr.c</FilePath>
             </File>
             <File>
-              <FileName>STC32G_DMA_Isr.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\Driver\isr\STC32G_DMA_Isr.c</FilePath>
-            </File>
-            <File>
               <FileName>STC32G_Exti_Isr.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Sources\Driver\isr\STC32G_Exti_Isr.c</FilePath>
@@ -703,11 +683,6 @@
               <FileName>STC32G_I2C_Isr.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Sources\Driver\isr\STC32G_I2C_Isr.c</FilePath>
-            </File>
-            <File>
-              <FileName>STC32G_LCM_Isr.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\Driver\isr\STC32G_LCM_Isr.c</FilePath>
             </File>
             <File>
               <FileName>STC32G_LIN_Isr.c</FileName>

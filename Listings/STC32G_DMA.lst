@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_DMA                                                         24/07/24  21:03:22  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_DMA                                                         28/07/24  14:10:11  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_DMA
@@ -66,7 +66,7 @@ stmt  level    source
    54   1              else DMA_M2M_CFG &= ~0x20;      //数据读完后地址自减
    55   1              if(DMA->DMA_DEST_Dir == M2M_ADDR_DEC)           DMA_M2M_CFG |= 0x10;    //数据写入后地址自减
    56   1              else DMA_M2M_CFG &= ~0x10;      //数据写入后地址自减
-C251 COMPILER V5.60.0,  STC32G_DMA                                                         24/07/24  21:03:22  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_DMA                                                         28/07/24  14:10:11  PAGE 2   
 
    57   1              
    58   1              if(DMA->DMA_Enable == ENABLE)           DMA_M2M_CR |= 0x80;     //使能M2M DMA
@@ -134,7 +134,7 @@ stmt  level    source
   119   2                      else DMA_UR1R_CR &= ~0x80;      //禁止UART1 RX DMA
   120   2              }
   121   1      #endif
-C251 COMPILER V5.60.0,  STC32G_DMA                                                         24/07/24  21:03:22  PAGE 3   
+C251 COMPILER V5.60.0,  STC32G_DMA                                                         28/07/24  14:10:11  PAGE 3   
 
   122   1      #ifdef UART2
   123   1              if(UARTx == UART2)
@@ -202,7 +202,7 @@ stmt  level    source
   185          // 返回: none.
   186          // 版本: V1.0, 2021-05-17
   187          //========================================================================
-C251 COMPILER V5.60.0,  STC32G_DMA                                                         24/07/24  21:03:22  PAGE 4   
+C251 COMPILER V5.60.0,  STC32G_DMA                                                         28/07/24  14:10:11  PAGE 4   
 
   188          void DMA_LCM_Inilize(DMA_LCM_InitTypeDef *DMA)
   189          {

@@ -198,8 +198,8 @@ void SPI_config(void)
 	SPI_InitStructure.SPI_Enable    = ENABLE;		    	//SPI启动    ENABLE, DISABLE
 	SPI_InitStructure.SPI_SSIG      = ENABLE;				//片选位     ENABLE, DISABLE
 	SPI_InitStructure.SPI_FirstBit  = SPI_MSB;				//移位方向   SPI_MSB, SPI_LSB
-	SPI_InitStructure.SPI_Mode      = SPI_Mode_Slave;		//主从选择   SPI_Mode_Master, SPI_Mode_Slave
-	SPI_InitStructure.SPI_CPOL      = SPI_CPOL_Low;			//时钟相位   SPI_CPOL_High,   SPI_CPOL_Low
+	SPI_InitStructure.SPI_Mode      = SPI_Mode_Master;		//主从选择   SPI_Mode_Master, SPI_Mode_Slave
+	SPI_InitStructure.SPI_CPOL      = SPI_CPOL_High;			//时钟相位   SPI_CPOL_High,   SPI_CPOL_Low //attettion!
 	SPI_InitStructure.SPI_CPHA      = SPI_CPHA_2Edge;		//数据边沿   SPI_CPHA_1Edge,  SPI_CPHA_2Edge
 	SPI_InitStructure.SPI_Speed     = SPI_Speed_4;			//SPI速度    SPI_Speed_4, SPI_Speed_8, SPI_Speed_16, SPI_Speed_32/SPI_Speed_2
 	SPI_Init(&SPI_InitStructure);
@@ -259,8 +259,8 @@ void Switch_config(void)
 //	COMP_SW(CMP_OUT_P34);			//CMP_OUT_P34,CMP_OUT_P41
 	SPI_SW(SPI_P22_P23_P24_P25);	//SPI_P54_P13_P14_P15,SPI_P22_P23_P24_P25,SPI_P54_P40_P41_P43,SPI_P35_P34_P33_P32
 
-	LCM_CTRL_SW(LCM_CTRL_P45_P44_P42);	//LCM_CTRL_P45_P44_P42,LCM_CTRL_P45_P37_P36,LCM_CTRL_P40_P44_P42,LCM_CTRL_P40_P37_P36
-	LCM_DATA_SW(LCM_D8_NA_P6);		//LCM_D8_NA_P2,LCM_D8_NA_P6 / LCM_D16_P2_P0,LCM_D16_P6_P2,LCM_D16_P2_P7P4,LCM_D16_P6_P7
+	// LCM_CTRL_SW(LCM_CTRL_P45_P44_P42);	//LCM_CTRL_P45_P44_P42,LCM_CTRL_P45_P37_P36,LCM_CTRL_P40_P44_P42,LCM_CTRL_P40_P37_P36
+	// LCM_DATA_SW(LCM_D8_NA_P6);		//LCM_D8_NA_P2,LCM_D8_NA_P6 / LCM_D16_P2_P0,LCM_D16_P6_P2,LCM_D16_P2_P7P4,LCM_D16_P6_P7
 }
 
 
@@ -325,7 +325,7 @@ void vSystemInit(void)
   PWM_config();
   //	Exti_config();
   // I2C_config();
-  //	SPI_config();
+  SPI_config();
   //	CMP_config();
 	Switch_config();
 }

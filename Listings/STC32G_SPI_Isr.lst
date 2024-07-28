@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_SPI_Isr                                                     24/07/24  21:03:24  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_SPI_Isr                                                     28/07/24  14:26:17  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_SPI_Isr
@@ -39,19 +39,20 @@ stmt  level    source
    27          //========================================================================
    28          void SPI_ISR_Handler() interrupt SPI_VECTOR
    29          {
-   30   1              if(MSTR)        //主机模式
-   31   1              {
-   32   2                      B_SPI_Busy = 0;
-   33   2              }
-   34   1              else                                                    //从机模式
-   35   1              {
-   36   2                      if(SPI_RxCnt >= SPI_BUF_LENTH)          SPI_RxCnt = 0;
-   37   2                      SPI_RxBuffer[SPI_RxCnt++] = SPDAT;
-   38   2                      SPI_RxTimerOut = 5;
-   39   2              }
-   40   1              SPI_ClearFlag();        //清0 SPIF和WCOL标志
-   41   1      }
-   42          
+   30   1        //P35 = 1;
+   31   1        if(MSTR)      //主机模式
+   32   1              {
+   33   2                      B_SPI_Busy = 0;
+   34   2              }
+   35   1              else                                                    //从机模式
+   36   1              {
+   37   2                      if(SPI_RxCnt >= SPI_BUF_LENTH)          SPI_RxCnt = 0;
+   38   2                      SPI_RxBuffer[SPI_RxCnt++] = SPDAT;
+   39   2                      SPI_RxTimerOut = 5;
+   40   2              }
+   41   1              SPI_ClearFlag();        //清0 SPIF和WCOL标志
+   42   1      }
+   43          
 
 
 Module Information          Static   Overlayable
@@ -66,9 +67,9 @@ Module Information          Static   Overlayable
   edata size           =         1     ------
   bit size             =    ------     ------
   ebit size            =    ------     ------
-  bitaddressable size  =    ------     ------
-C251 COMPILER V5.60.0,  STC32G_SPI_Isr                                                     24/07/24  21:03:24  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_SPI_Isr                                                     28/07/24  14:26:17  PAGE 2   
 
+  bitaddressable size  =    ------     ------
   ebitaddressable size =    ------     ------
   far data size        =    ------     ------
   huge data size       =    ------     ------

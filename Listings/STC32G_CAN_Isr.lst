@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_CAN_Isr                                                     24/07/24  21:03:23  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_CAN_Isr                                                     28/07/24  14:10:13  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_CAN_Isr
@@ -66,7 +66,7 @@ stmt  level    source
    54   2              }
    55   1      
    56   1              if((isr & 0x40) == 0x40)  //ALI
-C251 COMPILER V5.60.0,  STC32G_CAN_Isr                                                     24/07/24  21:03:23  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_CAN_Isr                                                     28/07/24  14:10:13  PAGE 2   
 
    57   1              {
    58   2      //              CANAR = ISR;
@@ -134,7 +134,7 @@ stmt  level    source
   120   2        }     
   121   1              if((isr & 0x08) == 0x08)  //RI
   122   1              {
-C251 COMPILER V5.60.0,  STC32G_CAN_Isr                                                     24/07/24  21:03:23  PAGE 3   
+C251 COMPILER V5.60.0,  STC32G_CAN_Isr                                                     28/07/24  14:10:13  PAGE 3   
 
   123   2      //              CANAR = ISR;
   124   2      //              CANDR |= 0x08;    //CLR FLAG

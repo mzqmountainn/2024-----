@@ -1,0 +1,237 @@
+C251 COMPILER V5.60.0,  lcd_init                                                           28/07/24  14:10:13  PAGE 1   
+
+
+C251 COMPILER V5.60.0, COMPILATION OF MODULE lcd_init
+OBJECT MODULE PLACED IN .\Objects\lcd_init.obj
+COMPILER INVOKED BY: D:\software\keilc51\C251\BIN\C251.EXE Sources\Driver\src\lcd7796\LCD\lcd_init.c XSMALL FUNCTIONS(RE
+                    -ENTRANT) OPTIMIZE(4,SPEED) BROWSE INCDIR(.\Sources\User;.\Sources\User\include;.\Sources\FreeRTOS\include;.\Sources\Free
+                    -RTOS\portable\STC32G12K128;.\Sources\Driver\inc;.\Sources\Task\inc) DEBUG PRINT(.\Listings\lcd_init.lst) OBJECT(.\Object
+                    -s\lcd_init.obj) 
+
+stmt  level    source
+
+    1          #include "lcd_init.h"
+    2          #include        "STC32G_Delay.h"
+    3          #include "STC32G_SPI.h"
+    4          extern void delay_ms(uint16_t ms);
+    5          //不准确延时函数
+    6          // void delay_ms(unsigned int ms)
+    7          // {                         
+    8          //      unsigned int a;
+    9          //      while(ms)
+   10          //      {
+   11          //              a=1800;
+   12          //              while(a--);
+   13          //              ms--;
+   14          //      }
+   15          // }
+   16          
+   17          
+   18          /******************************************************************************
+   19                函数说明：LCD串行数据写入函数
+   20                入口数据：dat  要写入的串行数据
+   21                返回值：  无
+   22          ******************************************************************************/
+   23          void LCD_Writ_Bus(u8 dat) 
+   24          {       
+   25   1      
+   26   1      
+   27   1              
+   28   1            SPI_SS_2= 0;     //拉低从机 SS 管脚
+   29   1            SPI_SetMode(SPI_Mode_Master);     //SPI设置主机模式，开始发送数据
+   30   1            SPI_WriteByte(dat); //发送串口数据 // 在此处卡死
+   31   1                      SPI_RxCnt = 0;
+   32   1            SPI_SS_2 = 1;    //拉高从机的 SS 管脚
+   33   1              
+   34   1      
+   35   1      
+   36   1      // u8 i;
+   37   1      // LCD_CS_Clr();
+   38   1      // for(i=0;i<8;i++)
+   39   1      // {                      
+   40   1      //      LCD_SCLK_Clr();
+   41   1      //      if(dat&0x80)
+   42   1      //      {
+   43   1      //         LCD_MOSI_Set();
+   44   1      //      }
+   45   1      //      else
+   46   1      //      {
+   47   1      //         LCD_MOSI_Clr();
+   48   1      //      }
+   49   1      //      LCD_SCLK_Set();
+   50   1      //      dat<<=1;
+   51   1      //       }      
+   52   1      //   LCD_CS_Set();      
+   53   1      }
+   54          
+   55          
+   56          /******************************************************************************
+C251 COMPILER V5.60.0,  lcd_init                                                           28/07/24  14:10:13  PAGE 2   
+
+   57                函数说明：LCD写入数据
+   58                入口数据：dat 写入的数据
+   59                返回值：  无
+   60          ******************************************************************************/
+   61          void LCD_WR_DATA8(u8 dat)
+   62          {
+   63   1              LCD_Writ_Bus(dat);
+   64   1      }
+   65          
+   66          
+   67          /******************************************************************************
+   68                函数说明：LCD写入数据
+   69                入口数据：dat 写入的数据
+   70                返回值：  无
+   71          ******************************************************************************/
+   72          void LCD_WR_DATA(u16 dat)
+   73          {
+   74   1              LCD_Writ_Bus(dat>>8);
+*** WARNING C188 IN LINE 74 OF Sources\Driver\src\lcd7796\LCD\lcd_init.c: 'parameter 1': value truncated
+   75   1              LCD_Writ_Bus(dat);
+*** WARNING C188 IN LINE 75 OF Sources\Driver\src\lcd7796\LCD\lcd_init.c: 'parameter 1': value truncated
+   76   1      }
+   77          
+   78          
+   79          /******************************************************************************
+   80                函数说明：LCD写入命令
+   81                入口数据：dat 写入的命令
+   82                返回值：  无
+   83          ******************************************************************************/
+   84          void LCD_WR_REG(u8 dat)
+   85          {
+   86   1              LCD_DC_Clr();//写命令
+   87   1              LCD_Writ_Bus(dat);
+   88   1              LCD_DC_Set();//写数据
+   89   1      }
+   90          
+   91          
+   92          /******************************************************************************
+   93                函数说明：设置起始和结束地址
+   94                入口数据：x1,x2 设置列的起始和结束地址
+   95                          y1,y2 设置行的起始和结束地址
+   96                返回值：  无
+   97          ******************************************************************************/
+   98          void LCD_Address_Set(u16 x1,u16 y1,u16 x2,u16 y2)
+   99          {
+  100   1                      LCD_WR_REG(0x2a);//列地址设置
+  101   1                      LCD_WR_DATA(x1);
+  102   1                      LCD_WR_DATA(x2);
+  103   1                      LCD_WR_REG(0x2b);//行地址设置
+  104   1                      LCD_WR_DATA(y1);
+  105   1                      LCD_WR_DATA(y2);
+  106   1                      LCD_WR_REG(0x2c);//储存器写
+  107   1      }
+  108          
+  109          
+  110          /******************************************************************************
+  111                函数说明：LCD初始化函数
+  112                入口数据：无
+  113                返回值：  无
+  114          ******************************************************************************/
+  115          void LCD_Init(void)
+  116          {
+  117   1              LCD_RES_Clr();
+  118   1              delay_ms(100);
+  119   1              LCD_RES_Set();
+  120   1              delay_ms(100);
+C251 COMPILER V5.60.0,  lcd_init                                                           28/07/24  14:10:13  PAGE 3   
+
+  121   1              LCD_BLK_Set();
+  122   1              delay_ms(100);
+  123   1              // //************* Start Initial Sequence **********//
+  124   1              LCD_WR_REG(0x11); //Sleep out 
+  125   1              delay_ms(120);              //Delay 120ms 
+  126   1              // //************* Start Initial Sequence **********// 
+  127   1              LCD_WR_REG(0Xf0);
+  128   1              LCD_WR_DATA8(0xc3);
+  129   1              LCD_WR_REG(0Xf0);
+  130   1              LCD_WR_DATA8(0x96);
+  131   1              LCD_WR_REG(0x36);    // Memory Access Control 
+  132   1              if(USE_HORIZONTAL==0)LCD_WR_DATA8(0x48);
+  133   1              else if(USE_HORIZONTAL==1)LCD_WR_DATA8(0x88);
+  134   1              else if(USE_HORIZONTAL==2)LCD_WR_DATA8(0x28);
+  135   1              else LCD_WR_DATA8(0xE8);
+  136   1              LCD_WR_REG(0X3a);
+  137   1              LCD_WR_DATA8(0x05);
+  138   1              LCD_WR_REG(0Xe6);
+  139   1              LCD_WR_DATA8(0x0f);
+  140   1              LCD_WR_DATA8(0xf2);
+  141   1              LCD_WR_DATA8(0x3f);
+  142   1              LCD_WR_DATA8(0x4f);
+  143   1              LCD_WR_DATA8(0x4f);
+  144   1              LCD_WR_DATA8(0x28);
+  145   1              LCD_WR_DATA8(0x0e);
+  146   1              LCD_WR_DATA8(0x00);
+  147   1              LCD_WR_REG(0Xc5);
+  148   1              LCD_WR_DATA8(0x2a);
+  149   1              LCD_WR_REG(0Xe0);
+  150   1              LCD_WR_DATA8(0xf0);
+  151   1              LCD_WR_DATA8(0x03);
+  152   1              LCD_WR_DATA8(0x0a);
+  153   1              LCD_WR_DATA8(0x11);
+  154   1              LCD_WR_DATA8(0x14);
+  155   1              LCD_WR_DATA8(0x1c);
+  156   1              LCD_WR_DATA8(0x3b);
+  157   1              LCD_WR_DATA8(0x55);
+  158   1              LCD_WR_DATA8(0x4a);
+  159   1              LCD_WR_DATA8(0x0a);
+  160   1              LCD_WR_DATA8(0x13);
+  161   1              LCD_WR_DATA8(0x14);
+  162   1              LCD_WR_DATA8(0x1c);
+  163   1              LCD_WR_DATA8(0x1f);
+  164   1              LCD_WR_REG(0Xe1);
+  165   1              LCD_WR_DATA8(0xf0);
+  166   1              LCD_WR_DATA8(0x03);
+  167   1              LCD_WR_DATA8(0x0a);
+  168   1              LCD_WR_DATA8(0x0c);
+  169   1              LCD_WR_DATA8(0x0c);
+  170   1              LCD_WR_DATA8(0x09);
+  171   1              LCD_WR_DATA8(0x36);
+  172   1              LCD_WR_DATA8(0x54);
+  173   1              LCD_WR_DATA8(0x49);
+  174   1              LCD_WR_DATA8(0x0f);
+  175   1              LCD_WR_DATA8(0x1b);
+  176   1              LCD_WR_DATA8(0x18);
+  177   1              LCD_WR_DATA8(0x1b);
+  178   1              LCD_WR_DATA8(0x1f);
+  179   1              LCD_WR_REG(0Xf0);
+  180   1              LCD_WR_DATA8(0x3c);
+  181   1              LCD_WR_REG(0Xf0);
+  182   1              LCD_WR_DATA8(0x69);
+  183   1              LCD_WR_REG(0X29);
+  184   1      } 
+  185          
+  186          
+C251 COMPILER V5.60.0,  lcd_init                                                           28/07/24  14:10:13  PAGE 4   
+
+  187          
+  188          
+  189          
+  190          
+  191          
+  192          
+  193          
+
+
+Module Information          Static   Overlayable
+------------------------------------------------
+  code size            =       426     ------
+  ecode size           =    ------     ------
+  data size            =    ------     ------
+  idata size           =    ------     ------
+  pdata size           =    ------     ------
+  xdata size           =    ------     ------
+  xdata-const size     =    ------     ------
+  edata size           =    ------     ------
+  bit size             =    ------     ------
+  ebit size            =    ------     ------
+  bitaddressable size  =    ------     ------
+  ebitaddressable size =    ------     ------
+  far data size        =    ------     ------
+  huge data size       =    ------     ------
+  const size           =    ------     ------
+  hconst size          =    ------     ------
+End of Module Information.
+
+
+C251 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

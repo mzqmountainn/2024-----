@@ -27,7 +27,8 @@ uint8_t SPI_RxCnt;
 //========================================================================
 void SPI_ISR_Handler() interrupt SPI_VECTOR
 {
-	if(MSTR)	//主机模式
+  //P35 = 1;
+  if(MSTR)	//主机模式
 	{
 		B_SPI_Busy = 0;
 	}

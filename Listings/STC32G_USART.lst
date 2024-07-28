@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  STC32G_USART                                                       24/07/24  21:03:23  PAGE 1   
+C251 COMPILER V5.60.0,  STC32G_USART                                                       28/07/24  14:10:13  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE STC32G_USART
@@ -66,7 +66,7 @@ stmt  level    source
    54          void UsartLinSendData(uint8_t USARTx, uint8_t *pdat)
    55          {
    56   1              uint8_t i;
-C251 COMPILER V5.60.0,  STC32G_USART                                                       24/07/24  21:03:23  PAGE 2   
+C251 COMPILER V5.60.0,  STC32G_USART                                                       28/07/24  14:10:13  PAGE 2   
 
    57   1      
    58   1              for(i=0;i<FRAME_LEN;i++)
@@ -134,7 +134,7 @@ stmt  level    source
   120          //========================================================================
   121          void UsartLinSendPID(uint8_t USARTx, uint8_t id)
   122          {
-C251 COMPILER V5.60.0,  STC32G_USART                                                       24/07/24  21:03:23  PAGE 3   
+C251 COMPILER V5.60.0,  STC32G_USART                                                       28/07/24  14:10:13  PAGE 3   
 
   123   1              uint8_t P0 ;
   124   1              uint8_t P1 ;
@@ -202,7 +202,7 @@ stmt  level    source
   186   1              else if(USARTx == USART2)
   187   1              {
   188   2                      USART2BRH = (uint8_t)(tmp>>8);
-C251 COMPILER V5.60.0,  STC32G_USART                                                       24/07/24  21:03:23  PAGE 4   
+C251 COMPILER V5.60.0,  STC32G_USART                                                       28/07/24  14:10:13  PAGE 4   
 
   189   2                      USART2BRL = (uint8_t)tmp;
   190   2              }
@@ -271,7 +271,7 @@ Module Information          Static   Overlayable
   idata size           =    ------     ------
   pdata size           =    ------     ------
   xdata size           =    ------     ------
-C251 COMPILER V5.60.0,  STC32G_USART                                                       24/07/24  21:03:23  PAGE 5   
+C251 COMPILER V5.60.0,  STC32G_USART                                                       28/07/24  14:10:13  PAGE 5   
 
   xdata-const size     =    ------     ------
   edata size           =    ------     ------

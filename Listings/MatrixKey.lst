@@ -1,4 +1,4 @@
-C251 COMPILER V5.60.0,  MatrixKey                                                          26/07/24  19:26:13  PAGE 1   
+C251 COMPILER V5.60.0,  MatrixKey                                                          28/07/24  14:10:10  PAGE 1   
 
 
 C251 COMPILER V5.60.0, COMPILATION OF MODULE MatrixKey
@@ -66,7 +66,7 @@ stmt  level    source
    54   3                  BEEP = 1;    //蜂鸣器关闭
    55   3              }
    56   2      
-C251 COMPILER V5.60.0,  MatrixKey                                                          26/07/24  19:26:13  PAGE 2   
+C251 COMPILER V5.60.0,  MatrixKey                                                          28/07/24  14:10:10  PAGE 2   
 
    57   2              MatrixKeyScan();
    58   2              if(KeyCode > 0)  //有键按下
@@ -134,7 +134,7 @@ stmt  level    source
   120   3                  else if(j == IO_KeyState)
   121   3                  {
   122   4                      if(++IO_KeyHoldCnt >= 20)   //1秒后重键
-C251 COMPILER V5.60.0,  MatrixKey                                                          26/07/24  19:26:13  PAGE 3   
+C251 COMPILER V5.60.0,  MatrixKey                                                          28/07/24  14:10:10  PAGE 3   
 
   123   4                      {
   124   5                          IO_KeyHoldCnt = 18;

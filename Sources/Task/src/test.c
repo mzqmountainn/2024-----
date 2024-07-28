@@ -10,6 +10,8 @@
 #include "math.h"
 #include	"STC32G_PWM.h"
 #include "mzqGlobal.h"
+#include "lcd.h"
+#include "lcd_init.h"
 extern void TX1_write2buff(uint8_t dat);
 extern void TX2_write2buff(uint8_t dat);
 
@@ -303,6 +305,20 @@ void uart4frame(void *pvParameters){
   }
   
 }
+//lcd初始化与显示程序
+void lcd(void *pvParameters){
+  pvParameters = pvParameters;
+  LCD_Init();
+  LCD_Fill(0, 0, LCD_W, LCD_H, WHITE);
+  LCD_ShowChar(20, 20, 123, BLACK, WHITE, 16, 0);
+  while (1)
+  {
+    vTaskDelay(1000);
+  }
+  
+
+}
+
 
 char* itoa(int num,char* str,int radix)
 {
